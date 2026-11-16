@@ -14,3 +14,6 @@ js/models-data.js
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Original eBook file (published copy lives in downloads/)
+Green and White Simple Company Business Booklet.pdf

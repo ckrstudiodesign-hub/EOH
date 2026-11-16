@@ -1,0 +1,11 @@
+var fs = require('fs');
+var html = fs.readFileSync('about.html', 'utf8');
+console.log('File length:', html.length, 'lines:', html.split('\n').length);
+console.log('Has about-banner:', html.indexOf('about-banner') > -1);
+console.log('Has about-alisha.jpg:', html.indexOf('about-alisha.jpg') > -1);
+console.log('Has Alex+Brush font:', html.indexOf('Alex+Brush') > -1);
+console.log('Has bannerLineIn animation:', html.indexOf('bannerLineIn') > -1);
+console.log('Old phero removed:', html.indexOf('class=\x22phero\x22') === -1);
+var opens = (html.match(/<section/g)||[]).length;
+var closes = (html.match(/<\/section>/g)||[]).length;
+console.log('Sections open:', opens, 'close:', closes, 'balanced:', opens === closes);

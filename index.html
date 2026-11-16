@@ -693,23 +693,63 @@ a.ct-m:hover .go{opacity:1;transform:none}
 .js .ct.in .ct-info > *,.js .ct.in .ct-card{opacity:1;transform:none}
 @media (max-width:900px){.ct-in{grid-template-columns:1fr}}
 @media (max-width:520px){.ct-row{grid-template-columns:1fr}}
-/* "A new horizon" scene: EOH gold sun + brand type */
-.scene .sun{background:radial-gradient(circle at 50% 50%,#C9A227 0,#D4AF37 34%,rgba(226,197,90,.78) 44%,rgba(242,222,150,.38) 54%,rgba(255,254,251,0) 64%)}
-.scene .scene-stage{background:#FFFEFB}
-.scene .scene-dark{background:#1F1610}
-.scene h2{font-family:"Zilla Slab",Georgia,serif;font-weight:500;letter-spacing:-.03em}
-.scene h2 .b{font-family:"Kaushan Script",cursive;font-weight:400;letter-spacing:0;margin-top:.12em;color:#FFF8E6}
 @media (prefers-reduced-motion:reduce){.js .fq .fq-intro > *,.js .fq .fq-item,.js .ct .ct-info > *,.js .ct .ct-card{opacity:1;transform:none;transition:none}}
-/* "A new horizon": 60fps sunrise video revealed through the rising sun */
-.scene-video{position:absolute;inset:0;z-index:1;pointer-events:none;--r:0px;--cy:115%;
-  -webkit-mask-image:radial-gradient(circle at 50% var(--cy),#000 var(--r),rgba(0,0,0,0) calc(var(--r) + 14vmax));
-  mask-image:radial-gradient(circle at 50% var(--cy),#000 var(--r),rgba(0,0,0,0) calc(var(--r) + 14vmax))}
-.scene-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(var(--z,1.18));will-change:transform}
-.scene-veil{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(20,12,6,.18),rgba(20,12,6,.5) 100%)}
-.scene h2 .b{text-shadow:0 2px 30px rgba(20,12,6,.35)}
-.scene h2 .a{text-shadow:0 0 28px rgba(255,248,230,.75),0 0 2px rgba(255,248,230,.5)}
-.scene.full .scene-video{-webkit-mask-image:none;mask-image:none}
-@media (prefers-reduced-motion:reduce){.scene-video{-webkit-mask-image:none;mask-image:none}.scene-video video{transform:none}}
+/* "A new horizon": scroll-driven sunrise. Night sky, a horizon line draws, the sun rises out of it while old words
+   (doubt, fear, limits) sink into the sea and new ones (clarity, courage, purpose) rise. Default CSS = the finished
+   sunrise (no-JS / reduced motion); js/horizon script sets the start state and scrubs it with scroll. */
+.hz{--hz:64%;--sd:min(54vmin,560px);position:relative;height:100vh;height:100svh;background:#FAF3E6}
+.hz.hz-motion{height:520vh}
+.hz-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;isolation:isolate}
+.hz-sky,.hz-sky i,.hz-sea i{position:absolute;inset:0;display:block}
+.hz-night{background:linear-gradient(180deg,#07050C 0%,#140C18 38%,#26141C 64%)}
+.hz-dawn{background:linear-gradient(180deg,#24142F 0%,#5B2236 30%,#C2421E 54%,#FF9A3D 64%)}
+.hz-day{background:linear-gradient(180deg,#FFF1D2 0%,#FFE1A3 34%,#FFC870 56%,#FFB24E 64%)}
+.hz-dust{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+.hz-upper{position:absolute;left:0;right:0;top:0;height:var(--hz);overflow:hidden;z-index:2;pointer-events:none}
+.hz-sun{position:absolute;left:50%;top:100%;width:var(--sd);height:var(--sd);transform:translate(-50%,-50%) translateY(-19svh);--warm:0;will-change:transform}
+.hz-sun i{position:absolute;left:50%;top:50%;display:block;border-radius:50%;transform:translate(-50%,-50%)}
+.hz-disc{width:100%;height:100%;background:radial-gradient(circle at 50% 42%,#FFFBEA 0,#FFE08A 34%,#FFB938 70%,#F28A1E 100%);
+  box-shadow:0 0 60px 10px rgba(255,190,80,.55),0 0 160px 40px rgba(255,150,50,.35)}
+.hz-disc::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 50% 40%,#FF7A2E,#C7300F);opacity:var(--warm)}
+.hz-halo{width:340%;height:340%;background:radial-gradient(circle,rgba(255,206,120,.75) 0,rgba(255,170,80,.32) 26%,rgba(255,150,60,0) 60%)}
+.hz-rays{width:260vmax;height:260vmax;opacity:.55;border-radius:0!important;
+  background:repeating-conic-gradient(from 0deg,rgba(255,236,190,.38) 0deg 2.2deg,rgba(255,236,190,0) 2.2deg 9deg);
+  -webkit-mask-image:radial-gradient(circle,#000 4%,rgba(0,0,0,.35) 18%,transparent 42%);mask-image:radial-gradient(circle,#000 4%,rgba(0,0,0,.35) 18%,transparent 42%);
+  animation:hz-spin 90s linear infinite}
+@keyframes hz-spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.hz-sea{position:absolute;left:0;right:0;top:var(--hz);bottom:0;z-index:2;overflow:hidden;background:linear-gradient(180deg,#1B0E12 0%,#0B0609 100%)}
+.hz-sea-dawn{background:linear-gradient(180deg,#B5521E 0%,#5A2414 40%,#24100C 100%)}
+.hz-sea-day{background:linear-gradient(180deg,#FFC46A 0%,#FBDDA8 36%,#FAEBD2 70%,#FAF3E6 100%)}
+.hz-sea .hz-glint{left:50%;right:auto;width:calc(var(--sd) * 1.3);transform:translateX(-50%);
+  background:radial-gradient(ellipse 50% 100% at 50% 0,rgba(255,236,170,1) 0,rgba(255,196,96,.7) 34%,rgba(255,170,70,0) 78%);
+  -webkit-mask-image:repeating-linear-gradient(180deg,#000 0 3px,transparent 3px 8px);mask-image:repeating-linear-gradient(180deg,#000 0 3px,transparent 3px 8px);
+  -webkit-mask-size:100% 16px;mask-size:100% 16px;animation:hz-shimmer 2.6s linear infinite}
+@keyframes hz-shimmer{to{-webkit-mask-position:0 16px;mask-position:0 16px}}
+.hz-bloom{position:absolute;left:50%;top:var(--hz);width:140vmax;height:30vmax;transform:translate(-50%,-50%);z-index:3;pointer-events:none;opacity:.35;
+  background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(255,190,100,.85),rgba(255,140,60,.25) 40%,rgba(255,140,60,0) 70%);mix-blend-mode:screen}
+.hz-line{position:absolute;left:0;right:0;top:var(--hz);height:1px;z-index:4;display:block;transform-origin:50% 50%;
+  background:linear-gradient(90deg,rgba(255,220,160,0),rgba(255,236,200,.95) 50%,rgba(255,220,160,0));box-shadow:0 0 12px 1px rgba(255,200,120,.55)}
+
+.hz-kick,.hz-title,.hz-rise,.hz-sink,.hz-cta{position:absolute;left:0;right:0;z-index:5;text-align:center;margin:0}
+.hz-kick{top:calc(var(--hz) + 4.5vh);font-size:.9375rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(246,235,221,.72);opacity:0}
+.hz-title{inset:0;pointer-events:none;font-family:"Zilla Slab",Georgia,serif;font-weight:500}
+.hz-a{position:absolute;left:0;right:0;top:15%;padding:0 16px;font-size:clamp(2.4rem,6.6vw,6.2rem);letter-spacing:-.035em;line-height:1.05;color:#2B160C}
+.hz-a .hz-ln{display:inline-block;overflow:hidden;vertical-align:top;padding:.04em .02em .14em}
+.hz-a .hz-ch{display:inline-block;will-change:transform}
+.hz-bw{position:absolute;left:0;right:0;top:44%;transform:translateY(-50%);padding:0 16px}
+.hz-b{display:inline-block;font-family:"Kaushan Script",cursive;font-weight:400;font-size:clamp(2.6rem,8.2vw,7.8rem);line-height:1.15;color:#3A1C0C;padding:.1em .2em;
+  text-shadow:0 0 40px rgba(255,248,225,.9),0 0 2px rgba(255,248,225,.6)}
+.hz-rise{bottom:calc(100% - var(--hz));height:0;-webkit-clip-path:inset(-100vh -50vw 0 -50vw);clip-path:inset(-100vh -50vw 0 -50vw)}
+.hz-w{position:absolute;left:0;right:0;bottom:0;opacity:0;font-family:"Zilla Slab",Georgia,serif;font-weight:500;font-size:clamp(3rem,9vw,8.6rem);letter-spacing:-.04em;line-height:1;
+  color:#FFF4E2;text-shadow:0 0 50px rgba(120,40,10,.6),0 2px 20px rgba(90,30,8,.45)}
+.hz-sink{top:var(--hz);height:0;-webkit-clip-path:inset(0 -50vw -100vh -50vw);clip-path:inset(0 -50vw -100vh -50vw)}
+.hz-o{position:absolute;left:50%;top:3vh;white-space:nowrap;opacity:0;font-family:"Zilla Slab",Georgia,serif;font-style:italic;font-size:clamp(1.3rem,2.6vw,2rem);color:rgba(246,235,221,.7)}
+.hz-o i{position:absolute;left:-8%;top:55%;width:116%;height:2px;background:#FF9A3D;border-radius:2px;transform:scaleX(0);transform-origin:0 50%}
+.hz-cta{top:calc(var(--hz) + 9vh);display:flex;gap:12px;justify-content:center;flex-wrap:wrap;padding:0 16px}
+.hz-ghost{background:rgba(255,255,255,.55);color:#2B160C;box-shadow:inset 0 0 0 1px rgba(43,22,12,.18);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+@media (hover:hover) and (pointer:fine){.hz-ghost:hover{background:rgba(255,255,255,.8)}}
+@media (max-width:640px){.hz{--hz:66%}.hz-a{top:17%}.hz-bw{top:43%}.hz-cta{top:calc(var(--hz) + 7vh)}.hz-cta .btn{height:44px}}
+@media (prefers-reduced-motion:reduce){.hz-rays,.hz-sea .hz-glint{animation:none}.hz-dust{display:none}}
 /* founders: compact layout (photo beside text, less height) */
 .fd{padding:clamp(56px,7vw,90px) 0}
 .sv{padding-bottom:clamp(40px,5vw,64px)}
@@ -898,15 +938,6 @@ a.ct-m:hover .go{opacity:1;transform:none}
 .v figcaption{margin-top:auto;font-size:.8125rem;color:var(--mute)}
 .v figcaption b{display:block;color:var(--ink);font-weight:600;font-size:.875rem}
 
-/* SCENE: glow takeover */
-.scene{position:relative;height:170vh}
-.scene-stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:grid;place-items:center;background:var(--cream)}
-.sun{position:absolute;left:50%;top:115%;width:160vmax;height:160vmax;border-radius:50%;transform:translate(-50%,-50%) scale(.35);
-  background:radial-gradient(circle at 50% 50%,#E8540F 0,#E8540F 34%,rgba(242,106,31,.75) 44%,rgba(249,176,122,.35) 54%,rgba(248,244,238,0) 64%);will-change:transform}
-.scene-dark{position:absolute;inset:0;background:var(--espresso);opacity:0}
-.scene h2{position:relative;z-index:2;text-align:center;font-size:clamp(2.6rem,7.2vw,6.6rem);letter-spacing:-0.05em;line-height:1}
-.scene h2 .a{display:block;color:var(--ink)}
-.scene h2 .b{display:block;color:#FFF5EC}
 
 /* entrance */
 .js .rise{opacity:0;transform:translateY(18px);filter:blur(8px)}
@@ -972,7 +1003,6 @@ a.ct-m:hover .go{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){
   .js .rise{opacity:1;transform:none;filter:none}
   .journey{height:auto}.j-stage{position:relative;height:auto;padding:120px 0}
-  .scene{height:auto}.scene-stage{position:relative;height:100vh}.sun{transform:translate(-50%,-50%) scale(1)}
 }
 </style>
 <link rel="stylesheet" href="css/site.css">
@@ -1335,12 +1365,28 @@ a.ct-m:hover .go{opacity:1;transform:none}
   </div>
 </section>
 
-<section class="scene" aria-label="A new horizon">
-  <div class="scene-stage">
-    <div class="sun" id="sun"></div>
-    <div class="scene-dark" id="dark"></div>
-    <div class="scene-video" aria-hidden="true"><video muted loop playsinline preload="none" poster="video/horizon-60fps.jpg" data-src="video/horizon-60fps.mp4" data-src-m="video/horizon-60fps-m.mp4"></video><span class="scene-veil"></span></div>
-    <h2><span class="a" id="la">A new horizon,</span><span class="b">emerge and shine now.</span></h2>
+<section class="hz" id="horizon" aria-labelledby="hz-title">
+  <div class="hz-stage">
+    <div class="hz-sky" aria-hidden="true"><i class="hz-night"></i><i class="hz-dawn"></i><i class="hz-day"></i></div>
+    <canvas class="hz-dust" aria-hidden="true"></canvas>
+    <div class="hz-upper" aria-hidden="true">
+      <div class="hz-sun"><i class="hz-rays"></i><i class="hz-halo"></i><i class="hz-disc"></i></div>
+    </div>
+    <div class="hz-sea" aria-hidden="true"><i class="hz-sea-dawn"></i><i class="hz-sea-day"></i><i class="hz-glint"></i></div>
+    <i class="hz-bloom" aria-hidden="true"></i>
+    <i class="hz-line" aria-hidden="true"></i>
+
+    <p class="hz-kick">Every horizon begins in the dark.</p>
+    <h2 class="hz-title" id="hz-title" aria-label="A new horizon, emerge and shine now.">
+      <span class="hz-a" aria-hidden="true">A new horizon,</span>
+      <span class="hz-bw" aria-hidden="true"><span class="hz-b">emerge and shine now.</span></span>
+    </h2>
+    <div class="hz-rise" aria-hidden="true"><span class="hz-w">clarity</span><span class="hz-w">courage</span><span class="hz-w">purpose</span></div>
+    <div class="hz-sink" aria-hidden="true"><span class="hz-o">doubt<i></i></span><span class="hz-o">fear<i></i></span><span class="hz-o">limits<i></i></span></div>
+    <div class="hz-cta">
+      <a class="btn btn-dark" href="#contact">Begin your journey <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <button class="btn hz-ghost" type="button" data-ebook-open>Get the free eBook</button>
+    </div>
   </div>
 </section>
 
@@ -1718,14 +1764,6 @@ a.ct-m:hover .go{opacity:1;transform:none}
 
   if(reduce) return;
 
-  /* scene: the sun rises, fills the screen, then the room goes dark */
-  var tl=gsap.timeline({scrollTrigger:{trigger:'.scene',start:'top top',end:'bottom bottom',scrub:true}});
-  tl.to('#sun',{scale:1.6,top:'60%',ease:'none',duration:1})
-    .to('#sun',{scale:3.2,top:'50%',ease:'none',duration:.8})
-    .to('#la',{color:'#FFF5EC',ease:'none',duration:.3},'-=.5')
-    .to('#dark',{opacity:1,ease:'none',duration:.6})
-    .to('#la',{opacity:0,ease:'none',duration:.3},'<');
-
   /* footer wordmark lifts into place */
   gsap.from('.giant span',{yPercent:30,opacity:.4,ease:'none',scrollTrigger:{trigger:'.giant',start:'top bottom',end:'bottom bottom',scrub:true}});
 })();
@@ -1873,6 +1911,7 @@ a.ct-m:hover .go{opacity:1;transform:none}
 })();
 </script>
 <script src="js/nav.js"></script>
+<script src="js/ebook.js" defer></script>
 <script>
 (function() {
   /* Gallery drag, wheel and arrow navigation */
@@ -2356,29 +2395,116 @@ a.ct-m:hover .go{opacity:1;transform:none}
 </script>
 
 <script>
-/* Scene video: plays muted in a loop while the scene is on screen; the sun "opens" onto it as you scroll */
+/* "A new horizon": a sunrise you scroll through.
+   Night: a horizon line draws itself and "A new horizon," rises letter by letter.
+   Dawn: the sun lifts out of the line; doubt / fear / limits sink and strike out below it while
+   clarity / courage / purpose rise above it. Day: the sky turns gold and "emerge and shine now." is written in. */
 (function(){
-  var sc=document.querySelector('.scene'); if(!sc) return;
-  var wrap=sc.querySelector('.scene-video'), v=wrap&&wrap.querySelector('video'); if(!v) return;
-  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches, loaded=false;
-  function load(){ if(loaded) return; loaded=true; v.src=(Math.min(screen.width,window.innerWidth)<760?v.dataset.srcM:v.dataset.src); v.load(); }
-  function play(){ load(); var pr=v.play(); if(pr&&pr.catch) pr.catch(function(){}); }
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting) play(); else v.pause(); });},{rootMargin:'600px 0px'}).observe(sc);
-  } else play();
-  /* if the scene is not a long sticky scroll (phones / reduced motion), just show the video fully */
-  function staticMode(){ return reduce || sc.offsetHeight < window.innerHeight*1.3; }
-  if(staticMode() || !window.gsap || !window.ScrollTrigger){ sc.classList.add('full'); return; }
+  var sec=document.querySelector('.hz'); if(!sec) return;
+  var $=function(s){return sec.querySelector(s)}, $$=function(s){return Array.prototype.slice.call(sec.querySelectorAll(s))};
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce || !window.gsap || !window.ScrollTrigger) return;   // CSS already shows the finished sunrise
   gsap.registerPlugin(ScrollTrigger);
-  function ease(t){ return t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
-  var vmax=Math.max(window.innerWidth,window.innerHeight);
-  window.addEventListener('resize',function(){ vmax=Math.max(window.innerWidth,window.innerHeight); sc.classList.toggle('full',staticMode()); });
-  ScrollTrigger.create({trigger:sc,start:'top top',end:'bottom bottom',scrub:true,onUpdate:function(st){
-    var p=st.progress, q=Math.min(1,Math.max(0,(p-.06)/.62)), e=ease(q);
-    wrap.style.setProperty('--r',(e*vmax*1.25)+'px');
-    wrap.style.setProperty('--cy',(115-65*e)+'%');
-    v.style.setProperty('--z',(1.18-.18*p).toFixed(4));
-  }});
+  sec.classList.add('hz-motion');
+
+  /* split "A new horizon," into letters inside a mask */
+  var a=$('.hz-a');
+  a.innerHTML=a.textContent.trim().split(' ').map(function(w){
+    return '<span class="hz-ln">'+w.split('').map(function(c){return '<span class="hz-ch">'+c+'</span>'}).join('')+'</span>';
+  }).join(' ');
+
+  var stage=$('.hz-stage'), H=function(){return stage.offsetHeight};
+  var sun=$('.hz-sun'), words=$$('.hz-w'), olds=$$('.hz-o');
+  var sunStart=function(){return sun.offsetWidth*0.62}, sunEnd=function(){return -H()*0.19};
+  var wordUp=function(){return -H()*0.2};
+
+  /* starting state: night */
+  gsap.set(sun,{xPercent:-50,yPercent:-50,x:0,y:sunStart,'--warm':1});
+  gsap.set(['.hz-dawn','.hz-day','.hz-sea-dawn','.hz-sea-day','.hz-halo','.hz-glint','.hz-rays','.hz-bloom','.hz-kick'],{opacity:0});
+  gsap.set('.hz-line',{scaleX:0});
+  gsap.set('.hz-ch',{yPercent:110});
+  gsap.set(a,{color:'#F6EBDD'});
+  gsap.set('.hz-b',{clipPath:'inset(-30% 100% -30% -6%)'});
+  gsap.set('.hz-cta',{opacity:0,y:24,pointerEvents:'none'});
+  gsap.set(words,{opacity:1,yPercent:100,y:0});
+  gsap.set(olds,{opacity:0,xPercent:-50,y:-8,filter:'blur(0px)'});
+
+  var dust={mode:0};
+  var tl=gsap.timeline({defaults:{ease:'none'},scrollTrigger:{trigger:sec,start:'top top',end:'bottom bottom',scrub:0.7,invalidateOnRefresh:true}});
+
+  /* 0 - 1.7  night: the horizon draws, the title rises */
+  tl.to('.hz-line',{scaleX:1,duration:1.2,ease:'power2.inOut'},0)
+    .to('.hz-kick',{opacity:1,duration:.6},.2)
+    .to('.hz-ch',{yPercent:0,duration:.9,ease:'power3.out',stagger:.035},.3)
+    .to('.hz-bloom',{opacity:1,duration:2.6,ease:'sine.inOut'},1.2)
+    .to('.hz-kick',{opacity:0,y:12,duration:.4},1.3)
+
+  /* 1.2 - 8.6  the sun rises, the sky turns from night to dawn to day */
+    .to(sun,{y:sunEnd,duration:7.4,ease:'sine.inOut'},1.2)
+    .to(sun,{'--warm':0,duration:5.5},3)
+    .to('.hz-halo',{opacity:1,duration:4.5},2)
+    .to('.hz-glint',{opacity:1,duration:4},2.5)
+    .to('.hz-dawn',{opacity:1,duration:4,ease:'sine.inOut'},1.5)
+    .to('.hz-day',{opacity:1,duration:3,ease:'sine.inOut'},5.6)
+    .to('.hz-sea-dawn',{opacity:1,duration:3.5,ease:'sine.inOut'},2)
+    .to('.hz-sea-day',{opacity:1,duration:3.4,ease:'sine.inOut'},5.2)
+    .to('.hz-bloom',{opacity:.35,duration:2},6.6)
+    .to(a,{color:'#2B160C',duration:1.2},6.6)
+    .to('.hz-rays',{opacity:.55,duration:2.6},6.2)
+    .to(dust,{mode:1,duration:7.4},1.2);
+
+  /* 1.8 - 7.8  what you leave below the horizon, what rises above it */
+  words.forEach(function(w,i){
+    var s=1.8+i*2, o=olds[i];
+    tl.to(o,{opacity:1,y:0,duration:.4},s)
+      .to(o.querySelector('i'),{scaleX:1,duration:.5,ease:'power2.out'},s+.35)
+      .to(o,{y:function(){return H()*0.16},opacity:0,filter:'blur(6px)',duration:.9,ease:'power1.in'},s+.75)
+      .to(w,{yPercent:50,y:wordUp,duration:1,ease:'power2.out'},s+.3)
+      .to(w,{opacity:0,y:function(){return wordUp()-H()*0.06},letterSpacing:'.04em',filter:'blur(10px)',duration:.6,ease:'power1.in'},s+1.5);
+  });
+
+  /* 8 - 9.8  daylight: the promise is written in, then the invitation */
+  tl.to('.hz-b',{clipPath:'inset(-30% -6% -30% -6%)',duration:1.3,ease:'power1.inOut'},8)
+    .fromTo('.hz-b',{scale:.94,filter:'blur(4px)'},{scale:1,filter:'blur(0px)',duration:1.3,ease:'power2.out',immediateRender:false},8)
+    .to('.hz-cta',{opacity:1,y:0,pointerEvents:'auto',duration:.7,ease:'power2.out'},9.1)
+    .to({},{duration:.8});
+
+  /* the sun and the dust follow the pointer a little */
+  var px=0, py=0;
+  if(window.matchMedia('(pointer:fine)').matches){
+    var sx=gsap.quickTo(sun,'x',{duration:1.6,ease:'power3.out'});
+    sec.addEventListener('pointermove',function(e){
+      px=e.clientX/innerWidth-.5; py=e.clientY/innerHeight-.5; sx(px*-36);
+    });
+  }
+
+  /* stars at night that turn into golden motes drifting up by day */
+  var cv=$('.hz-dust'), cx=cv.getContext('2d'), dpr=Math.min(2,window.devicePixelRatio||1), W=0, HH=0, P=[], on=false, ox=0, oy=0;
+  function size(){
+    W=cv.clientWidth; HH=cv.clientHeight; cv.width=W*dpr; cv.height=HH*dpr; cx.setTransform(dpr,0,0,dpr,0,0);
+    var n=Math.round(Math.min(160,W*HH/9000)); P=[];
+    for(var i=0;i<n;i++) P.push({x:Math.random()*W,y:Math.random()*HH,r:Math.random()*1.4+.4,t:Math.random()*6.28,s:Math.random()*.6+.4,d:Math.random()*.8+.2});
+  }
+  function mix(a,b,m){return Math.round(a+(b-a)*m)}
+  function draw(){
+    if(!on) return;
+    var m=dust.mode, hz=HH*.64;
+    ox+=(px*-14-ox)*.05; oy+=(py*-8-oy)*.05;
+    cx.clearRect(0,0,W,HH);
+    cx.fillStyle='rgb('+mix(235,214,m)+','+mix(232,140,m)+','+mix(255,40,m)+')';
+    for(var i=0;i<P.length;i++){
+      var p=P[i]; p.t+=.02*p.s;
+      p.y-=(.03+m*.7)*p.s; p.x+=Math.sin(p.t*.5)*.15*m;
+      if(p.y<-4){p.y=HH+4; p.x=Math.random()*W;}
+      var al=(1-m)*(p.y<hz?1:.15)*(.35+.65*Math.abs(Math.sin(p.t)))*.9 + m*.55*p.d;
+      if(al<.02) continue;
+      cx.globalAlpha=al;
+      cx.beginPath(); cx.arc(p.x+ox*p.d,p.y+oy*p.d,p.r*(1+m*.8),0,6.283); cx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  size(); window.addEventListener('resize',size);
+  new IntersectionObserver(function(es){ var v=es[0].isIntersecting; if(v&&!on){on=true;requestAnimationFrame(draw);} on=v; }).observe(sec);
 })();
 </script>
 </body>
