@@ -267,6 +267,18 @@
       waLink.href = waUrl;
     }
 
+    // Automatically store lead in Google Sheets and email alert to ckrstudiodesign@gmail.com
+    if (typeof window.sendEOHLead === 'function') {
+      window.sendEOHLead({
+        name: name,
+        email: email,
+        phone: phone,
+        service: service,
+        message: msg,
+        source: 'Contact Page Inquiry'
+      });
+    }
+
     form.style.display = 'none';
     var success = document.getElementById('cform-success');
     if (success) {

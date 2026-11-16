@@ -144,15 +144,25 @@
     root.querySelector('.eb-done a').focus({ preventScroll: true });
   }
 
-  function saveToGoogleSheet(email, name, source) {
+  function saveToGoogleSheet(data) {
     if (!CONFIG.sheetScriptUrl) {
       console.info('EOH: Google Sheets endpoint not yet set in CONFIG.sheetScriptUrl (see GOOGLE-SHEET-SETUP.md).');
       return Promise.resolve(false);
     }
+    // Support either an object or (email, name, source)
+    var payload = (typeof data === 'object' && data !== null) ? data : {
+      email: arguments[0],
+      name: arguments[1],
+      source: arguments[2]
+    };
+
     var params = new URLSearchParams();
-    params.append('email', email);
-    params.append('name', name || 'Subscriber');
-    params.append('source', source || ('Free eBook: ' + CONFIG.ebookTitle));
+    params.append('name', payload.name || 'Website Visitor');
+    params.append('email', payload.email || '');
+    params.append('phone', payload.phone || '-');
+    params.append('service', payload.service || payload.source || ('Free eBook: ' + CONFIG.ebookTitle));
+    params.append('message', payload.message || 'eBook Download / Newsletter');
+    params.append('source', payload.source || ('Free eBook: ' + CONFIG.ebookTitle));
     params.append('page', location.href);
     params.append('notificationEmail', CONFIG.notificationEmail || 'ckrstudiodesign@gmail.com');
 
@@ -169,10 +179,9 @@
     });
   }
 
-  // Expose global helper for any other forms (e.g. contact/consultations)
-  window.submitEOHLead = function (data) {
-    return saveToGoogleSheet(data.email, data.name, data.source);
-  };
+  // Expose global helpers for any other forms (e.g. contact/consultations)
+  window.submitEOHLead = saveToGoogleSheet;
+  window.sendEOHLead = saveToGoogleSheet;
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();

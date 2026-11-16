@@ -2387,6 +2387,19 @@ a.ct-m:hover .go{opacity:1;transform:none}
     var wa='https://wa.me/971541615066?text='+encodeURIComponent(text);
     document.getElementById('ct-wa').href=wa;
     document.getElementById('ct-mail').href='mailto:support@emergeonhorizon.com?subject='+encodeURIComponent('Inquiry: '+val('ct-service'))+'&body='+encodeURIComponent(text);
+
+    // Automatically store lead in Google Sheets and email alert to ckrstudiodesign@gmail.com
+    if (typeof window.sendEOHLead === 'function') {
+      window.sendEOHLead({
+        name: val('ct-name'),
+        email: val('ct-email'),
+        phone: val('ct-phone'),
+        service: val('ct-service'),
+        message: val('ct-msg'),
+        source: 'Homepage Inquiry'
+      });
+    }
+
     window.open(wa,'_blank','noopener');
     card.classList.add('sent');
   });
