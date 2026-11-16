@@ -752,7 +752,7 @@
    ======================================================== */
 .mvideo-box{
   position:relative;
-  aspect-ratio:16/10;
+  aspect-ratio:16/9;
   border-radius:28px;
   overflow:hidden;
   box-shadow:0 24px 60px rgba(40,25,10,.14);
@@ -761,19 +761,25 @@
 .mvideo-el{
   width:100%;
   height:100%;
-  object-fit:cover;
+  border:0;
+  display:block;
+}
+.mvideo-box iframe.mvideo-el{
+  width:100%;
+  height:100%;
+  border:0;
   display:block;
 }
 .mvideo-overlay{
   position:absolute;
   inset:0;
-  background:linear-gradient(180deg,rgba(26,14,8,.15) 0%,rgba(26,14,8,0) 40%,rgba(26,14,8,.3) 100%);
+  background:linear-gradient(180deg,rgba(26,14,8,.12) 0%,rgba(26,14,8,0) 30%,rgba(26,14,8,.2) 100%);
   pointer-events:none;
 }
 .vtoggle-mute{
   position:absolute;
   right:18px;
-  bottom:18px;
+  top:18px;
   z-index:10;
   background:rgba(255,255,255,.88);
   backdrop-filter:blur(14px);
@@ -1269,14 +1275,26 @@
       </div>
     </div>
     
-    <!-- Autoplaying looping video with Mute/Unmute toggle -->
+    <!-- Autoplaying looping YouTube video with Mute/Unmute toggle -->
     <div class="mvideo-box" id="mvideo-box">
-      <video class="mvideo-el" id="movement-video" autoplay loop muted playsinline preload="auto" poster="video/horizon-60fps.jpg">
-        <source src="video/horizon-60fps.mp4" type="video/mp4">
-      </video>
+      <iframe
+        id="movement-yt-iframe"
+        class="mvideo-el"
+        src="https://www.youtube-nocookie.com/embed/rf-6AlfQ-MA?autoplay=1&mute=1&loop=1&playlist=rf-6AlfQ-MA&enablejsapi=1&playsinline=1&controls=1&rel=0&modestbranding=1"
+        title="The EOH Movement"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
       <div class="mvideo-overlay" aria-hidden="true"></div>
       
-      <!-- Floating Mute / Unmute Button -->
+      <!-- Video status pill (top left) -->
+      <div class="mvideo-pill" aria-hidden="true">
+        <span class="mv-dot"></span>
+        <span>A New Horizon</span>
+      </div>
+
+      <!-- Floating Mute / Unmute Button (top right) -->
       <button type="button" class="vtoggle-mute is-muted" id="vmute-btn" aria-label="Toggle sound">
         <span class="vmute-icon icon-muted">
           <!-- Muted: speaker with slash -->
@@ -1288,12 +1306,6 @@
         </span>
         <span class="vmute-text" id="vmute-text">Unmute</span>
       </button>
-
-      <!-- Video status pill -->
-      <div class="mvideo-pill" aria-hidden="true">
-        <span class="mv-dot"></span>
-        <span>A New Horizon</span>
-      </div>
     </div>
   </div>
 </section>
@@ -1597,27 +1609,45 @@
   // Initialize Stage 01
   setStage(0);
 
-  /* ---- Movement Video Mute/Unmute Controller ---- */
+  /* ---- Movement YouTube Video Mute/Unmute Controller ---- */
   var vBtn = document.getElementById('vmute-btn');
-  var vVid = document.getElementById('movement-video');
+  var vFrame = document.getElementById('movement-yt-iframe');
   var vText = document.getElementById('vmute-text');
-  if (vBtn && vVid) {
-    vBtn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      vVid.muted = !vVid.muted;
-      var muted = vVid.muted;
-      vBtn.classList.toggle('is-muted', muted);
-      if (vText) vText.textContent = muted ? 'Unmute' : 'Mute';
-      vBtn.setAttribute('aria-label', muted ? 'Unmute video' : 'Mute video');
+  var isMuted = true;
+
+  function sendYTCommand(func, args) {
+    if (vFrame && vFrame.contentWindow) {
+      try {
+        vFrame.contentWindow.postMessage(JSON.stringify({
+          event: 'command',
+          func: func,
+          args: args || ''
+        }), '*');
+      } catch (err) {}
+    }
+  }
+
+  if (vBtn && vFrame) {
+    vFrame.addEventListener('load', function() {
+      sendYTCommand('listening');
     });
 
-    var playPromise = vVid.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(function() {
-        vVid.muted = true;
-        vVid.play();
-      });
-    }
+    vBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      isMuted = !isMuted;
+      if (isMuted) {
+        sendYTCommand('mute');
+        vBtn.classList.add('is-muted');
+        if (vText) vText.textContent = 'Unmute';
+        vBtn.setAttribute('aria-label', 'Unmute video');
+      } else {
+        sendYTCommand('unMute');
+        sendYTCommand('setVolume', [100]);
+        vBtn.classList.remove('is-muted');
+        if (vText) vText.textContent = 'Mute';
+        vBtn.setAttribute('aria-label', 'Mute video');
+      }
+    });
   }
 })();
 </script>
