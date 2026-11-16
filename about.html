@@ -189,6 +189,563 @@
   .about-banner-sub,.about-banner-ctas{margin-inline:auto}
   .about-banner-ctas{justify-content:center}
 }
+
+/* ========================================================
+   THE EOH PHILOSOPHY: Supercharged Interactive Experience
+   ======================================================== */
+.philo{
+  position:relative;
+  overflow:hidden;
+  background:#FAF7F2;
+  padding:clamp(90px,13vh,150px) 0 clamp(80px,11vh,130px);
+}
+.philo-ambient{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+}
+.philo-aura{
+  position:absolute;
+  width:800px;
+  height:800px;
+  border-radius:50%;
+  left:var(--mx,50%);
+  top:var(--my,40%);
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle,rgba(201,138,30,.18) 0%,rgba(201,138,30,.06) 40%,transparent 70%);
+  transition:left .35s ease-out,top .35s ease-out;
+}
+.philo-grid-lines{
+  position:absolute;
+  inset:0;
+  opacity:.45;
+  background-image:
+    radial-gradient(circle at 50% 30%,rgba(201,138,30,.08) 0%,transparent 70%),
+    repeating-radial-gradient(circle at 50% 30%,transparent 0,transparent 48px,rgba(201,138,30,.025) 49px,transparent 50px);
+}
+.philo-wrap{
+  position:relative;
+  z-index:1;
+}
+.philo-head{
+  margin-bottom:clamp(40px,6vh,70px);
+}
+.philo-eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  color:#C98A1E;
+}
+.eyebrow-spark{
+  color:#C98A1E;
+  font-size:1.15rem;
+  animation:sparkSpin 4s ease-in-out infinite;
+}
+@keyframes sparkSpin{
+  0%,100%{transform:scale(1) rotate(0deg);opacity:.8}
+  50%{transform:scale(1.3) rotate(90deg);opacity:1}
+}
+.philo-title{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:clamp(8px,1.5vw,20px);
+  margin-top:14px;
+  font-size:clamp(2.4rem,5vw,4.2rem);
+  font-weight:600;
+  letter-spacing:-0.04em;
+  color:#1A0E08;
+}
+.pword{
+  display:inline-block;
+  cursor:pointer;
+  transition:color .35s ease,text-shadow .35s ease,transform .35s cubic-bezier(.22,1,.36,1);
+  position:relative;
+  padding-bottom:4px;
+}
+.pword::after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:0%;
+  height:3px;
+  border-radius:2px;
+  background:linear-gradient(90deg,#C98A1E,#F0C060);
+  transition:width .4s cubic-bezier(.22,1,.36,1);
+}
+.pword:hover,
+.pword.on{
+  color:#C98A1E;
+  text-shadow:0 0 32px rgba(201,138,30,.35);
+  transform:translateY(-2px);
+}
+.pword.on::after{
+  width:100%;
+}
+.philo-lead{
+  margin:18px auto 0;
+  max-width:38em;
+  font-size:clamp(1rem,1.2vw,1.15rem);
+  color:#6B5D53;
+  line-height:1.55;
+}
+
+/* Timeline Track */
+.philo-timeline{
+  position:relative;
+  max-width:920px;
+  margin:0 auto 42px;
+  padding:0 24px;
+}
+.pt-track{
+  height:2px;
+  background:rgba(201,138,30,.15);
+  position:relative;
+  border-radius:2px;
+  overflow:hidden;
+}
+.pt-fill{
+  position:absolute;
+  left:0;
+  top:0;
+  height:100%;
+  width:33.33%;
+  background:linear-gradient(90deg,#C98A1E,#F2C568);
+  transition:width .6s cubic-bezier(.22,1,.36,1);
+}
+.pt-comet{
+  position:absolute;
+  top:-2px;
+  width:60px;
+  height:6px;
+  border-radius:3px;
+  background:linear-gradient(90deg,transparent,#FFF 60%,#C98A1E);
+  filter:blur(1px);
+  animation:cometRun 3.5s ease-in-out infinite;
+}
+@keyframes cometRun{
+  0%{left:-60px;opacity:0}
+  15%{opacity:1}
+  85%{opacity:1}
+  100%{left:100%;opacity:0}
+}
+.pt-nodes{
+  display:flex;
+  justify-content:space-between;
+  margin-top:-7px;
+  position:relative;
+}
+.pt-node{
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:#FAF7F2;
+  border:2px solid rgba(201,138,30,.35);
+  cursor:pointer;
+  transition:all .35s ease;
+}
+.pt-node.on{
+  border-color:#C98A1E;
+  background:#C98A1E;
+  box-shadow:0 0 14px rgba(201,138,30,.7);
+  transform:scale(1.4);
+}
+
+/* 3 Evolution Cards */
+.philo-cards{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(16px,2.5vw,32px);
+  margin-bottom:clamp(60px,9vh,100px);
+}
+.pcard{
+  position:relative;
+  border-radius:28px;
+  background:rgba(255,255,255,.86);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+  border:1.5px solid rgba(255,255,255,.95);
+  box-shadow:0 18px 45px rgba(40,25,10,.06);
+  padding:clamp(26px,3.5vw,38px) clamp(20px,2.5vw,32px);
+  display:flex;
+  flex-direction:column;
+  cursor:pointer;
+  transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s ease,border-color .4s ease,background .4s ease;
+  overflow:hidden;
+  outline:none;
+}
+.pcard:hover,
+.pcard:focus-visible{
+  transform:translateY(-10px);
+  border-color:rgba(201,138,30,.4);
+  box-shadow:0 28px 65px rgba(201,138,30,.18),inset 0 0 0 1px rgba(201,138,30,.2);
+}
+.pcard.on{
+  border-color:#C98A1E;
+  box-shadow:0 30px 70px rgba(201,138,30,.22),inset 0 0 0 1px rgba(201,138,30,.35);
+  background:rgba(255,255,255,.96);
+}
+.pcard-shine{
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at var(--cx,50%) var(--cy,20%),rgba(255,255,255,.8) 0%,transparent 60%);
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .3s ease;
+}
+.pcard:hover .pcard-shine,
+.pcard.on .pcard-shine{
+  opacity:1;
+}
+
+.pcard-inner{
+  position:relative;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  height:100%;
+}
+.pcard-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:clamp(20px,3vh,32px);
+}
+.pcard-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:.75rem;
+  font-weight:700;
+  letter-spacing:.08em;
+  color:#A89E94;
+  text-transform:uppercase;
+  transition:color .3s ease;
+}
+.badge-dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#A89E94;
+  transition:background .3s ease,box-shadow .3s ease;
+}
+.pcard.on .pcard-badge,
+.pcard:hover .pcard-badge{
+  color:#C98A1E;
+}
+.pcard.on .badge-dot,
+.pcard:hover .badge-dot{
+  background:#C98A1E;
+  box-shadow:0 0 8px #C98A1E;
+}
+.pcard-pill{
+  font-size:.75rem;
+  font-weight:600;
+  color:#7A6E63;
+  background:rgba(26,14,8,.05);
+  padding:4px 10px;
+  border-radius:999px;
+  transition:all .3s ease;
+}
+.pcard.on .pcard-pill,
+.pcard:hover .pcard-pill{
+  background:rgba(201,138,30,.12);
+  color:#C98A1E;
+}
+
+/* Orbs */
+.porb-wrap{
+  position:relative;
+  width:130px;
+  height:130px;
+  margin:0 auto clamp(20px,3vh,32px);
+  display:grid;
+  place-items:center;
+}
+.porb-ambient{
+  position:absolute;
+  inset:-20px;
+  border-radius:50%;
+  filter:blur(22px);
+  opacity:.6;
+  transition:all .5s ease;
+}
+.porb-ambient.a1{background:radial-gradient(circle,rgba(255,185,50,.55) 0%,transparent 70%)}
+.porb-ambient.a2{background:radial-gradient(circle,rgba(240,115,30,.55) 0%,transparent 70%)}
+.porb-ambient.a3{background:radial-gradient(circle,rgba(255,220,80,.65) 0%,transparent 70%)}
+.pcard.on .porb-ambient,
+.pcard:hover .porb-ambient{
+  opacity:1;
+  inset:-30px;
+}
+
+.porb-ring{
+  position:absolute;
+  border-radius:50%;
+  pointer-events:none;
+}
+.porb-ring.r1{
+  inset:4px;
+  border:1.5px dashed rgba(201,138,30,.4);
+  animation:orbRingSpin 24s linear infinite;
+}
+.porb-ring.r2a{
+  inset:0;
+  border:1.5px solid rgba(240,115,30,.35);
+  animation:orbRingSpin 18s linear infinite;
+}
+.porb-ring.r2b{
+  inset:8px;
+  border:1px dashed rgba(201,138,30,.4);
+  animation:orbRingSpin 12s linear infinite reverse;
+}
+.porb-ring.r3a{
+  inset:-2px;
+  border:1.5px dashed rgba(255,215,64,.5);
+  animation:orbRingSpin 20s linear infinite;
+}
+.porb-ring.r3b{
+  inset:6px;
+  border:1px solid rgba(201,138,30,.4);
+  animation:orbRingSpin 10s linear infinite reverse;
+}
+@keyframes orbRingSpin{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+
+.porb-core{
+  position:relative;
+  width:92px;
+  height:92px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  box-shadow:inset -6px -8px 16px rgba(0,0,0,.25),inset 6px 8px 14px rgba(255,255,255,.5),0 16px 36px rgba(180,100,20,.3);
+  transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s ease;
+  animation:orbFloat 5s ease-in-out infinite;
+}
+.pcard:nth-child(2) .porb-core{animation-delay:-1.6s}
+.pcard:nth-child(3) .porb-core{animation-delay:-3.2s}
+@keyframes orbFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+}
+.pcard.on .porb-core,
+.pcard:hover .porb-core{
+  transform:scale(1.08) translateY(-4px);
+  box-shadow:inset -6px -8px 18px rgba(0,0,0,.25),inset 8px 10px 18px rgba(255,255,255,.7),0 22px 48px rgba(201,138,30,.45);
+}
+.porb-core.c1{background:radial-gradient(circle at 35% 30%,#FFF6D8 0%,#FFD269 35%,#D48816 70%,#7C4505 100%)}
+.porb-core.c2{background:radial-gradient(circle at 35% 30%,#FFEEDB 0%,#FF9E4A 35%,#C9550D 70%,#6B2503 100%)}
+.porb-core.c3{background:radial-gradient(circle at 35% 30%,#FFFFE8 0%,#FFE57F 30%,#E5A110 65%,#875604 100%)}
+
+.porb-glint{
+  position:absolute;
+  top:14%;
+  left:22%;
+  width:32%;
+  height:20%;
+  border-radius:50%;
+  background:rgba(255,255,255,.8);
+  filter:blur(2px);
+  transform:rotate(-28deg);
+  pointer-events:none;
+}
+.porb-symbol{
+  position:relative;
+  z-index:2;
+  color:#FFF;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,.35));
+  transition:transform .3s ease;
+  display:grid;
+  place-items:center;
+}
+.pcard:hover .porb-symbol,
+.pcard.on .porb-symbol{
+  transform:scale(1.15);
+}
+
+/* Card Body */
+.pcard-body{
+  text-align:center;
+  flex:1;
+}
+.pcard-title{
+  margin:0;
+  font-size:clamp(1.75rem,2.2vw,2.1rem);
+  font-weight:600;
+  letter-spacing:-0.03em;
+  color:#1A0E08;
+  transition:color .3s ease;
+}
+.pcard.on .pcard-title,
+.pcard:hover .pcard-title{
+  color:#C98A1E;
+}
+.pcard-script{
+  display:block;
+  font-family:"Alex Brush","Kaushan Script",cursive;
+  font-size:clamp(2.1rem,2.8vw,2.8rem);
+  color:#C98A1E;
+  line-height:1.05;
+  margin:2px 0 12px;
+  text-shadow:0 2px 14px rgba(201,138,30,.2);
+  transition:transform .3s ease;
+}
+.pcard:hover .pcard-script,
+.pcard.on .pcard-script{
+  transform:scale(1.06);
+}
+.pcard-desc{
+  margin:0 auto;
+  font-size:.9375rem;
+  line-height:1.55;
+  color:#5C5248;
+  max-width:24ch;
+}
+
+/* Card Foot */
+.pcard-foot{
+  margin-top:clamp(20px,3vh,28px);
+  padding-top:16px;
+  border-top:1px solid rgba(26,14,8,.06);
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.pcard-bar{
+  height:3px;
+  border-radius:2px;
+  background:rgba(26,14,8,.08);
+  overflow:hidden;
+}
+.pcard-bar-fill{
+  display:block;
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#C98A1E,#F5CF75);
+  transition:width .1s linear;
+}
+.pcard-action{
+  font-size:.8125rem;
+  font-weight:600;
+  color:#C98A1E;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  transition:gap .25s ease;
+}
+.pcard:hover .pcard-action,
+.pcard.on .pcard-action{
+  gap:10px;
+}
+
+/* Grand Climax Quote Plaque */
+.philo-quote-wrap{
+  position:relative;
+  max-width:880px;
+  margin:0 auto;
+}
+.pq-aura{
+  position:absolute;
+  inset:-20px;
+  border-radius:40px;
+  background:radial-gradient(ellipse at 50% 50%,rgba(201,138,30,.2) 0%,rgba(201,138,30,0) 70%);
+  filter:blur(30px);
+  pointer-events:none;
+}
+.pq-card{
+  position:relative;
+  border-radius:32px;
+  background:linear-gradient(145deg,rgba(255,255,255,.95) 0%,rgba(253,248,238,.92) 100%);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border:1.5px solid rgba(201,138,30,.35);
+  box-shadow:0 24px 60px rgba(50,30,10,.09),inset 0 1px 0 rgba(255,255,255,.9);
+  padding:clamp(36px,5vw,56px) clamp(24px,5vw,48px);
+  text-align:center;
+  overflow:hidden;
+}
+.pq-mark{
+  position:absolute;
+  top:-20px;
+  left:28px;
+  font-family:"Zilla Slab",Georgia,serif;
+  font-size:clamp(6rem,12vw,10rem);
+  font-weight:700;
+  line-height:1;
+  color:rgba(201,138,30,.08);
+  pointer-events:none;
+  user-select:none;
+}
+.pq-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  font-size:.75rem;
+  font-weight:700;
+  letter-spacing:.14em;
+  color:#C98A1E;
+  text-transform:uppercase;
+  margin-bottom:14px;
+}
+.pq-tag-line{
+  width:28px;
+  height:1px;
+  background:linear-gradient(90deg,transparent,#C98A1E);
+}
+.pq-tag-line:last-child{
+  background:linear-gradient(90deg,#C98A1E,transparent);
+}
+.pq-text{
+  margin:0;
+  font-size:clamp(1.9rem,4vw,3.2rem);
+  font-weight:600;
+  letter-spacing:-0.04em;
+  line-height:1.15;
+  color:#1A0E08;
+}
+.pq-text span{
+  display:block;
+}
+.pq-text .pq-em{
+  display:inline-block;
+  background:linear-gradient(135deg,#B87310 0%,#E8A020 40%,#FFD269 60%,#B87310 100%);
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  animation:goldShimmer 6s linear infinite;
+  text-shadow:0 0 30px rgba(201,138,30,.2);
+}
+@keyframes goldShimmer{
+  0%{background-position:0% center}
+  100%{background-position:200% center}
+}
+.pq-horizon-bar{
+  width:clamp(80px,18vw,160px);
+  height:3px;
+  border-radius:2px;
+  background:linear-gradient(90deg,transparent,#C98A1E,#F0C060,#C98A1E,transparent);
+  margin:24px auto 0;
+  animation:barPulse 3s ease-in-out infinite;
+}
+@keyframes barPulse{
+  0%,100%{transform:scaleX(1);opacity:.7}
+  50%{transform:scaleX(1.4);opacity:1}
+}
+
+/* Philo Responsive */
+@media (max-width:960px){
+  .philo-cards{grid-template-columns:1fr;max-width:440px;margin-inline:auto}
+  .philo-timeline{display:none}
+  .pcard{text-align:center}
+}
 </style>
 </head>
 <body data-page="about">
@@ -238,15 +795,168 @@
 
   </div>
 </section>
-<section class="philo" aria-labelledby="philo-title">
-  <div class="wrap">
-    <div class="center-head"><span class="eyebrow">The EOH philosophy</span><h2 id="philo-title">Transpire. Transform. Transcend.</h2></div>
-    <ol class="steps3">
-      <li><span class="orb" aria-hidden="true"></span><b>Transpire</b><em>Awaken</em><p>Notice the talent that self-doubt and fear have been hiding.</p></li>
-      <li><span class="orb" aria-hidden="true"></span><b>Transform</b><em>Change</em><p>Build the habits, focus and resilience to use it every day.</p></li>
-      <li><span class="orb" aria-hidden="true"></span><b>Transcend</b><em>Rise</em><p>Lead, perform and live closer to the life you were born to live.</p></li>
-    </ol>
-    <blockquote class="bigquote">“This is not a programme. This is a movement.”</blockquote>
+<section class="philo" id="philosophy" aria-labelledby="philo-title">
+  <!-- Ambient interactive glowing aura that tracks mouse -->
+  <div class="philo-ambient" aria-hidden="true">
+    <div class="philo-aura" id="philo-aura"></div>
+    <div class="philo-grid-lines"></div>
+  </div>
+
+  <div class="wrap philo-wrap">
+    <!-- Header with interactive word triggers -->
+    <div class="center-head philo-head">
+      <span class="eyebrow philo-eyebrow">
+        <span class="eyebrow-spark">✦</span>
+        The EOH philosophy
+      </span>
+      <h2 id="philo-title" class="philo-title">
+        <span class="pword w1 on" data-stage="0">Transpire.</span>
+        <span class="pword w2" data-stage="1">Transform.</span>
+        <span class="pword w3" data-stage="2">Transcend.</span>
+      </h2>
+      <p class="philo-lead">Three distinct stages of human evolution. One unbroken path to your genius.</p>
+    </div>
+
+    <!-- Active Stage Timeline Connector with Traveling Photon Comet -->
+    <div class="philo-timeline" aria-hidden="true">
+      <div class="pt-track">
+        <div class="pt-fill" id="pt-fill"></div>
+        <div class="pt-comet" id="pt-comet"></div>
+      </div>
+      <div class="pt-nodes">
+        <button type="button" class="pt-node n1 on" data-stage="0" aria-label="Stage 1: Transpire"></button>
+        <button type="button" class="pt-node n2" data-stage="1" aria-label="Stage 2: Transform"></button>
+        <button type="button" class="pt-node n3" data-stage="2" aria-label="Stage 3: Transcend"></button>
+      </div>
+    </div>
+
+    <!-- The 3 Monumental Evolution Cards -->
+    <div class="philo-cards" role="list">
+      <!-- Card 1: Transpire (Awaken) -->
+      <article class="pcard on" data-stage="0" role="listitem" tabindex="0">
+        <div class="pcard-shine"></div>
+        <div class="pcard-inner">
+          <header class="pcard-top">
+            <span class="pcard-badge"><span class="badge-dot"></span>STAGE 01</span>
+            <span class="pcard-pill">Inner Awakening</span>
+          </header>
+
+          <!-- Dynamic Solar Orb 1 -->
+          <div class="porb-wrap">
+            <div class="porb-ambient a1"></div>
+            <div class="porb-ring r1"></div>
+            <div class="porb-core c1">
+              <div class="porb-glint"></div>
+              <div class="porb-symbol">
+                <!-- Sun spark awakening icon -->
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="pcard-body">
+            <h3 class="pcard-title">Transpire</h3>
+            <span class="pcard-script">Awaken</span>
+            <p class="pcard-desc">Notice the talent that self-doubt and fear have been hiding.</p>
+          </div>
+
+          <footer class="pcard-foot">
+            <div class="pcard-bar"><span class="pcard-bar-fill"></span></div>
+            <span class="pcard-action">Stage 01 Focus <span class="arrow">→</span></span>
+          </footer>
+        </div>
+      </article>
+
+      <!-- Card 2: Transform (Change) -->
+      <article class="pcard" data-stage="1" role="listitem" tabindex="0">
+        <div class="pcard-shine"></div>
+        <div class="pcard-inner">
+          <header class="pcard-top">
+            <span class="pcard-badge"><span class="badge-dot"></span>STAGE 02</span>
+            <span class="pcard-pill">Daily Mastery</span>
+          </header>
+
+          <!-- Dynamic Solar Orb 2 -->
+          <div class="porb-wrap">
+            <div class="porb-ambient a2"></div>
+            <div class="porb-ring r2a"></div>
+            <div class="porb-ring r2b"></div>
+            <div class="porb-core c2">
+              <div class="porb-glint"></div>
+              <div class="porb-symbol">
+                <!-- Transform crystal diamond icon -->
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9z"/><path d="M2 9h20M12 3v18"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="pcard-body">
+            <h3 class="pcard-title">Transform</h3>
+            <span class="pcard-script">Change</span>
+            <p class="pcard-desc">Build the habits, focus and resilience to use it every day.</p>
+          </div>
+
+          <footer class="pcard-foot">
+            <div class="pcard-bar"><span class="pcard-bar-fill"></span></div>
+            <span class="pcard-action">Stage 02 Focus <span class="arrow">→</span></span>
+          </footer>
+        </div>
+      </article>
+
+      <!-- Card 3: Transcend (Rise) -->
+      <article class="pcard" data-stage="2" role="listitem" tabindex="0">
+        <div class="pcard-shine"></div>
+        <div class="pcard-inner">
+          <header class="pcard-top">
+            <span class="pcard-badge"><span class="badge-dot"></span>STAGE 03</span>
+            <span class="pcard-pill">Peak Horizon</span>
+          </header>
+
+          <!-- Dynamic Solar Orb 3 -->
+          <div class="porb-wrap">
+            <div class="porb-ambient a3"></div>
+            <div class="porb-ring r3a"></div>
+            <div class="porb-ring r3b"></div>
+            <div class="porb-core c3">
+              <div class="porb-glint"></div>
+              <div class="porb-symbol">
+                <!-- Transcend wings / horizon peak icon -->
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 19h20L12 2z"/><path d="M12 9v6M12 18h.01"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="pcard-body">
+            <h3 class="pcard-title">Transcend</h3>
+            <span class="pcard-script">Rise</span>
+            <p class="pcard-desc">Lead, perform and live closer to the life you were born to live.</p>
+          </div>
+
+          <footer class="pcard-foot">
+            <div class="pcard-bar"><span class="pcard-bar-fill"></span></div>
+            <span class="pcard-action">Stage 03 Focus <span class="arrow">→</span></span>
+          </footer>
+        </div>
+      </article>
+    </div>
+
+    <!-- The Climax Quote: Grand Illuminated Gold Plaque -->
+    <div class="philo-quote-wrap">
+      <div class="pq-aura" aria-hidden="true"></div>
+      <div class="pq-card">
+        <div class="pq-mark" aria-hidden="true">“</div>
+        <div class="pq-tag">
+          <span class="pq-tag-line"></span>
+          <span>THE EOH CREED</span>
+          <span class="pq-tag-line"></span>
+        </div>
+        <blockquote class="pq-text">
+          <span>“This is not a programme.</span>
+          <span class="pq-em">This is a movement.”</span>
+        </blockquote>
+        <div class="pq-horizon-bar" aria-hidden="true"></div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -392,5 +1102,126 @@
 <script src="js/nav.js"></script>
 <script src="js/ebook.js" defer></script>
 <script src="js/page.js"></script>
+<script>
+/* ========================================================
+   THE EOH PHILOSOPHY: Supercharged Interactive Evolution Flow
+   ======================================================== */
+(function() {
+  var philoSec = document.getElementById('philosophy');
+  if (!philoSec) return;
+
+  var cards = [].slice.call(philoSec.querySelectorAll('.pcard'));
+  var pwords = [].slice.call(philoSec.querySelectorAll('.pword'));
+  var pnodes = [].slice.call(philoSec.querySelectorAll('.pt-node'));
+  var ptFill = document.getElementById('pt-fill');
+  var activeIdx = 0;
+  var isHovered = false;
+  var interval = 4800; // 4.8s per stage
+  var elapsed = 0;
+  var lastTick = performance.now();
+  var fillBars = cards.map(function(c) { return c.querySelector('.pcard-bar-fill'); });
+
+  function setStage(idx) {
+    activeIdx = (idx + cards.length) % cards.length;
+    cards.forEach(function(c, k) {
+      var on = k === activeIdx;
+      c.classList.toggle('on', on);
+      c.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    pwords.forEach(function(w, k) {
+      w.classList.toggle('on', k === activeIdx);
+    });
+    pnodes.forEach(function(n, k) {
+      n.classList.toggle('on', k === activeIdx);
+      n.setAttribute('aria-selected', k === activeIdx ? 'true' : 'false');
+    });
+
+    if (ptFill) {
+      var pct = activeIdx === 0 ? 16 : (activeIdx === 1 ? 50 : 100);
+      ptFill.style.width = pct + '%';
+    }
+
+    fillBars.forEach(function(b, k) {
+      if (b) b.style.width = k === activeIdx ? '0%' : '0%';
+    });
+    elapsed = 0;
+  }
+
+  // Cards interaction & 3D tilt
+  cards.forEach(function(c, k) {
+    c.addEventListener('click', function() {
+      setStage(k);
+    });
+    c.addEventListener('mouseenter', function() {
+      setStage(k);
+      isHovered = true;
+    });
+    c.addEventListener('mouseleave', function() {
+      isHovered = false;
+      lastTick = performance.now();
+      c.style.transform = '';
+    });
+
+    // 3D Tilt effect
+    c.addEventListener('mousemove', function(e) {
+      var rect = c.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var y = e.clientY - rect.top;
+      var cx = (x / rect.width) * 100;
+      var cy = (y / rect.height) * 100;
+      c.style.setProperty('--cx', cx + '%');
+      c.style.setProperty('--cy', cy + '%');
+
+      var rx = ((y - rect.height / 2) / (rect.height / 2)) * -6;
+      var ry = ((x - rect.width / 2) / (rect.width / 2)) * 6;
+      c.style.transform = 'perspective(900px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg) translateY(-8px)';
+    });
+  });
+
+  // Words trigger
+  pwords.forEach(function(w, k) {
+    w.addEventListener('click', function() { setStage(k); });
+    w.addEventListener('mouseenter', function() { setStage(k); isHovered = true; });
+    w.addEventListener('mouseleave', function() { isHovered = false; lastTick = performance.now(); });
+  });
+
+  // Timeline nodes trigger
+  pnodes.forEach(function(n, k) {
+    n.addEventListener('click', function() { setStage(k); });
+  });
+
+  // Cursor ambient radial tracker
+  philoSec.addEventListener('mousemove', function(e) {
+    var rect = philoSec.getBoundingClientRect();
+    var x = e.clientX - rect.left;
+    var y = e.clientY - rect.top;
+    philoSec.style.setProperty('--mx', x + 'px');
+    philoSec.style.setProperty('--my', y + 'px');
+  });
+
+  // Auto-flow tick loop
+  function tickFlow(now) {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce && !isHovered) {
+      var delta = now - lastTick;
+      elapsed += delta;
+      var activeBar = fillBars[activeIdx];
+      if (activeBar) {
+        var pct = Math.min(100, (elapsed / interval) * 100);
+        activeBar.style.width = pct + '%';
+      }
+      if (elapsed >= interval) {
+        setStage(activeIdx + 1);
+      }
+    }
+    lastTick = now;
+    requestAnimationFrame(tickFlow);
+  }
+  requestAnimationFrame(tickFlow);
+
+  // Initialize Stage 01
+  setStage(0);
+})();
+</script>
 </body>
 </html>
