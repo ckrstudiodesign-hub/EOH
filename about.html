@@ -746,6 +746,303 @@
   .philo-timeline{display:none}
   .pcard{text-align:center}
 }
+
+/* ========================================================
+   THE EOH MOVEMENT: Autoplaying Video with Mute/Unmute
+   ======================================================== */
+.mvideo-box{
+  position:relative;
+  aspect-ratio:16/10;
+  border-radius:28px;
+  overflow:hidden;
+  box-shadow:0 24px 60px rgba(40,25,10,.14);
+  background:#1A0E08;
+}
+.mvideo-el{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+.mvideo-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(26,14,8,.15) 0%,rgba(26,14,8,0) 40%,rgba(26,14,8,.3) 100%);
+  pointer-events:none;
+}
+.vtoggle-mute{
+  position:absolute;
+  right:18px;
+  bottom:18px;
+  z-index:10;
+  background:rgba(255,255,255,.88);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.95);
+  border-radius:999px;
+  padding:8px 16px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:.8125rem;
+  font-weight:600;
+  color:#1A0E08;
+  cursor:pointer;
+  box-shadow:0 8px 24px rgba(20,10,5,.18);
+  transition:all .25s ease;
+}
+.vtoggle-mute:hover{
+  transform:scale(1.05);
+  background:#FFF;
+  color:#C98A1E;
+}
+.vmute-icon{
+  display:grid;
+  place-items:center;
+}
+.vtoggle-mute.is-muted .icon-unmuted{
+  display:none;
+}
+.vtoggle-mute:not(.is-muted) .icon-muted{
+  display:none;
+}
+.mvideo-pill{
+  position:absolute;
+  left:18px;
+  top:18px;
+  z-index:10;
+  background:rgba(26,14,8,.65);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:999px;
+  padding:6px 14px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-size:.75rem;
+  font-weight:600;
+  color:#FFF;
+  letter-spacing:.03em;
+}
+.mv-dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#C98A1E;
+  box-shadow:0 0 8px #C98A1E;
+  animation:dotBlink 2s ease-in-out infinite;
+}
+@keyframes dotBlink{
+  0%,100%{opacity:.6;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.3)}
+}
+
+/* ========================================================
+   THE FOUNDERS: Side-by-Side Duo with Golden Halo
+   ======================================================== */
+.people{
+  padding:clamp(80px,11vh,130px) 0;
+  background:#FAF7F2;
+}
+.people-side-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(24px,3.5vw,44px);
+  margin-top:clamp(44px,7vh,70px);
+}
+.founder-card{
+  background:rgba(255,255,255,.92);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+  border:1.5px solid rgba(255,255,255,.95);
+  border-radius:32px;
+  box-shadow:0 20px 50px rgba(40,25,10,.06);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s ease,border-color .4s ease;
+}
+.founder-card:hover{
+  transform:translateY(-8px);
+  border-color:rgba(201,138,30,.4);
+  box-shadow:0 30px 70px rgba(201,138,30,.18),inset 0 0 0 1px rgba(201,138,30,.2);
+}
+.founder-photo-box{
+  position:relative;
+  height:clamp(340px,34vw,440px);
+  background:linear-gradient(180deg,#FFFDF7 0%,#F5ECDA 100%);
+  display:flex;
+  justify-content:center;
+  align-items:flex-end;
+  overflow:hidden;
+}
+/* The Signature Golden Round Halo */
+.founder-halo{
+  position:absolute;
+  left:50%;
+  bottom:6%;
+  transform:translateX(-50%);
+  width:clamp(260px,28vw,350px);
+  height:clamp(260px,28vw,350px);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:1;
+}
+.founder-halo .halo-glow{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  background:radial-gradient(circle at 50% 50%,rgba(255,248,230,.98) 0%,rgba(245,225,175,.52) 50%,rgba(245,225,175,0) 72%);
+  box-shadow:0 0 70px rgba(201,138,30,.22);
+  animation:haloPulse 6s ease-in-out infinite;
+}
+.founder-halo .ring-dashed{
+  position:absolute;
+  inset:8%;
+  border-radius:50%;
+  border:1.5px dashed rgba(201,138,30,.32);
+  animation:haloSpin 80s linear infinite;
+}
+.founder-halo .ring-solid{
+  position:absolute;
+  inset:20%;
+  border-radius:50%;
+  border:1px solid rgba(201,138,30,.22);
+}
+.founder-cutout{
+  position:relative;
+  z-index:2;
+  height:96%;
+  width:auto;
+  object-fit:contain;
+  object-position:bottom center;
+  filter:drop-shadow(0 14px 28px rgba(80,50,15,.12));
+  transition:transform .6s cubic-bezier(.22,1,.36,1);
+  display:block;
+}
+.founder-card:hover .founder-cutout{
+  transform:scale(1.03);
+}
+
+.founder-content{
+  padding:clamp(26px,3.5vw,38px);
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  flex:1;
+}
+.founder-role{
+  font-size:.8125rem;
+  font-weight:700;
+  color:#C98A1E;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  line-height:1.35;
+}
+.founder-name{
+  font-size:clamp(1.75rem,2.4vw,2.2rem);
+  font-weight:600;
+  color:#1A0E08;
+  letter-spacing:-0.03em;
+  margin:0;
+}
+.founder-tags{
+  font-size:.875rem;
+  color:#6E5F53;
+  line-height:1.5;
+  margin:0;
+}
+.founder-bio{
+  color:#5C5046;
+  line-height:1.65;
+  font-size:.9375rem;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:4px;
+}
+.founder-creds{
+  list-style:none;
+  margin:6px 0 0;
+  padding:0;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.founder-creds li{
+  font-size:.8125rem;
+  font-weight:500;
+  padding:6px 12px;
+  border-radius:999px;
+  background:rgba(201,138,30,.1);
+  color:#8A5D0B;
+  border:1px solid rgba(201,138,30,.18);
+}
+.founder-stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin-top:auto;
+  padding-top:18px;
+  border-top:1px solid rgba(26,14,8,.08);
+  text-align:center;
+}
+.founder-stats b{
+  display:block;
+  font-size:1.75rem;
+  font-weight:700;
+  color:#C98A1E;
+  line-height:1;
+}
+.founder-stats span{
+  display:block;
+  font-size:.75rem;
+  color:#7A6F66;
+  margin-top:4px;
+  line-height:1.3;
+}
+.founder-timeline-block{
+  margin-top:auto;
+  padding-top:16px;
+  border-top:1px solid rgba(26,14,8,.08);
+}
+.timeline-title{
+  display:block;
+  font-size:.75rem;
+  font-weight:700;
+  letter-spacing:.08em;
+  color:#8A5D0B;
+  text-transform:uppercase;
+  margin-bottom:10px;
+}
+.founder-timeline{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.founder-timeline li{
+  font-size:.8125rem;
+  font-weight:500;
+  padding:6px 12px;
+  border-radius:999px;
+  background:rgba(26,14,8,.05);
+  color:#5C5046;
+  border:1px solid rgba(26,14,8,.08);
+}
+.founder-timeline li:last-child{
+  background:rgba(201,138,30,.14);
+  color:#8A5D0B;
+  border-color:rgba(201,138,30,.28);
+  font-weight:600;
+}
+
+@media (max-width:960px){
+  .people-side-grid{grid-template-columns:1fr;max-width:540px;margin-inline:auto}
+}
 </style>
 </head>
 <body data-page="about">
@@ -967,37 +1264,115 @@
       <h2 id="mov-title">A movement built to change lives permanently.</h2>
       <p>EOH was not created merely to deliver coaching programmes. It was created to ignite human potential, elevate performance, and empower individuals, organisations and communities to become the highest version of themselves.</p>
       <p>Built on clinical science, delivered with human warmth, and committed to one outcome: that every soul who finds EOH lives closer to the life they were always born to live.</p>
+      <div style="margin-top:24px">
+        <a class="btn btn-olive" href="https://wa.me/971541615066?text=Hi%20EOH%2C%20I%27d%20like%20to%20know%20more%20about%20the%20movement.">Join the movement</a>
+      </div>
     </div>
-    <a class="mvideo" href="https://www.youtube.com/watch?v=4sf5WhNDDGc" aria-label="Watch our story on YouTube"><img src="img/yt/4sf5WhNDDGc.webp" alt="" loading="lazy"><span class="vplay big"><svg width="18" height="20" viewBox="0 0 10 12" fill="currentColor"><path d="M0 0v12l10-6z"/></svg></span><span class="mlabel">Watch our story</span></a>
+    
+    <!-- Autoplaying looping video with Mute/Unmute toggle -->
+    <div class="mvideo-box" id="mvideo-box">
+      <video class="mvideo-el" id="movement-video" autoplay loop muted playsinline preload="auto" poster="video/horizon-60fps.jpg">
+        <source src="video/horizon-60fps.mp4" type="video/mp4">
+      </video>
+      <div class="mvideo-overlay" aria-hidden="true"></div>
+      
+      <!-- Floating Mute / Unmute Button -->
+      <button type="button" class="vtoggle-mute is-muted" id="vmute-btn" aria-label="Toggle sound">
+        <span class="vmute-icon icon-muted">
+          <!-- Muted: speaker with slash -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+        </span>
+        <span class="vmute-icon icon-unmuted">
+          <!-- Unmuted: speaker with waves -->
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+        </span>
+        <span class="vmute-text" id="vmute-text">Unmute</span>
+      </button>
+
+      <!-- Video status pill -->
+      <div class="mvideo-pill" aria-hidden="true">
+        <span class="mv-dot"></span>
+        <span>A New Horizon</span>
+      </div>
+    </div>
   </div>
 </section>
 
 <section class="people" id="people" aria-labelledby="ppl-title">
   <div class="wrap">
-    <div class="center-head"><span class="eyebrow">The people behind EOH</span><h2 id="ppl-title">Two generations. One unstoppable mission.</h2><p>Our founder brings 20 years of clinical expertise. Our co-founder brings the fearless instincts of a generation that refuses to settle.</p></div>
-    <article class="person-row">
-      <div class="pphoto"><img src="img/shaheena.webp" alt="Dr. Shaheena Kadri" loading="lazy"></div>
-      <div class="ptext">
-        <span class="role">Founder &amp; Chief Empowerment Officer</span>
-        <h3>Dr. Shaheena Kadri</h3>
-        <p class="ptags">Physician · ICF Certified Life Coach · Peak Performance &amp; Empowerment Coach · Author · International Speaker</p>
-        <p>Her journey began in medicine, with nearly two decades of clinical practice across India and the UAE. As a homeopathic physician she treated the body, but she saw something deeper: people whose gifts lay buried under self-doubt, fear and unfulfilled aspiration.</p>
-        <p>She expanded into human behaviour, psychology and coaching science, becoming an ICF Certified Life Coach, Peak Performance and Empowerment Coach, Mindfulness Trainer, Leadership Facilitator and published author. Emerge on Horizon grew from that work.</p>
-        <ul class="creds2"><li>MD HOM, UK</li><li>ICF Certified Coach</li><li>Mindfulness Trainer</li><li>Published Author</li></ul>
-        <div class="stats"><div><b data-count="20">20</b><span>+ years of experience</span></div><div><b data-count="50000">50,000</b><span>+ lives impacted</span></div><div><b data-count="50">50</b><span>+ nationalities</span></div></div>
-      </div>
-    </article>
-    <article class="person-row flip">
-      <div class="pphoto"><img src="img/alisha.webp" alt="Alisha Kadri" loading="lazy"></div>
-      <div class="ptext">
-        <span class="role">Co-Founder &amp; Director, Partnerships, Growth &amp; Strategic Alliances</span>
-        <h3>Alisha Kadri</h3>
-        <p class="ptags">Partnership Development · Corporate Outreach · Community Building · Growth &amp; Strategic Alliances</p>
-        <p>Alisha was drawn to leadership from the beginning, out of a deep need to be useful, to connect and to make things better for the people around her. Each role sharpened a different edge.</p>
-        <p>Today she is the bridge between EOH's programmes and the organisations, schools and communities that need them. She approaches every organisation with one question: "How can we grow together?"</p>
-        <ol class="timeline" aria-label="Alisha's leadership journey"><li><span></span>Learning Ambassador</li><li><span></span>House Captain</li><li><span></span>Wellness Ambassador</li><li><span></span>Gavels Club Secretary</li><li><span></span>Gavels Club President</li><li><span></span>Head of the Finance Club</li><li><span></span>Co-Founder, EOH</li></ol>
-      </div>
-    </article>
+    <div class="center-head">
+      <span class="eyebrow">The people behind EOH</span>
+      <h2 id="ppl-title">Two generations. One unstoppable mission.</h2>
+      <p>Our founder brings 20 years of clinical expertise. Our co-founder brings the fearless instincts of a generation that refuses to settle.</p>
+    </div>
+
+    <!-- Side-by-Side Founders Grid with Golden Halo & Transparent Cutouts -->
+    <div class="people-side-grid">
+      <!-- Founder 1: Dr. Shaheena Kadri -->
+      <article class="founder-card" id="founder-shaheena">
+        <div class="founder-photo-box">
+          <div class="founder-halo" aria-hidden="true">
+            <span class="halo-glow"></span>
+            <span class="ring-dashed"></span>
+            <span class="ring-solid"></span>
+          </div>
+          <img src="img/shaheena-cut.webp" alt="Dr. Shaheena Kadri smiling in white blazer and saffron headscarf" class="founder-cutout" width="600" height="879" loading="lazy">
+        </div>
+        <div class="founder-content">
+          <span class="founder-role">Founder &amp; Chief Empowerment Officer</span>
+          <h3 class="founder-name">Dr. Shaheena Kadri</h3>
+          <p class="founder-tags">Physician · ICF Certified Life Coach · Peak Performance &amp; Empowerment Coach · Author · International Speaker</p>
+          <div class="founder-bio">
+            <p>Her journey began in medicine, with nearly two decades of clinical practice across India and the UAE. As a homeopathic physician she treated the body, but she saw something deeper: people whose gifts lay buried under self-doubt, fear and unfulfilled aspiration.</p>
+            <p>She expanded into human behaviour, psychology and coaching science, becoming an ICF Certified Life Coach, Peak Performance and Empowerment Coach, Mindfulness Trainer, Leadership Facilitator and published author. Emerge on Horizon grew from that work.</p>
+          </div>
+          <ul class="founder-creds" aria-label="Credentials">
+            <li>MD HOM, UK</li>
+            <li>ICF Certified Coach</li>
+            <li>Mindfulness Trainer</li>
+            <li>Published Author</li>
+          </ul>
+          <div class="founder-stats">
+            <div><b data-count="20">20</b><span>+ years experience</span></div>
+            <div><b data-count="50000">50,000</b><span>+ lives impacted</span></div>
+            <div><b data-count="50">50</b><span>+ nationalities</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Founder 2: Alisha Kadri -->
+      <article class="founder-card" id="founder-alisha">
+        <div class="founder-photo-box">
+          <div class="founder-halo" aria-hidden="true">
+            <span class="halo-glow"></span>
+            <span class="ring-dashed"></span>
+            <span class="ring-solid"></span>
+          </div>
+          <img src="img/alisha-cut.webp" alt="Alisha Kadri smiling in white blazer and saffron headscarf" class="founder-cutout" width="900" height="1337" loading="lazy">
+        </div>
+        <div class="founder-content">
+          <span class="founder-role">Co-Founder &amp; Director, Partnerships, Growth &amp; Strategic Alliances</span>
+          <h3 class="founder-name">Alisha Kadri</h3>
+          <p class="founder-tags">Partnership Development · Corporate Outreach · Community Building · Growth &amp; Strategic Alliances</p>
+          <div class="founder-bio">
+            <p>Alisha was drawn to leadership from the beginning, out of a deep need to be useful, to connect and to make things better for the people around her. Each role sharpened a different edge.</p>
+            <p>Today she is the bridge between EOH's programmes and the organisations, schools and communities that need them. She approaches every organisation with one question: "How can we grow together?"</p>
+          </div>
+          <div class="founder-timeline-block">
+            <span class="timeline-title">Leadership Journey</span>
+            <ol class="founder-timeline" aria-label="Alisha's leadership journey">
+              <li><span></span>Learning Ambassador</li>
+              <li><span></span>House Captain</li>
+              <li><span></span>Wellness Ambassador</li>
+              <li><span></span>Gavels Club Secretary</li>
+              <li><span></span>Gavels Club President</li>
+              <li><span></span>Head of the Finance Club</li>
+              <li><span></span>Co-Founder, EOH</li>
+            </ol>
+          </div>
+        </div>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -1221,6 +1596,29 @@
 
   // Initialize Stage 01
   setStage(0);
+
+  /* ---- Movement Video Mute/Unmute Controller ---- */
+  var vBtn = document.getElementById('vmute-btn');
+  var vVid = document.getElementById('movement-video');
+  var vText = document.getElementById('vmute-text');
+  if (vBtn && vVid) {
+    vBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      vVid.muted = !vVid.muted;
+      var muted = vVid.muted;
+      vBtn.classList.toggle('is-muted', muted);
+      if (vText) vText.textContent = muted ? 'Unmute' : 'Mute';
+      vBtn.setAttribute('aria-label', muted ? 'Unmute video' : 'Mute video');
+    });
+
+    var playPromise = vVid.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(function() {
+        vVid.muted = true;
+        vVid.play();
+      });
+    }
+  }
 })();
 </script>
 </body>
