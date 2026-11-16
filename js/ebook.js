@@ -1,15 +1,25 @@
-/* Free eBook popup: collects an email and sends the eBook download link with EmailJS.
-   Setup (one time, free plan is enough):
+/* Free eBook popup: collects an email, stores it automatically in Google Sheets,
+   sends an instant email notification to ckrstudiodesign@gmail.com, and delivers the eBook.
+   
+   Google Sheets & Email Notification Setup:
+   1. Follow the quick steps in GOOGLE-SHEET-SETUP.md (takes 2 minutes).
+   2. Paste the deployed Web App URL into CONFIG.sheetScriptUrl below.
+   
+   Optional EmailJS setup (if emailing the eBook directly to visitors):
    1. Create an account at https://www.emailjs.com and connect the EOH mailbox under "Email Services".
-   2. Create an Email Template. Set "To Email" to {{to_email}} and put {{ebook_link}} in the body
-      (see README.md for a ready-made template). Use {{reply_to}} for "Reply To" if you like.
-   3. Paste the three IDs below. Until they are filled in, the popup still works: it shows the
-      download link on screen instead of emailing it.
-   Open the popup from anywhere with a link or button that has  data-ebook-open  on it. */
+   2. Create an Email Template with {{to_email}} and {{ebook_link}} in the body.
+   3. Paste serviceId, templateId, publicKey in CONFIG.
+   
+   Open the popup from anywhere with a link or button that has data-ebook-open on it. */
 (function () {
   'use strict';
 
   var CONFIG = {
+    // Google Sheets & Email Notification endpoint (Google Apps Script Web App URL)
+    sheetScriptUrl: '',
+    notificationEmail: 'ckrstudiodesign@gmail.com',
+
+    // Optional EmailJS parameters (if configured, also emails eBook to visitor)
     serviceId: 'YOUR_SERVICE_ID',
     templateId: 'YOUR_TEMPLATE_ID',
     publicKey: 'YOUR_PUBLIC_KEY',
@@ -134,6 +144,36 @@
     root.querySelector('.eb-done a').focus({ preventScroll: true });
   }
 
+  function saveToGoogleSheet(email, name, source) {
+    if (!CONFIG.sheetScriptUrl) {
+      console.info('EOH: Google Sheets endpoint not yet set in CONFIG.sheetScriptUrl (see GOOGLE-SHEET-SETUP.md).');
+      return Promise.resolve(false);
+    }
+    var params = new URLSearchParams();
+    params.append('email', email);
+    params.append('name', name || 'Subscriber');
+    params.append('source', source || ('Free eBook: ' + CONFIG.ebookTitle));
+    params.append('page', location.href);
+    params.append('notificationEmail', CONFIG.notificationEmail || 'ckrstudiodesign@gmail.com');
+
+    return fetch(CONFIG.sheetScriptUrl, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString()
+    }).catch(function () {
+      try {
+        var beacon = new Image();
+        beacon.src = CONFIG.sheetScriptUrl + '?' + params.toString();
+      } catch (err) {}
+    });
+  }
+
+  // Expose global helper for any other forms (e.g. contact/consultations)
+  window.submitEOHLead = function (data) {
+    return saveToGoogleSheet(data.email, data.name, data.source);
+  };
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     var email = input.value.trim();
@@ -143,24 +183,56 @@
       input.focus(); return;
     }
     input.removeAttribute('aria-invalid'); msg.textContent = '';
-    if (!configured) { showDone(email, false); return; }
 
     btn.disabled = true; var label = btn.textContent; btn.textContent = 'Sending…';
-    fetch('https://api.emailjs.com/api/v1.0/email/send', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        service_id: CONFIG.serviceId,
-        template_id: CONFIG.templateId,
-        user_id: CONFIG.publicKey,
-        template_params: { to_email: email, reply_to: email, ebook_link: ebookUrl, ebook_title: CONFIG.ebookTitle }
-      })
-    }).then(function (r) {
-      if (!r.ok) throw new Error('EmailJS ' + r.status);
-      showDone(email, true);
-    }).catch(function () {
-      showDone(email, false);
-    }).then(function () { btn.disabled = false; btn.textContent = label; });
+
+    // 1. Automatically store in Google Sheet and notify ckrstudiodesign@gmail.com
+    var sheetPromise = saveToGoogleSheet(email, 'eBook Visitor', 'Free eBook: ' + CONFIG.ebookTitle);
+
+    // 2. Deliver eBook (via EmailJS if configured, otherwise direct download)
+    if (configured) {
+      fetch('https://api.emailjs.com/api/v1.0/email/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          service_id: CONFIG.serviceId,
+          template_id: CONFIG.templateId,
+          user_id: CONFIG.publicKey,
+          template_params: { to_email: email, reply_to: email, ebook_link: ebookUrl, ebook_title: CONFIG.ebookTitle }
+        })
+      }).then(function (r) {
+        if (!r.ok) throw new Error('EmailJS ' + r.status);
+        showDone(email, true);
+      }).catch(function () {
+        showDone(email, false);
+      }).then(function () { btn.disabled = false; btn.textContent = label; });
+    } else {
+      // Wait briefly for Google Sheet submission before revealing the download
+      Promise.race([
+        sheetPromise,
+        new Promise(function (res) { setTimeout(res, 600); })
+      ]).then(function () {
+        showDone(email, false);
+        btn.disabled = false; btn.textContent = label;
+      }).catch(function () {
+        showDone(email, false);
+        btn.disabled = false; btn.textContent = label;
+      });
+    }
+  });
+
+  // Also seamlessly enhance any footer newsletter form on the page to save to the same Google Sheet
+  document.addEventListener('DOMContentLoaded', function () {
+    var ftNews = document.querySelector('.ft-news');
+    if (ftNews) {
+      ftNews.addEventListener('submit', function (ev) {
+        var emInput = ftNews.querySelector('#ft-email');
+        var nmInput = ftNews.querySelector('#ft-name');
+        if (emInput && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emInput.value.trim())) {
+          saveToGoogleSheet(emInput.value.trim(), nmInput ? nmInput.value.trim() : '', 'Footer Newsletter');
+        }
+      }, true);
+    }
   });
 
   // Auto-open 3 seconds after the website opens, once per visit.
