@@ -1,0 +1,3 @@
+mission-sunrise.mp4 / mission-sunrise-m.mp4: "Stunning Mountain Sunrise Aerial View", Pexels (free licence) https://www.pexels.com/video/33354461/ (trimmed to 16s, sound removed)
+
+horizon-60fps.mp4 / horizon-60fps-m.mp4: "Stunning Aerial Sunrise Above Clouds Footage", Pexels (free licence) https://www.pexels.com/video/40193252/ (60fps, trimmed to a seamless 12.5s loop, sound removed)

@@ -1,0 +1,16 @@
+# Backups and working files (not part of the live website)
+_old-hero/
+Selected/
+hero images/
+update_hero.js
+node_modules/
+
+# Old 3D "Where we work" scene (section removed from the homepage)
+models/
+js/worlds.js
+js/models-data.js
+
+# System files
+.DS_Store
+Thumbs.db
+desktop.ini
