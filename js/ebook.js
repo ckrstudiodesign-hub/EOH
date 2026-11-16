@@ -16,7 +16,7 @@
 
   var CONFIG = {
     // Google Sheets & Email Notification endpoint (Google Apps Script Web App URL)
-    sheetScriptUrl: '',
+    sheetScriptUrl: 'https://script.google.com/macros/s/AKfycbzNomr9ZdQNr6htMJvev5x2vd6yU6IdqYOr_kO6NrbfvGUZhchU5KpaMpXlcgNfSdv9/exec',
     notificationEmail: 'ckrstudiodesign@gmail.com',
 
     // Optional EmailJS parameters (if configured, also emails eBook to visitor)
