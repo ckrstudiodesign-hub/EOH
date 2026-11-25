@@ -162,27 +162,27 @@ p{margin:0}
 /* ========================================================
    VISION + ABOUT (after hero)
    ======================================================== */
-.va{position:relative;background:#FFFEFB;padding:clamp(80px,11vw,140px) 0;overflow:hidden}
-.va::before{content:"";position:absolute;right:-220px;top:-120px;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,#FBF4DA 0%,rgba(251,244,218,0) 70%);pointer-events:none}
-.va-in{position:relative;max-width:1240px;margin:0 auto;padding:0 clamp(20px,4vw,56px);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(40px,6vw,96px);align-items:center}
-.va-kicker{display:inline-flex;align-items:center;gap:10px;font:500 1rem/1 "Zilla Slab",Georgia,serif;color:#9E8000;letter-spacing:.02em}
-.va-kicker::before{content:"";width:28px;height:1.5px;background:currentColor}
-.va-vision{margin:18px 0 0;font:400 clamp(1.45rem,2.25vw,2rem)/1.34 "Zilla Slab",Georgia,serif;color:#2B211A;letter-spacing:-.005em;max-width:22em}
-.va-vision em{font-style:normal;font-family:"Kaushan Script",cursive;color:#B89600;font-size:1.08em}
-.va-rule{height:1px;background:linear-gradient(90deg,rgba(184,150,0,.35),rgba(184,150,0,0));margin:clamp(32px,5vw,48px) 0}
-.va-h{font:500 clamp(1.5rem,2.2vw,1.9rem)/1.2 "Zilla Slab",Georgia,serif;color:#1A0E08;letter-spacing:-.01em}
-.va-p{margin-top:14px;color:#5E5249;font-size:1.0625rem;line-height:1.7;max-width:36em}
-.va-more{display:inline-flex;align-items:center;gap:8px;margin-top:18px;font-weight:600;color:#8A7000;text-decoration:none;border-bottom:1.5px solid rgba(184,150,0,.4);padding-bottom:3px;transition:gap .3s var(--ease),border-color .3s ease}
-.va-more:hover{gap:12px;border-color:#B89600}
-.va-stats{display:flex;gap:clamp(28px,4vw,56px);margin-top:clamp(30px,4vw,44px)}
-.va-stat b{display:block;font:500 clamp(2.4rem,4vw,3.4rem)/1 "Zilla Slab",Georgia,serif;color:#B89600;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.va-stat span{display:block;margin-top:8px;font-size:.95rem;color:#5E5249}
-.va-stat + .va-stat{padding-left:clamp(28px,4vw,56px);border-left:1px solid rgba(184,150,0,.25)}
+.va{position:relative;background:#FFFEFB;padding:clamp(64px,8vw,108px) 0;overflow:hidden}
+.va-in{position:relative;max-width:1180px;margin:0 auto;padding:0 clamp(20px,4vw,56px)}
+.va-top{max-width:860px;margin-bottom:clamp(28px,4vw,40px)}
+.va-kicker{margin:0;font:400 clamp(1.5rem,2.4vw,1.85rem)/1.2 "Kaushan Script",cursive;color:#B89600;letter-spacing:0}
+.va-vision{margin:10px 0 0;font:400 clamp(1.05rem,1.4vw,1.25rem)/1.65 "Zilla Slab",Georgia,serif;color:#2B211A;letter-spacing:0}
+.va-vision em{font-style:normal;font-family:"Kaushan Script",cursive;color:#B89600;font-size:1.18em;padding:0 2px}
+.va-tagline{margin:16px 0 0;font:400 clamp(1.15rem,1.8vw,1.45rem)/1.3 "Kaushan Script",cursive;color:#B89600}
+
+.va-card{background:#FAF8F2;border-radius:18px;padding:clamp(20px,3vw,30px);border:1px solid rgba(184,150,0,.10);box-shadow:0 16px 48px rgba(43,33,26,.05);display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);gap:clamp(24px,3.5vw,44px);align-items:center}
+.va-h{margin:0;font:400 clamp(1.65rem,2.5vw,2.1rem)/1.2 "Kaushan Script",cursive;color:#B89600;letter-spacing:0}
+.va-p{margin-top:12px;color:#3E342D;font:.95rem/1.68 "Zilla Slab",Georgia,serif}
+.va-more{display:inline;margin-left:4px;font:600 .95rem/1.68 "Zilla Slab",Georgia,serif;color:#1A0E08;text-decoration:underline;text-underline-offset:3px;transition:color .2s ease}
+.va-more:hover{color:#B89600}
+.va-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
+.va-stat{background:#fff;border-radius:12px;padding:16px 14px;text-align:center;border:1px solid rgba(26,14,8,.05);box-shadow:0 4px 16px rgba(43,33,26,.04)}
+.va-stat b{display:block;font:700 clamp(1.5rem,2.3vw,1.9rem)/1.1 var(--font);color:#B89600;font-variant-numeric:tabular-nums}
+.va-stat span{display:block;margin-top:5px;font-size:.8125rem;color:#5E5249}
 
 /* video card: custom player (21st.dev "video-player" look, plain JS) */
 .va-media{position:relative}
-.va-media::before{content:"";position:absolute;inset:auto -18px -18px auto;width:62%;height:70%;border-radius:28px;background:#F6EDC6;z-index:0}
-.vp{position:relative;z-index:1;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#111 url(img/yt/4sf5WhNDDGc.webp) center/cover;box-shadow:0 0 20px rgba(0,0,0,.2),0 30px 70px rgba(43,33,26,.18);isolation:isolate}
+.vp{position:relative;z-index:1;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#111 url(img/yt/4sf5WhNDDGc.webp) center/cover;box-shadow:0 14px 36px rgba(43,33,26,.14);isolation:isolate}
 .vp-screen{position:absolute;inset:0;overflow:hidden}
 .vp-screen iframe,.vp-screen video{position:absolute;left:50%;top:50%;width:118%;height:118%;transform:translate(-50%,-50%);border:0;pointer-events:none;object-fit:cover;opacity:0;transition:opacity .8s ease}
 .vp-screen video{width:100%;height:100%}
@@ -228,10 +228,9 @@ p{margin:0}
 .js .va.in [data-va="2"]{transition-delay:.12s}.js .va.in [data-va="3"]{transition-delay:.24s}.js .va.in [data-va="4"]{transition-delay:.36s}
 
 @media (max-width:900px){
-  .va-in{grid-template-columns:1fr}
-  .va-media{margin-right:18px;margin-top:8px}
+  .va-card{grid-template-columns:1fr}
 }
-@media (max-width:420px){.va-stats{gap:22px}.va-stat + .va-stat{padding-left:22px}.va-cap{right:20px;bottom:70px}}
+@media (max-width:420px){.va-stats{gap:10px}.va-cap{right:20px;bottom:70px}}
 @media (prefers-reduced-motion:reduce){.js .va [data-va]{opacity:1;transform:none;transition:none}}
 /* ========================================================
    SERVICES: Apple-style card carousel (21st.dev carousel-08 look)
@@ -1106,53 +1105,58 @@ a.ct-m:hover .go{opacity:1;transform:none}
 
 <section class="va" id="about-eoh" aria-labelledby="va-title">
   <div class="va-in">
-    <div class="va-copy">
-      <p class="va-kicker" data-va="1">Our Vision</p>
-      <p class="va-vision" data-va="1">To <em>transpire, transform &amp; transcend</em> every soul from dreams to destiny, potential to performance, and limitation to legacy.</p>
-      <div class="va-rule" data-va="2"></div>
-      <h2 class="va-h" id="va-title" data-va="2">About Emerge on Horizon</h2>
-      <p class="va-p" data-va="2">Emerge on Horizon is a hub of transformational training programs. We strongly believe every soul is blessed with high potentials and has a genius within.</p>
-      <p class="va-p" data-va="3">Emerge on Horizon has innovatively invented structured programs to unleash the potential within every genius who aspires to excel his forte.</p>
-      <a class="va-more" href="about.html" data-va="3">Read more <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 7h10M8 3l4 4-4 4"/></svg></a>
-      <div class="va-stats" data-va="4">
-        <div class="va-stat"><b data-count="1000" data-suffix="+">1000+</b><span>Happy Clients</span></div>
-        <div class="va-stat"><b data-count="50" data-suffix="+">50+</b><span>Nationalities Coached</span></div>
-      </div>
+    <div class="va-top" data-va="1">
+      <p class="va-kicker">Our Vision</p>
+      <p class="va-vision">To <em>transpire, transform &amp; transcend</em> every soul from dreams to destiny, potential to performance, and limitation to legacy.</p>
+      <p class="va-tagline">A New Horizon, A New Beginning — Emerge and Shine NOW.</p>
     </div>
-    <div class="va-media" data-va="2">
-      <div class="vp paused" id="va-player" data-yt="4sf5WhNDDGc" data-mp4="video/eoh-story.mp4" data-vol="x">
-        <div class="vp-screen" id="vp-screen"></div>
-        <button class="vp-hit" type="button" aria-label="Play or pause the video"></button>
-        <p class="vp-cap">High Quality Services for You</p>
-        <span class="vp-big" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg></span>
-        <div class="vp-bar">
-          <div class="vp-row">
-            <span class="vp-t" data-cur>0:00</span>
-            <div class="vp-sl" data-seek role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
-            <span class="vp-t" data-dur>0:00</span>
-          </div>
-          <div class="vp-row">
-            <div class="vp-l">
-              <button class="vp-b" type="button" data-play aria-label="Play">
-                <svg class="ic-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l14 9-14 9z"/></svg>
-                <svg class="ic-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
-              </button>
-              <div class="grp">
-                <button class="vp-b" type="button" data-mute aria-label="Unmute">
-                  <svg class="ic-vx" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="m22 9-6 6M16 9l6 6"/></svg>
-                  <svg class="ic-v1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>
-                  <svg class="ic-v2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+
+    <div class="va-card">
+      <div class="va-media" data-va="2">
+        <div class="vp paused" id="va-player" data-yt="4sf5WhNDDGc" data-mp4="video/eoh-story.mp4" data-vol="x">
+          <div class="vp-screen" id="vp-screen"></div>
+          <button class="vp-hit" type="button" aria-label="Play or pause the video"></button>
+          <p class="vp-cap">High Quality Services for You</p>
+          <span class="vp-big" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+          <div class="vp-bar">
+            <div class="vp-row">
+              <span class="vp-t" data-cur>0:00</span>
+              <div class="vp-sl" data-seek role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+              <span class="vp-t" data-dur>0:00</span>
+            </div>
+            <div class="vp-row">
+              <div class="vp-l">
+                <button class="vp-b" type="button" data-play aria-label="Play">
+                  <svg class="ic-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l14 9-14 9z"/></svg>
+                  <svg class="ic-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
                 </button>
-                <div class="vp-sl vp-vol" data-vol-sl role="slider" tabindex="0" aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+                <div class="grp">
+                  <button class="vp-b" type="button" data-mute aria-label="Unmute">
+                    <svg class="ic-vx" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="m22 9-6 6M16 9l6 6"/></svg>
+                    <svg class="ic-v1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg>
+                    <svg class="ic-v2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>
+                  </button>
+                  <div class="vp-sl vp-vol" data-vol-sl role="slider" tabindex="0" aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></div>
+                </div>
+              </div>
+              <div class="vp-r" role="group" aria-label="Playback speed">
+                <button class="vp-b" type="button" data-speed="0.5" aria-pressed="false">0.5x</button>
+                <button class="vp-b" type="button" data-speed="1" aria-pressed="true">1x</button>
+                <button class="vp-b" type="button" data-speed="1.5" aria-pressed="false">1.5x</button>
+                <button class="vp-b" type="button" data-speed="2" aria-pressed="false">2x</button>
               </div>
             </div>
-            <div class="vp-r" role="group" aria-label="Playback speed">
-              <button class="vp-b" type="button" data-speed="0.5" aria-pressed="false">0.5x</button>
-              <button class="vp-b" type="button" data-speed="1" aria-pressed="true">1x</button>
-              <button class="vp-b" type="button" data-speed="1.5" aria-pressed="false">1.5x</button>
-              <button class="vp-b" type="button" data-speed="2" aria-pressed="false">2x</button>
-            </div>
           </div>
+        </div>
+      </div>
+
+      <div class="va-copy">
+        <h2 class="va-h" id="va-title" data-va="2">About Emerge on Horizon</h2>
+        <p class="va-p" data-va="2">Emerge on Horizon is a hub of transformational training programs. We strongly believe every soul is blessed with high potentials and has a genius within.</p>
+        <p class="va-p" data-va="3">Emerge on Horizon has innovatively invented structured programs to unleash the potential within every genius who aspires to excel his forte. <a class="va-more" href="about.html">Read more</a></p>
+        <div class="va-stats" data-va="4">
+          <div class="va-stat"><b data-count="1000" data-suffix="+">1000+</b><span>Happy Clients</span></div>
+          <div class="va-stat"><b data-count="50" data-suffix="+">50+</b><span>Nationalities Coached</span></div>
         </div>
       </div>
     </div>
