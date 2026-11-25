@@ -90,16 +90,16 @@ p{margin:0}
 
 /* right: sun circle + founders */
 .hw-art{position:relative;align-self:center;display:grid;place-items:center;min-height:0;padding-bottom:4vh}
-.hw-sun{position:absolute;left:50%;top:calc(50% - 2vh);width:min(96%,600px,68vh);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 50% 50%,var(--sun-2) 0 38%,var(--sun) 38.2% 100%);box-shadow:0 0 0 1px rgba(184,150,0,.05);animation:hwBreath 9s ease-in-out infinite}
-.hw-sun::after{content:"";position:absolute;inset:-14px;border-radius:50%;border:1px dashed rgba(184,150,0,.22);animation:hwSpin 80s linear infinite}
+.hw-sun{position:absolute;left:50%;top:calc(50% - 2vh);width:min(74%,430px,48vh);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 50% 50%,var(--sun-2) 0 38%,var(--sun) 38.2% 100%);box-shadow:0 0 0 1px rgba(184,150,0,.05);animation:hwBreath 9s ease-in-out infinite}
+.hw-sun::after{content:"";position:absolute;inset:-12px;border-radius:50%;border:1px dashed rgba(184,150,0,.22);animation:hwSpin 80s linear infinite}
 @keyframes hwBreath{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.025)}}
 @keyframes hwSpin{to{transform:rotate(360deg)}}
-.hw-figs{position:relative;width:min(96%,600px,68vh);aspect-ratio:1}
-.hw-fig{position:absolute;left:50%;bottom:0;width:104%;-webkit-mask-image:linear-gradient(to bottom,#000 80%,transparent 99%);mask-image:linear-gradient(to bottom,#000 80%,transparent 99%);margin:0;transform:translate(-50%,40px) scale(.96);opacity:0;transition:opacity .7s ease,transform 1.1s var(--ease),filter .7s ease;filter:blur(4px);pointer-events:none}
+.hw-figs{position:relative;width:min(98%,660px,74vh);aspect-ratio:1}
+.hw-fig{position:absolute;left:50%;bottom:0;width:108%;-webkit-mask-image:linear-gradient(to bottom,#000 80%,transparent 99%);mask-image:linear-gradient(to bottom,#000 80%,transparent 99%);margin:0;transform:translate(-50%,40px) scale(.96);opacity:0;transition:opacity .7s ease,transform 1.1s var(--ease),filter .7s ease;filter:blur(4px);pointer-events:none}
 .hw-fig img{width:100%;height:auto;-webkit-user-drag:none;user-select:none}
-/* group photos: centred in the circle */
-.hw-fig[data-i="1"]{width:112%;bottom:17%;-webkit-mask-image:linear-gradient(to bottom,#000 72%,transparent 100%);mask-image:linear-gradient(to bottom,#000 72%,transparent 100%)}
-.hw-fig[data-i="2"]{width:108%;bottom:15%;-webkit-mask-image:linear-gradient(to bottom,#000 72%,transparent 100%);mask-image:linear-gradient(to bottom,#000 72%,transparent 100%)}
+/* group photos: prominent and larger than the background circle */
+.hw-fig[data-i="1"]{width:124%;bottom:10%;-webkit-mask-image:linear-gradient(to bottom,#000 74%,transparent 100%);mask-image:linear-gradient(to bottom,#000 74%,transparent 100%)}
+.hw-fig[data-i="2"]{width:122%;bottom:8%;-webkit-mask-image:linear-gradient(to bottom,#000 74%,transparent 100%);mask-image:linear-gradient(to bottom,#000 74%,transparent 100%)}
 .hw-fig.on{opacity:1;transform:translate(-50%,0) scale(1);filter:none;transition-delay:.12s}
 .hw-fig.out{opacity:0;transform:translate(-50%,-18px) scale(1.02);filter:blur(3px);transition-duration:.55s,.8s,.55s}
 .hw-fig.on img{animation:hwFloat 6s ease-in-out 1.2s infinite}
