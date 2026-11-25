@@ -34,9 +34,9 @@ p{margin:0}
 .center-head p{margin-top:18px;color:var(--mute);font-size:1.125rem}
 
 /* ---------- navbar ---------- */
-.nav{position:fixed;z-index:50;top:22px;left:50%;transform:translateX(-50%);width:min(940px,calc(100% - 40px));height:56px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 7px 0 18px;border-radius:999px;
+.nav{position:fixed;z-index:50;top:22px;left:50%;transform:translateX(-50%) translateZ(0);will-change:transform;width:min(940px,calc(100% - 40px));height:56px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 7px 0 18px;border-radius:999px;
   background:rgba(255,255,255,.74);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);box-shadow:inset 0 0 0 1px rgba(255,255,255,.65),0 10px 30px rgba(30,30,20,.08);
-  transition:box-shadow 300ms ease,background-color 300ms ease}
+  transition:box-shadow 300ms ease,background-color 300ms ease;backface-visibility:hidden;-webkit-backface-visibility:hidden}
 .nav.scrolled{background:rgba(255,255,255,.86);box-shadow:inset 0 0 0 1px rgba(26,14,8,.06),0 14px 40px rgba(30,30,20,.12)}
 .nav .brand{flex:none}
 .nav .brand img{height:21px;width:auto}
@@ -255,4 +255,13 @@ p{margin:0}
   .ft-main{grid-template-columns:1fr}
   .ft-cta-btns,.ft-btn{width:100%}.ft-btn{justify-content:center}
   .ft-legal{flex-direction:column-reverse;align-items:flex-start}
+}
+
+/* Performance & smooth rendering */
+.hero-slide, .hero-slide-img, .hero-testi-pill, .eb-card, .founder-card, .pcard, .vcard, .offer {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.hero-slide-img {
+  will-change: transform;
 }

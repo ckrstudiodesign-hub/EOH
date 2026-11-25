@@ -1696,16 +1696,32 @@ a.ct-m:hover .go{opacity:1;transform:none}
       });
     }
 
+    var isHeroVis = true;
+    var heroRaf = null;
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function(entries) {
+        isHeroVis = entries[0].isIntersecting;
+        if (isHeroVis && !heroRaf) {
+          lastTick = performance.now();
+          heroRaf = requestAnimationFrame(tick);
+        } else if (!isHeroVis && heroRaf) {
+          cancelAnimationFrame(heroRaf);
+          heroRaf = null;
+        }
+      }, { threshold: 0.05 }).observe(heroEl);
+    }
+
     function tick(now) {
+      if (!isHeroVis) { heroRaf = null; return; }
       if (!reduce && !isPaused && !document.hidden) {
         elapsed += now - lastTick;
         if (progressBar) progressBar.style.width = Math.min(elapsed / slideInterval * 100, 100) + '%';
         if (elapsed >= slideInterval) goToSlide(curSlide + 1);
       }
       lastTick = now;
-      requestAnimationFrame(tick);
+      heroRaf = requestAnimationFrame(tick);
     }
-    requestAnimationFrame(tick);
+    heroRaf = requestAnimationFrame(tick);
 
     /* ---- Compact Hero Testimonial Pill ---- */
     var testiEl = document.getElementById('hero-testi');
@@ -1748,7 +1764,23 @@ a.ct-m:hover .go{opacity:1;transform:none}
       testiEl.addEventListener('pointerenter', function() { isQPaused = true; });
       testiEl.addEventListener('pointerleave', function() { isQPaused = false; lastQTime = performance.now(); });
 
+      var isTestiVis = true;
+      var testiRaf = null;
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function(entries) {
+          isTestiVis = entries[0].isIntersecting;
+          if (isTestiVis && !testiRaf) {
+            lastQTime = performance.now();
+            testiRaf = requestAnimationFrame(tickPill);
+          } else if (!isTestiVis && testiRaf) {
+            cancelAnimationFrame(testiRaf);
+            testiRaf = null;
+          }
+        }, { threshold: 0.1 }).observe(testiEl);
+      }
+
       function tickPill(now) {
+        if (!isTestiVis) { testiRaf = null; return; }
         if (!isQPaused && !reduce) {
           qElapsed += now - lastQTime;
           var pct = Math.min(100, (qElapsed / qDuration) * 100);
@@ -1756,9 +1788,9 @@ a.ct-m:hover .go{opacity:1;transform:none}
           if (qElapsed >= qDuration) setTestimonial(curQ + 1);
         }
         lastQTime = now;
-        requestAnimationFrame(tickPill);
+        testiRaf = requestAnimationFrame(tickPill);
       }
-      requestAnimationFrame(tickPill);
+      testiRaf = requestAnimationFrame(tickPill);
     }
   })();
 
@@ -2041,8 +2073,17 @@ a.ct-m:hover .go{opacity:1;transform:none}
     muteBtn.setAttribute('aria-label',muted?'Unmute':'Mute');
     setFill(volSl,v*100);
   }
-  function tick(){
-    if(drv){var c=drv.time(),d=drv.duration(); cur.textContent=fmt(c); dur.textContent=fmt(d); if(!seek.classList.contains('drag')) setFill(seek,d?c/d*100:0);}
+  var lastUiUpdate = 0;
+  function tick(now){
+    if(drv && playing && !document.hidden){
+      if(!now || now - lastUiUpdate > 120){
+        lastUiUpdate = now;
+        var c=drv.time(),d=drv.duration();
+        cur.textContent=fmt(c);
+        dur.textContent=fmt(d);
+        if(!seek.classList.contains('drag')) setFill(seek,d?c/d*100:0);
+      }
+    }
     requestAnimationFrame(tick);
   }
 

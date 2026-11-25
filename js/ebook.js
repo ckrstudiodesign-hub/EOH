@@ -25,36 +25,34 @@
     publicKey: 'YOUR_PUBLIC_KEY',
     ebookPath: 'downloads/unlocking-horizons-ebook.pdf',
     ebookTitle: 'Unlocking Horizons: An Entrepreneur’s Guide to Emerge',
-    showAfterMs: 3000           // auto-open this long after the website opens (once per visit)
+    showAfterMs: 1200           // auto-open 1.2s after the page opens / refreshes
   };
 
-  var KEY = 'eoh-ebook';
-  function store(v) { try { if (v === undefined) return localStorage.getItem(KEY); localStorage.setItem(KEY, v); } catch (e) { return null; } }
-  function seenThisVisit(set) { try { if (set) sessionStorage.setItem(KEY, '1'); return sessionStorage.getItem(KEY) === '1'; } catch (e) { return false; } }
-  // Show on every new visit, but only once per visit (not again on each page), and never after signing up.
-  function canAutoOpen() { return store() !== 'claimed' && !seenThisVisit(); }
   var configured = !/YOUR_/.test(CONFIG.serviceId + CONFIG.templateId + CONFIG.publicKey);
   var ebookUrl = new URL(CONFIG.ebookPath, location.href).href;
 
   var css = '' +
 '.eb{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:16px;visibility:hidden;pointer-events:none}' +
 '.eb.open{visibility:visible;pointer-events:auto}' +
-'.eb-veil{position:absolute;inset:0;background:rgba(26,14,8,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity 300ms ease}' +
+'.eb-veil{position:absolute;inset:0;background:rgba(26,14,8,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity 300ms ease;will-change:opacity}' +
 '.eb.open .eb-veil{opacity:1}' +
 '.eb-card{position:relative;width:min(560px,100%);max-height:calc(100svh - 32px);overflow:auto;background:#FFFEFB;color:#1A0E08;border-radius:24px;padding:clamp(24px,4vw,40px);' +
-  'box-shadow:0 40px 100px rgba(26,14,8,.35);font-family:var(--font,"Google Sans Flex",system-ui,sans-serif);opacity:0;transform:translateY(16px) scale(.97);transition:opacity 260ms cubic-bezier(.23,1,.32,1),transform 420ms cubic-bezier(.23,1,.32,1)}' +
+  'box-shadow:0 40px 100px rgba(26,14,8,.35);font-family:var(--font,"Google Sans Flex",system-ui,sans-serif);opacity:0;transform:translateY(16px) scale(.97) translateZ(0);will-change:transform,opacity;transition:opacity 260ms cubic-bezier(.23,1,.32,1),transform 420ms cubic-bezier(.23,1,.32,1)}' +
 '.eb.open .eb-card{opacity:1;transform:none}' +
 '.eb-x{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:999px;border:0;background:#F3EDE3;color:#1A0E08;display:grid;place-items:center;cursor:pointer;transition:background-color 200ms ease,transform 160ms ease}' +
 '.eb-x:hover{background:#EADFCF}.eb-x:active{transform:scale(.94)}' +
 '.eb-kick{display:inline-flex;align-items:center;gap:8px;font-size:.8125rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#B89600}' +
 '.eb-kick::before{content:"";width:8px;height:8px;border-radius:2px;background:currentColor;transform:rotate(45deg)}' +
 '.eb h2{margin:12px 40px 0 0;font-size:clamp(1.6rem,4vw,2.1rem);font-weight:600;letter-spacing:-0.035em;line-height:1.08}' +
-'.eb-lead{margin:14px 0 0;color:#6B5D53;font-size:1rem;line-height:1.55}' +
+'.eb-lead{margin:12px 0 0;color:#6B5D53;font-size:.9688rem;line-height:1.55}' +
 '.eb-lead em{font-style:normal;font-weight:600;color:#1A0E08}' +
-'.eb-list{margin:18px 0 0;padding:0;list-style:none;display:grid;gap:8px;font-size:.9375rem}' +
+'.eb-list{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:8px;font-size:.9375rem}' +
 '.eb-list li{display:flex;gap:10px;align-items:flex-start}' +
 '.eb-list svg{flex:none;margin-top:3px;color:#E8540F}' +
-'.eb-form{margin-top:22px;display:grid;gap:10px}' +
+'.eb-claim{margin-top:16px;padding:12px 14px;border-radius:12px;background:#FAF5EB;border:1px solid #EFE4CE;display:grid;gap:2px}' +
+'.eb-claim strong{font-size:1rem;color:#1A0E08;letter-spacing:-0.01em}' +
+'.eb-claim span{font-size:.875rem;color:#6B5D53}' +
+'.eb-form{margin-top:16px;display:grid;gap:10px}' +
 '.eb-form label{font-size:.875rem;font-weight:500}' +
 '.eb-row{display:flex;gap:8px;flex-wrap:wrap}' +
 '.eb-in{flex:1 1 220px;min-width:0;height:50px;padding:0 16px;border-radius:12px;border:1px solid #E9E1D6;background:#fff;font:inherit;font-size:1rem;color:inherit;transition:border-color 200ms ease,box-shadow 200ms ease}' +
@@ -63,12 +61,12 @@
 '.eb-btn{flex:0 0 auto;height:50px;padding:0 22px;border-radius:12px;border:0;background:#1A0E08;color:#F8F4EE;font:inherit;font-weight:600;font-size:1rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:background-color 200ms ease,transform 160ms ease}' +
 '.eb-btn:hover{background:#2E1A10}.eb-btn:active{transform:scale(.97)}.eb-btn[disabled]{opacity:.7;cursor:progress}' +
 '.eb-msg{min-height:1.2em;font-size:.875rem;color:#C2410C}' +
-'.eb-fine{margin-top:6px;font-size:.8125rem;color:#6B5D53;line-height:1.5}' +
+'.eb-fine{margin-top:4px;font-size:.8125rem;color:#6B5D53;line-height:1.5}' +
 '.eb-done{display:none;text-align:left}' +
-'.eb.sent .eb-form,.eb.sent .eb-list,.eb.sent .eb-lead{display:none}.eb.sent .eb-done{display:block}' +
+'.eb.sent .eb-form,.eb.sent .eb-intro{display:none}.eb.sent .eb-done{display:block}' +
 '.eb-done p{margin:14px 0 0;color:#6B5D53;line-height:1.55}' +
 '.eb-done a.eb-btn{margin-top:20px;text-decoration:none;width:auto}' +
-'.eb-sign{margin-top:18px;font-family:"Kaushan Script",cursive;font-size:1.25rem;color:#B89600}' +
+'.eb-sign{margin-top:12px;font-family:"Kaushan Script",cursive;font-size:1.25rem;color:#B89600}' +
 '@media (prefers-reduced-motion:reduce){.eb-card,.eb-veil{transition:none}}';
 
   var check = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
@@ -77,15 +75,26 @@
 '<div class="eb-card" role="dialog" aria-modal="true" aria-labelledby="eb-title">' +
   '<button class="eb-x" type="button" data-eb-close aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>' +
   '<span class="eb-kick">Free eBook</span>' +
-  '<h2 id="eb-title">Your journey with EOH starts here</h2>' +
-  '<p class="eb-lead">Welcome to Emerge on Horizon! As a thank-you for visiting, we’d love to gift you <em>“' + CONFIG.ebookTitle + '”</em>, with an action plan for your first 30 days.</p>' +
-  '<ul class="eb-list"><li>' + check + 'A clear 30-day plan to unlock your potential</li><li>' + check + 'Keys to success in the world of entrepreneurship</li><li>' + check + 'Sent straight to your inbox, free</li></ul>' +
+  '<h2 id="eb-title">Your Journey with EOH Starts Here!</h2>' +
+  '<div class="eb-intro">' +
+    '<p class="eb-lead">Hi,</p>' +
+    '<p class="eb-lead">Welcome to Emerge on Horizon! We’re delighted to see you! As a token of our appreciation, we want to gift you a FREE eBook, <em>“' + CONFIG.ebookTitle + '”</em>, specifically designed to help you.</p>' +
+    '<ul class="eb-list">' +
+      '<li>' + check + '<span><strong>Action Plan for the First 30 Days</strong> to unlock your potential and get started.</span></li>' +
+      '<li>' + check + '<span>Join us in learning the keys to success in the world of entrepreneurship.</span></li>' +
+    '</ul>' +
+    '<div class="eb-claim">' +
+      '<strong>Claim Your Free eBook Now!</strong>' +
+      '<span>Enter your email address below and get instant access to your eBook!</span>' +
+    '</div>' +
+  '</div>' +
   '<form class="eb-form" novalidate>' +
-    '<label for="eb-email">Email address</label>' +
+    '<label for="eb-email">Email</label>' +
     '<div class="eb-row"><input class="eb-in" id="eb-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required>' +
     '<button class="eb-btn" type="submit">Send me the eBook</button></div>' +
     '<div class="eb-msg" role="alert" aria-live="polite"></div>' +
-    '<p class="eb-fine">By signing up, you’ll also receive insider tips, upcoming events and more from EOH. Unsubscribe any time.</p>' +
+    '<p class="eb-fine">By signing up, you’ll also receive insider tips, upcoming events, and more surprises designed just for you!</p>' +
+    '<div class="eb-sign">Happy Emerging!</div>' +
   '</form>' +
   '<div class="eb-done" aria-live="polite">' +
     '<p class="eb-done-text"></p>' +
@@ -244,8 +253,8 @@
     }
   });
 
-  // Auto-open 3 seconds after the website opens, once per visit.
-  if (canAutoOpen()) {
-    setTimeout(function () { seenThisVisit(true); open(); }, CONFIG.showAfterMs);
-  }
+  // Auto-open after page load / refresh
+  setTimeout(function () {
+    open();
+  }, CONFIG.showAfterMs || 1200);
 })();

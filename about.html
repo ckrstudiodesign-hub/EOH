@@ -1577,17 +1577,44 @@
     n.addEventListener('click', function() { setStage(k); });
   });
 
-  // Cursor ambient radial tracker
+  // Cursor ambient radial tracker (throttled)
+  var philoTicking = false;
   philoSec.addEventListener('mousemove', function(e) {
-    var rect = philoSec.getBoundingClientRect();
-    var x = e.clientX - rect.left;
-    var y = e.clientY - rect.top;
-    philoSec.style.setProperty('--mx', x + 'px');
-    philoSec.style.setProperty('--my', y + 'px');
-  });
+    if (!philoTicking) {
+      philoTicking = true;
+      requestAnimationFrame(function() {
+        var rect = philoSec.getBoundingClientRect();
+        var x = e.clientX - rect.left;
+        var y = e.clientY - rect.top;
+        philoSec.style.setProperty('--mx', x + 'px');
+        philoSec.style.setProperty('--my', y + 'px');
+        philoTicking = false;
+      });
+    }
+  }, { passive: true });
 
-  // Auto-flow tick loop
+  // Auto-flow tick loop - runs only when section is in viewport
+  var isPhiloVisible = true;
+  var philoRaf = null;
+  if ('IntersectionObserver' in window) {
+    var pObserver = new IntersectionObserver(function(entries) {
+      isPhiloVisible = entries[0].isIntersecting;
+      if (isPhiloVisible && !philoRaf) {
+        lastTick = performance.now();
+        philoRaf = requestAnimationFrame(tickFlow);
+      } else if (!isPhiloVisible && philoRaf) {
+        cancelAnimationFrame(philoRaf);
+        philoRaf = null;
+      }
+    }, { threshold: 0.1 });
+    pObserver.observe(philoSec);
+  }
+
   function tickFlow(now) {
+    if (!isPhiloVisible) {
+      philoRaf = null;
+      return;
+    }
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!reduce && !isHovered) {
       var delta = now - lastTick;
@@ -1602,9 +1629,9 @@
       }
     }
     lastTick = now;
-    requestAnimationFrame(tickFlow);
+    philoRaf = requestAnimationFrame(tickFlow);
   }
-  requestAnimationFrame(tickFlow);
+  philoRaf = requestAnimationFrame(tickFlow);
 
   // Initialize Stage 01
   setStage(0);

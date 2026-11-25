@@ -7,9 +7,19 @@
   /* smooth scroll */
   var lenis = null;
   if (!reduce && window.Lenis) {
-    lenis = new Lenis({ duration: 1.15, easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); } });
-    if (hasG) { lenis.on('scroll', ScrollTrigger.update); gsap.ticker.add(function (t) { lenis.raf(t * 1000); }); gsap.ticker.lagSmoothing(0); }
-    else { (function raf(t) { lenis.raf(t); requestAnimationFrame(raf); })(); }
+    lenis = new Lenis({
+      duration: 0.9,
+      easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+      smoothWheel: true,
+      wheelMultiplier: 1.0
+    });
+    if (hasG) {
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+      gsap.ticker.lagSmoothing(500, 33);
+    } else {
+      (function raf(t) { lenis.raf(t); requestAnimationFrame(raf); })();
+    }
   }
 
   /* mark things that reveal on scroll */
@@ -33,9 +43,20 @@
   /* reveals, staggered per group */
   ScrollTrigger.batch('.rv', { start: 'top 88%', once: true, onEnter: function (b) { gsap.to(b, { opacity: 1, y: 0, duration: 1, ease: 'expo.out', stagger: .08, overwrite: true }); } });
 
-  /* the glow follows the pointer inside each card */
+  /* the glow follows the pointer inside each card (throttled to avoid layout thrashing) */
   document.querySelectorAll('.offer').forEach(function (c) {
-    c.addEventListener('pointermove', function (e) { var r = c.getBoundingClientRect(); c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px'); });
+    var ticking = false;
+    c.addEventListener('pointermove', function (e) {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(function () {
+          var r = c.getBoundingClientRect();
+          c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+          c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+          ticking = false;
+        });
+      }
+    }, { passive: true });
   });
 
   /* gallery: drag sideways, wheel scrolls it sideways while over it, gentle parallax on images */
