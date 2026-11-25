@@ -38,7 +38,7 @@
 .pr-media{position:relative;display:block;aspect-ratio:16/9;overflow:hidden;background:#221810}
 .pr-media img,.pr-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.23,1,.32,1),opacity .5s ease}
 .pr-media video{opacity:0}
-.pr-card.vplay .pr-media video{opacity:1}
+.pr-card.pr-playing .pr-media video{opacity:1}
 .pr-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,18,12,0) 55%,rgba(26,18,12,.35))}
 .pr-body{display:flex;flex-direction:column;gap:10px;padding:clamp(20px,2.4vw,28px);flex:1}
 .pr-name{font:500 clamp(1.3rem,1.9vw,1.6rem)/1.2 var(--serif);color:var(--ink);letter-spacing:-.01em}
@@ -157,5 +157,7 @@ main.pr ~ .site-ft .ft-main{padding-top:clamp(56px,6vw,80px)}
 @media (hover:hover) and (pointer:fine){
   .pr-card:hover,.js .pr .pr-card.rv.in:hover{transform:none}
 }
-.pr-media{transform:translateZ(0);-webkit-mask-image:-webkit-radial-gradient(white,black)}
-.pr-media img,.pr-media video{backface-visibility:hidden;will-change:transform}
+.pr-media{isolation:isolate}
+.pr-media img,.pr-media video{backface-visibility:hidden;transform:translateZ(0) scale(1)}
+@media (hover:hover) and (pointer:fine){.pr-card:hover .pr-media img,.pr-card:hover .pr-media video{transform:translateZ(0) scale(1.04)}}
+.pr-card{-webkit-tap-highlight-color:transparent}

@@ -22,9 +22,9 @@
   if (fine && !reduce) {
     document.querySelectorAll('.pr-card').forEach(function (c) {
       var v = c.querySelector('video'); if (!v) return;
-      var hov=false; v.addEventListener('playing', function () { if (hov) c.classList.add('vplay'); });
-      c.addEventListener('pointerenter', function () { hov=true; if (!v.src) v.src = v.dataset.src; var p = v.play(); if (p && p.catch) p.catch(function () {}); if (v.readyState > 2 && !v.paused) c.classList.add('vplay'); });
-      c.addEventListener('pointerleave', function () { hov=false; v.pause(); c.classList.remove('vplay'); });
+      var hov=false; v.addEventListener('playing', function () { if (hov) c.classList.add('pr-playing'); });
+      c.addEventListener('pointerenter', function () { hov=true; if (!v.src) v.src = v.dataset.src; var p = v.play(); if (p && p.catch) p.catch(function () {}); if (v.readyState > 2 && !v.paused) c.classList.add('pr-playing'); });
+      c.addEventListener('pointerleave', function () { hov=false; v.pause(); c.classList.remove('pr-playing'); });
     });
   }
 
