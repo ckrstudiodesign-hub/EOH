@@ -36,66 +36,71 @@
 '.eb.open{visibility:visible;pointer-events:auto}' +
 '.eb-veil{position:absolute;inset:0;background:rgba(26,14,8,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity 300ms ease;will-change:opacity}' +
 '.eb.open .eb-veil{opacity:1}' +
-'.eb-card{position:relative;width:min(560px,100%);max-height:calc(100svh - 32px);overflow:auto;background:#FFFEFB;color:#1A0E08;border-radius:24px;padding:clamp(24px,4vw,40px);' +
-  'box-shadow:0 40px 100px rgba(26,14,8,.35);font-family:var(--font,"Google Sans Flex",system-ui,sans-serif);opacity:0;transform:translateY(16px) scale(.97) translateZ(0);will-change:transform,opacity;transition:opacity 260ms cubic-bezier(.23,1,.32,1),transform 420ms cubic-bezier(.23,1,.32,1)}' +
+'.eb-card{position:relative;width:min(760px,100%);max-height:calc(100svh - 32px);overflow:auto;background:#FCF7EC;color:#1A1410;border-radius:16px;padding:clamp(26px,4vw,38px) clamp(24px,4vw,40px);' +
+  'box-shadow:0 32px 90px rgba(26,14,8,.32);font-family:"Zilla Slab",Georgia,serif;opacity:0;transform:translateY(16px) scale(.97) translateZ(0);will-change:transform,opacity;transition:opacity 260ms cubic-bezier(.23,1,.32,1),transform 420ms cubic-bezier(.23,1,.32,1)}' +
 '.eb.open .eb-card{opacity:1;transform:none}' +
-'.eb-x{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:999px;border:0;background:#F3EDE3;color:#1A0E08;display:grid;place-items:center;cursor:pointer;transition:background-color 200ms ease,transform 160ms ease}' +
-'.eb-x:hover{background:#EADFCF}.eb-x:active{transform:scale(.94)}' +
-'.eb-kick{display:inline-flex;align-items:center;gap:8px;font-size:.8125rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#B89600}' +
-'.eb-kick::before{content:"";width:8px;height:8px;border-radius:2px;background:currentColor;transform:rotate(45deg)}' +
-'.eb h2{margin:12px 40px 0 0;font-size:clamp(1.6rem,4vw,2.1rem);font-weight:600;letter-spacing:-0.035em;line-height:1.08}' +
-'.eb-lead{margin:12px 0 0;color:#6B5D53;font-size:.9688rem;line-height:1.55}' +
-'.eb-lead em{font-style:normal;font-weight:600;color:#1A0E08}' +
-'.eb-list{margin:14px 0 0;padding:0;list-style:none;display:grid;gap:8px;font-size:.9375rem}' +
-'.eb-list li{display:flex;gap:10px;align-items:flex-start}' +
-'.eb-list svg{flex:none;margin-top:3px;color:#E8540F}' +
-'.eb-claim{margin-top:16px;padding:12px 14px;border-radius:12px;background:#FAF5EB;border:1px solid #EFE4CE;display:grid;gap:2px}' +
-'.eb-claim strong{font-size:1rem;color:#1A0E08;letter-spacing:-0.01em}' +
-'.eb-claim span{font-size:.875rem;color:#6B5D53}' +
-'.eb-form{margin-top:16px;display:grid;gap:10px}' +
-'.eb-form label{font-size:.875rem;font-weight:500}' +
-'.eb-row{display:flex;gap:8px;flex-wrap:wrap}' +
-'.eb-in{flex:1 1 220px;min-width:0;height:50px;padding:0 16px;border-radius:12px;border:1px solid #E9E1D6;background:#fff;font:inherit;font-size:1rem;color:inherit;transition:border-color 200ms ease,box-shadow 200ms ease}' +
-'.eb-in:focus{outline:none;border-color:#E8540F;box-shadow:0 0 0 4px rgba(232,84,15,.14)}' +
+'.eb-x{position:absolute;top:0;right:0;width:44px;height:44px;border-radius:0 16px 0 0;border:0;background:#B89600;color:#fff;display:grid;place-items:center;cursor:pointer;transition:background-color 200ms ease,transform 160ms ease}' +
+'.eb-x:hover{background:#9C7F00}.eb-x:active{transform:scale(.95)}' +
+'.eb h2{margin:0 36px 0 0;font-family:"Zilla Slab",Georgia,serif;font-size:clamp(1.5rem,3.2vw,1.85rem);font-weight:600;letter-spacing:-0.01em;line-height:1.2;color:#B89600}' +
+'.eb-intro{margin-top:18px;font-size:.9688rem;line-height:1.65;color:#1A1410}' +
+'.eb-lead{margin:0 0 8px}' +
+'.eb-lead em{font-style:italic;font-weight:700;color:#B89600}' +
+'.eb-bold{margin:10px 0 0;font-weight:700;color:#1A1410}' +
+'.eb-box{margin-top:18px;padding:22px 24px;border-radius:14px;border:1px solid #DFD5B5;background:rgba(255,255,255,.35)}' +
+'.eb-box h3{margin:0 0 8px;font-family:"Zilla Slab",Georgia,serif;font-size:clamp(1.25rem,2.4vw,1.45rem);font-weight:600;color:#B89600;letter-spacing:-0.01em}' +
+'.eb-box-p{margin:0 0 6px;font-size:.9688rem;line-height:1.6;color:#1A1410}' +
+'.eb-form{margin-top:22px;display:grid;gap:14px}' +
+'.eb-field{position:relative;margin-top:4px}' +
+'.eb-field label{position:absolute;top:-10px;left:14px;padding:0 6px;background:#FCF7EC;font-size:.875rem;font-weight:500;color:#1A1410;line-height:1.2;z-index:1}' +
+'.eb-in{width:100%;box-sizing:border-box;height:48px;padding:0 16px;border-radius:8px;border:1px solid #D8CCA8;background:#FFFDF9;font:inherit;font-size:1rem;color:#1A1410;transition:border-color 200ms ease,box-shadow 200ms ease}' +
+'.eb-in:focus{outline:none;border-color:#B89600;box-shadow:0 0 0 3px rgba(184,150,0,.15)}' +
 '.eb-in[aria-invalid=true]{border-color:#C2410C}' +
-'.eb-btn{flex:0 0 auto;height:50px;padding:0 22px;border-radius:12px;border:0;background:#1A0E08;color:#F8F4EE;font:inherit;font-weight:600;font-size:1rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:background-color 200ms ease,transform 160ms ease}' +
-'.eb-btn:hover{background:#2E1A10}.eb-btn:active{transform:scale(.97)}.eb-btn[disabled]{opacity:.7;cursor:progress}' +
-'.eb-msg{min-height:1.2em;font-size:.875rem;color:#C2410C}' +
-'.eb-fine{margin-top:4px;font-size:.8125rem;color:#6B5D53;line-height:1.5}' +
-'.eb-done{display:none;text-align:left}' +
-'.eb.sent .eb-form,.eb.sent .eb-intro{display:none}.eb.sent .eb-done{display:block}' +
-'.eb-done p{margin:14px 0 0;color:#6B5D53;line-height:1.55}' +
-'.eb-done a.eb-btn{margin-top:20px;text-decoration:none;width:auto}' +
-'.eb-sign{margin-top:12px;font-family:"Kaushan Script",cursive;font-size:1.25rem;color:#B89600}' +
+'.eb-btn{justify-self:start;height:44px;padding:0 30px;border-radius:999px;border:2px solid #B89600;background:#FFFDF9;color:#B89600;font:inherit;font-weight:600;font-size:.9688rem;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:background-color 200ms ease,color 200ms ease,transform 160ms ease}' +
+'.eb-btn:hover{background:#B89600;color:#fff}.eb-btn:active{transform:scale(.97)}.eb-btn[disabled]{opacity:.7;cursor:progress}' +
+'.eb-msg{min-height:1.1em;font-size:.875rem;color:#C2410C;margin-top:-6px}' +
+'.eb-msg:empty{display:none}' +
+'.eb-foot{margin-top:18px;font-size:.9688rem;line-height:1.6;color:#1A1410}' +
+'.eb-foot p{margin:0}' +
+'.eb-sign{margin-top:12px;font-family:"Zilla Slab",Georgia,serif;font-size:.9688rem;font-weight:600;color:#B89600}' +
+'.eb-done{display:none;text-align:left;margin-top:16px}' +
+'.eb.sent .eb-intro,.eb.sent .eb-box,.eb.sent .eb-foot{display:none}.eb.sent .eb-done{display:block}' +
+'.eb-done p{margin:0 0 18px;color:#1A1410;font-size:1rem;line-height:1.6}' +
+'.eb-done a.eb-btn{text-decoration:none;width:auto}' +
 '@media (prefers-reduced-motion:reduce){.eb-card,.eb-veil{transition:none}}';
 
-  var check = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
   var html = '' +
 '<div class="eb-veil" data-eb-close></div>' +
 '<div class="eb-card" role="dialog" aria-modal="true" aria-labelledby="eb-title">' +
-  '<button class="eb-x" type="button" data-eb-close aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>' +
-  '<span class="eb-kick">Free eBook</span>' +
+  '<button class="eb-x" type="button" data-eb-close aria-label="Close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>' +
   '<h2 id="eb-title">Your Journey with EOH Starts Here!</h2>' +
   '<div class="eb-intro">' +
     '<p class="eb-lead">Hi,</p>' +
     '<p class="eb-lead">Welcome to Emerge on Horizon! We’re delighted to see you! As a token of our appreciation, we want to gift you a FREE eBook, <em>“' + CONFIG.ebookTitle + '”</em>, specifically designed to help you.</p>' +
-    '<ul class="eb-list">' +
-      '<li>' + check + '<span><strong>Action Plan for the First 30 Days</strong> to unlock your potential and get started.</span></li>' +
-      '<li>' + check + '<span>Join us in learning the keys to success in the world of entrepreneurship.</span></li>' +
-    '</ul>' +
-    '<div class="eb-claim">' +
-      '<strong>Claim Your Free eBook Now!</strong>' +
-      '<span>Enter your email address below and get instant access to your eBook!</span>' +
-    '</div>' +
+    '<p class="eb-bold">Action Plan for the First 30 Days to unlock your potential and get started.</p>' +
   '</div>' +
-  '<form class="eb-form" novalidate>' +
-    '<label for="eb-email">Email</label>' +
-    '<div class="eb-row"><input class="eb-in" id="eb-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required>' +
-    '<button class="eb-btn" type="submit">Send me the eBook</button></div>' +
-    '<div class="eb-msg" role="alert" aria-live="polite"></div>' +
-    '<p class="eb-fine">By signing up, you’ll also receive insider tips, upcoming events, and more surprises designed just for you!</p>' +
+  '<div class="eb-box">' +
+    '<h3>Claim Your Free eBook Now!</h3>' +
+    '<p class="eb-box-p">Enter your email address below and get instant access to your eBook!</p>' +
+    '<p class="eb-box-p">Join us in learning the keys to success in the world of entrepreneurship.</p>' +
+    '<form class="eb-form" novalidate>' +
+      '<div class="eb-field">' +
+        '<label for="eb-email">Email</label>' +
+        '<input class="eb-in" id="eb-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="" required>' +
+      '</div>' +
+      '<div class="eb-msg" role="alert" aria-live="polite"></div>' +
+      '<button class="eb-btn" type="submit">Submit Now</button>' +
+    '</form>' +
+  '</div>' +
+  '<div class="eb-foot">' +
+    '<p>By signing up, you’ll also receive insider tips, upcoming events, and more surprises designed just for you!</p>' +
     '<div class="eb-sign">Happy Emerging!</div>' +
-  '</form>' +
+  '</div>' +
+  '<div class="eb-done" aria-live="polite">' +
+    '<p class="eb-done-text"></p>' +
+    '<a class="eb-btn" href="' + ebookUrl + '" target="_blank" rel="noopener" download>Download the eBook now</a>' +
+    '<div class="eb-sign">Happy Emerging!</div>' +
+  '</div>' +
+'</div>';
   '<div class="eb-done" aria-live="polite">' +
     '<p class="eb-done-text"></p>' +
     '<a class="eb-btn" href="' + ebookUrl + '" target="_blank" rel="noopener" download>Download the eBook now</a>' +
@@ -149,7 +154,6 @@
       : 'Thank you! Your eBook is ready. Download it below.' + (configured ? ' (We couldn’t email it just now, so here it is directly.)' : '');
     root.querySelector('#eb-title').textContent = emailed ? 'Check your inbox' : 'Your eBook is ready';
     root.classList.add('sent');
-    store('claimed');
     root.querySelector('.eb-done a').focus({ preventScroll: true });
   }
 
