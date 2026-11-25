@@ -802,6 +802,223 @@ a.ct-m:hover .go{opacity:1;transform:none}
 .ac-logo[aria-selected="true"] img{filter:none;opacity:1;transform:scale(1.04)}
 .ac-logo:focus-visible{outline:2px solid #B89600;outline-offset:3px}
 @media (max-width:520px){.ac-list.ac-list{grid-template-columns:repeat(2,minmax(0,1fr))}.ac-btn.ac-logo{height:84px}.ac-logo img{max-height:44px}}
+/* ========================================================
+   OUR CLIENTS: equal-size logo tiles, revealed one by one, then scrolling
+   ======================================================== */
+.cl{position:relative;background:#FFFEFB;padding:clamp(48px,6vw,80px) 0;overflow:hidden}
+.cl-head{max-width:760px;margin:0 auto clamp(26px,3.5vw,40px);padding:0 clamp(20px,4vw,56px);text-align:center}
+.cl-kicker{font:400 clamp(1.7rem,2.8vw,2.3rem)/1.1 "Kaushan Script",cursive;color:#B89600}
+.cl-sub{margin-top:8px;color:#5E5249;font-size:1.0625rem}
+.cl-row{position:relative;-webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
+.cl-lane{list-style:none;margin:0;padding:12px 0;display:flex;gap:20px;width:max-content;animation:clScroll 32s linear infinite}
+.cl-row:hover .cl-lane{animation-play-state:paused}
+@keyframes clScroll{to{transform:translateX(calc(-50% - 10px))}}
+.cl-tile{flex:none;width:210px;height:112px;display:flex;align-items:center;justify-content:center;padding:18px 22px;border-radius:18px;background:#fff;border:1px solid rgba(43,33,26,.08);box-shadow:0 1px 2px rgba(0,0,0,.03),0 10px 26px rgba(43,33,26,.06);transition:transform .35s var(--ease),box-shadow .35s ease,border-color .35s ease}
+/* every logo fills the same box: same width and height limits, centred */
+.cl-tile img{width:var(--w);height:var(--h);max-width:100%;object-fit:contain;filter:grayscale(1) contrast(1.1);opacity:.72;transition:filter .35s ease,opacity .35s ease,transform .45s var(--ease)}
+.cl-tile:hover{transform:translateY(-4px);border-color:rgba(184,150,0,.4);box-shadow:0 18px 36px rgba(43,33,26,.12)}
+.cl-tile:hover img{filter:none;opacity:1;transform:scale(1.05)}
+/* entrance: tiles pop in one by one, then the lane starts moving */
+.js .cl .cl-head > *{opacity:0;transform:translateY(16px);transition:opacity .8s ease,transform .9s var(--ease)}
+.js .cl.in .cl-head > *{opacity:1;transform:none}
+.js .cl .cl-tile{opacity:0;transform:translateY(26px) scale(.9)}
+.js .cl.in .cl-tile{opacity:1;transform:none;transition:opacity .6s ease var(--d,0s),transform .8s cubic-bezier(.34,1.56,.64,1) var(--d,0s),box-shadow .35s ease,border-color .35s ease}
+.js .cl.in.settled .cl-tile{transition:transform .35s var(--ease),box-shadow .35s ease,border-color .35s ease}
+.js .cl.in.settled .cl-tile:hover{transform:translateY(-4px)}
+.js .cl:not(.settled) .cl-lane{animation-play-state:paused}
+@media (max-width:640px){.cl-tile{width:160px;height:90px;padding:14px 16px;border-radius:14px}.cl-tile img{width:calc(var(--w)*.76);height:calc(var(--h)*.76)}.cl-lane{gap:14px}@keyframes clScroll{to{transform:translateX(calc(-50% - 7px))}}}
+@media (prefers-reduced-motion:reduce){.cl-lane{animation:none;flex-wrap:wrap;justify-content:center;width:auto;padding-inline:20px}.cl-tile[aria-hidden="true"]{display:none}.cl-row{-webkit-mask-image:none;mask-image:none}.js .cl .cl-tile,.js .cl .cl-head > *{opacity:1;transform:none}}
+/* services: readable text + hover highlight */
+.sv-card::before{background:linear-gradient(180deg,rgba(14,8,3,.90) 0%,rgba(14,8,3,.72) 26%,rgba(14,8,3,.30) 48%,rgba(14,8,3,0) 62%,rgba(14,8,3,.50) 100%);transition:background .45s ease}
+.sv-card::after{content:"";position:absolute;inset:0;border-radius:inherit;z-index:1;pointer-events:none;box-shadow:inset 0 0 0 2px rgba(226,197,90,0);transition:box-shadow .4s ease}
+.sv-cat{color:#F7DE85;font-weight:600;text-shadow:0 1px 8px rgba(0,0,0,.55)}
+.sv-title{color:#fff;font-weight:600;text-shadow:0 2px 14px rgba(0,0,0,.55),0 1px 2px rgba(0,0,0,.4)}
+.sv-card > div{position:relative;z-index:2}
+.sv-go{position:relative;z-index:2}
+@media (hover:hover) and (pointer:fine){
+  .js .sv.in .sv-card.settled:hover,.sv-card:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 0 0 1px rgba(226,197,90,.5),0 26px 60px rgba(184,150,0,.35),0 10px 24px rgba(43,33,26,.18)}
+  .sv-card:hover::after{box-shadow:inset 0 0 0 2px rgba(226,197,90,.95)}
+  .sv-card:hover::before{background:linear-gradient(180deg,rgba(14,8,3,.92) 0%,rgba(40,28,6,.70) 30%,rgba(120,90,10,.18) 60%,rgba(184,150,0,.10) 75%,rgba(14,8,3,.55) 100%)}
+  .sv-card:hover .sv-cat{color:#FFE9A0}
+  .js .sv.in .sv-track:hover .sv-card.settled:not(:hover){opacity:.62;filter:saturate(.7)}
+  .js .sv.in .sv-card.settled{transition:transform .45s var(--ease),box-shadow .45s ease,opacity .35s ease,filter .35s ease}
+}
+.sv-card:focus-visible::after{box-shadow:inset 0 0 0 3px #E2C55A}
+/* mission: live-site look (blurred library photo, left-aligned) */
+.ms{min-height:0;display:block;padding:clamp(80px,9vw,120px) 0;background:#2A2017}
+.ms-bg{inset:-10% 0}
+.ms-bg img{width:100%;height:100%;object-fit:cover;object-position:center 45%;display:block;transform:scale(1.08);will-change:transform}
+.ms::before{background:linear-gradient(90deg,rgba(20,12,6,.55) 0%,rgba(20,12,6,.35) 55%,rgba(20,12,6,.15) 100%)}
+.ms-in{max-width:1240px;text-align:left}
+.ms-kicker{display:block;font-size:clamp(1.7rem,2.6vw,2.2rem);color:#CCB23D;text-shadow:1px 1px 4px rgba(0,0,0,.7)}
+.ms-kicker::before,.ms-kicker::after{display:none}
+.ms-text{margin-top:10px;max-width:58em;font:500 clamp(1.15rem,1.75vw,1.45rem)/1.55 "Zilla Slab",Georgia,serif;letter-spacing:0;text-wrap:pretty;text-shadow:0 1px 10px rgba(0,0,0,.45)}
+.ms-text em{font-family:inherit;font-size:inherit;color:inherit}
+.ms-text .w{opacity:.35}
+@media (prefers-reduced-motion:reduce){.ms-bg img{transform:none}}
+/* reviews: compact + world map watermark */
+.tm{padding:clamp(52px,6vw,80px) 0;isolation:isolate}
+.tm::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:url(img/world-map.webp) center 58%/min(1100px,92%) auto no-repeat;opacity:.32}
+.tm-head{margin-bottom:clamp(22px,3vw,34px)}
+.tm-h{font-size:clamp(1.9rem,3.4vw,2.8rem)}
+.tm-sub{font-size:1rem;margin-top:8px}
+.tm-row{padding:6px 0}
+.tm-row + .tm-row{margin-top:6px}
+.tm-lane{gap:16px}
+.tm-card{width:300px;padding:18px 18px 14px;gap:10px;border-radius:16px;background:rgba(255,255,255,.74);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+.tm-stars svg{width:13px;height:13px}
+.tm-q{font-size:1rem;line-height:1.4}
+.tm-prog{font-size:.75rem}
+.tm-who{padding-top:10px;gap:10px}
+.tm-who img,.tm-ini{width:36px;height:36px}
+.tm-who b{font-size:.875rem}.tm-who small{font-size:.75rem}
+.tm-more{height:28px;padding:0 10px;font-size:.75rem}
+@keyframes tmScroll{to{transform:translateX(calc(-50% - 8px))}}
+@media (max-width:640px){.tm-card{width:250px;padding:16px 16px 12px}.tm-q{font-size:.9375rem}.tm::before{background-size:160% auto;opacity:.18}}
+/* gallery: compact (a few photos + View all) */
+.gl{padding:clamp(56px,7vw,90px) 0}
+.gl-head{margin-bottom:clamp(20px,3vw,30px)}
+.gl-h{font-size:clamp(1.9rem,3.4vw,2.8rem)}
+.gl-sub{font-size:1rem;margin-top:6px}
+.gl.collapsed .gl-item.extra{display:none}
+.gl-grid{position:relative}
+.gl.collapsed .gl-grid{columns:auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.gl.collapsed .gl-item{margin:0;aspect-ratio:4/3}
+.gl.collapsed .gl-item img{height:100%;object-fit:cover;object-position:center 25%}
+.gl-more{display:flex;justify-content:center;margin-top:clamp(18px,2.6vw,28px)}
+.gl-more button{display:inline-flex;align-items:center;gap:10px;height:50px;padding:0 26px;border-radius:999px;border:1.5px solid #B89600;background:#fff;color:#7A6300;font:600 1rem/1 var(--font);cursor:pointer;box-shadow:0 10px 24px rgba(184,150,0,.14);transition:background-color .25s ease,color .25s ease,transform .2s ease}
+.gl-more button:hover{background:#B89600;color:#fff;transform:translateY(-2px)}
+.gl-more svg{width:16px;height:16px;transition:transform .35s var(--ease)}
+.gl:not(.collapsed) .gl-more svg{transform:rotate(180deg)}
+@media (max-width:640px){.gl.collapsed .gl-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.gl.collapsed .gl-item{aspect-ratio:1}}
+/* gallery: original photo shapes in the short view */
+.gl.collapsed .gl-grid{display:block;columns:4 220px;column-gap:16px}
+.gl.collapsed .gl-item{margin:0 0 16px;aspect-ratio:auto}
+.gl.collapsed .gl-item img{height:auto;object-fit:initial}
+@media (max-width:640px){.gl.collapsed .gl-grid{columns:2 140px;column-gap:10px}.gl.collapsed .gl-item{margin-bottom:10px}}
+/* ========================================================
+   PHOTO GALLERY: 3D parallax unfurling (21st.dev design, plain JS)
+   ======================================================== */
+.pg{position:relative;background:#FAF8F2;padding-top:clamp(56px,7vw,90px)}
+.pg-head{max-width:760px;margin:0 auto;padding:0 clamp(20px,4vw,56px);text-align:center}
+.pg-h{font:400 clamp(1.9rem,3.4vw,2.8rem)/1.12 "Selima","Kaushan Script",cursive;color:#B89600}
+.pg-sub{margin-top:8px;color:#5E5249;font-size:1rem}
+.pg-track{position:relative;height:230vh}
+.pg-sticky{position:sticky;top:0;height:100vh;height:100svh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pg-banner{position:relative;width:90vw;height:80vh;max-width:1920px;border-radius:44px;border:4px solid #3A2E1E;overflow:hidden;background:#140D07;box-shadow:0 30px 80px rgba(26,14,8,.25);will-change:width,height,border-radius}
+.pg-persp{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;perspective:1000px}
+.pg-matrix{display:flex;align-items:flex-start;justify-content:center;gap:clamp(12px,1.4vw,24px);width:120vw;height:150vh;transform-style:preserve-3d;will-change:transform;flex:none}
+.pg-col{flex:none;width:22vw;min-width:200px;display:flex;flex-direction:column;gap:clamp(12px,1.4vw,24px);will-change:transform}
+.pg-card{display:block;width:100%;padding:0;border:0;border-radius:14px;overflow:hidden;background:#221810;cursor:zoom-in;transition:transform .3s ease,box-shadow .3s ease}
+.pg-card img{display:block;width:100%;height:auto;opacity:.85;transition:opacity .3s ease}
+.pg-card:hover{transform:scale(1.02);box-shadow:0 0 0 2px #E2C55A,0 18px 40px rgba(0,0,0,.45)}
+.pg-card:hover img{opacity:1}
+.pg-card:focus-visible{outline:3px solid #E2C55A;outline-offset:3px}
+.pg-shade{position:absolute;inset:0;z-index:2;pointer-events:none;
+  box-shadow:inset 0 110px 140px -50px #140D07,inset 0 -110px 140px -50px #140D07,inset 140px 0 140px -50px #140D07,inset -140px 0 140px -50px #140D07}
+.pg-all{position:absolute;z-index:3;left:50%;bottom:clamp(18px,3vh,32px);transform:translateX(-50%);display:inline-flex;align-items:center;gap:10px;height:50px;padding:0 24px;border:0;border-radius:999px;
+  background:#B89600;color:#fff;font:600 1rem/1 var(--font);cursor:pointer;box-shadow:0 12px 30px rgba(0,0,0,.35);transition:background-color .2s ease,transform .2s ease}
+.pg-all:hover{background:#CFA90E;transform:translateX(-50%) translateY(-2px)}
+.pg-all svg{width:16px;height:16px}
+.pg-lb .x{z-index:2}
+/* phones: lighter 3D, shorter scroll */
+@media (max-width:640px){.pg-track{height:190vh}.pg-banner{width:94vw;height:78vh;border-radius:26px;border-width:3px}.pg-col{min-width:150px}.pg-card{border-radius:10px}}
+/* reduced motion or no GSAP: flat, still */
+.pg.static .pg-track{height:auto}
+.pg.static .pg-sticky{position:relative;height:auto;padding:28px 0 40px}
+.pg.static .pg-banner{width:min(1240px,94vw);height:78vh;border-radius:28px}
+.pg.static .pg-matrix{transform:none;width:100%;height:auto;padding:24px}
+.pg.static .pg-col{width:auto;flex:1;min-width:0}
+/* contact: compact */
+.ct{padding:clamp(56px,6.5vw,84px) 0}
+.ct-in{max-width:1120px;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(28px,4vw,56px);align-items:center}
+.ct-kicker{font-size:clamp(1.4rem,2.2vw,1.8rem)}
+.ct-h{font-size:clamp(1.6rem,2.6vw,2.15rem);margin-top:4px;line-height:1.15}
+.ct-desc{font-size:.9375rem;line-height:1.6;margin-top:10px}
+.ct-methods{gap:8px;margin-top:20px}
+.ct-m{gap:12px;padding:10px 14px;border-radius:14px}
+.ct-ic{width:36px;height:36px;border-radius:10px}
+.ct-ic svg{width:17px;height:17px}
+.ct-m b{font-size:.9rem}
+.ct-m span{font-size:.8125rem}
+.ct-badges{gap:6px;margin-top:14px}
+.ct-badge{height:28px;padding:0 10px 0 8px;font-size:.78rem}
+.ct-card{border-radius:22px;padding:clamp(20px,2.6vw,30px)}
+.ct-card h3{font-size:clamp(1.25rem,1.7vw,1.45rem)}
+.ct-card .csub{font-size:.875rem;margin-top:4px}
+.ct-form{margin-top:16px;gap:10px}
+.ct-row{gap:10px}
+.ct-f{gap:5px}
+.ct-f label{font-size:.75rem}
+.ct-f input,.ct-f select{height:42px;font-size:.875rem;border-radius:10px}
+.ct-f textarea{min-height:84px;font-size:.875rem;border-radius:10px;padding:10px 12px}
+.ct-btn{height:46px;font-size:.9375rem;margin-top:2px}
+.ct-priv{font-size:.75rem}
+@media (max-width:900px){.ct-in{grid-template-columns:1fr;max-width:620px}}
+.pg-all{opacity:0;visibility:hidden;transform:translateX(-50%) translateY(18px);transition:opacity 1.1s ease,transform 1.2s cubic-bezier(.23,1,.32,1),visibility 0s 1.1s,background-color .2s ease}
+.pg-all.pg-all-show,.pg.static .pg-all{opacity:1;visibility:visible;transform:translateX(-50%);transition:opacity 1.1s ease,transform 1.2s cubic-bezier(.23,1,.32,1),visibility 0s,background-color .2s ease}
+.pg-all.pg-all-show:hover{transform:translateX(-50%) translateY(-2px)}
+/* ========== dark gold finale: FAQ + contact + footer as one ending ========== */
+.fq,.ct{--bg:#1A120C;--tx:#EDE6DA;--mu:rgba(237,230,218,.66);--g:#E2C55A;--g2:#C9A227;--ln:rgba(237,230,218,.11);background:var(--bg);color:var(--tx)}
+.fq{position:relative;overflow:hidden;isolation:isolate}
+.fq::before{content:"";position:absolute;left:50%;top:-260px;width:1100px;height:520px;margin-left:-550px;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at center,rgba(201,162,39,.18),rgba(201,162,39,0) 68%)}
+.fq::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:url(img/world-map.webp) right -120px top 40px/720px auto no-repeat;opacity:.1;filter:brightness(2.4)}
+.fq-kicker,.ct-kicker{color:var(--g)}
+.fq-h,.ct-h{color:#fff}
+.fq-tag{background:rgba(226,197,90,.12);color:var(--g);box-shadow:inset 0 0 0 1px rgba(226,197,90,.35)}
+.fq-sub,.ct-desc{color:var(--mu)}
+.fq-help{background:rgba(255,255,255,.04);border-color:rgba(226,197,90,.2);box-shadow:none}
+.fq-help b{color:#fff}
+.fq-help a{color:var(--g);border-color:rgba(226,197,90,.45)}
+.fq-item{background:rgba(255,255,255,.035);border-color:var(--ln);box-shadow:none}
+.fq-item:hover{border-color:rgba(226,197,90,.3)}
+.fq-item[open]{background:rgba(226,197,90,.07);border-color:rgba(226,197,90,.45);box-shadow:0 18px 40px rgba(0,0,0,.25)}
+.fq-item summary{color:#fff}
+.fq-num{color:var(--g)}
+.fq-ic{background:rgba(226,197,90,.14)}
+.fq-ic::before,.fq-ic::after{background:var(--g)}
+.fq-item[open] .fq-ic{background:var(--g2)}
+.fq-item[open] .fq-ic::before,.fq-item[open] .fq-ic::after{background:#1A120C}
+.fq-a p{color:var(--mu)}
+.fq-a a{color:var(--g)}
+/* a thin gold line joins FAQ and contact */
+.ct{border-top:0}
+.ct::before{right:auto;left:50%;top:0;width:min(1120px,90%);height:1px;margin-left:calc(min(1120px,90%) / -2);border-radius:0;background:linear-gradient(90deg,rgba(226,197,90,0),rgba(226,197,90,.45),rgba(226,197,90,0))}
+.ct-m{background:rgba(255,255,255,.04);border-color:var(--ln)}
+a.ct-m:hover{border-color:rgba(226,197,90,.45);box-shadow:0 14px 30px rgba(0,0,0,.3)}
+.ct-m b{color:#fff}
+.ct-m span{color:var(--mu)}
+.ct-ic{background:rgba(226,197,90,.12);color:var(--g)}
+a.ct-m:hover .ct-ic{background:var(--g2);color:#1A120C}
+.ct-m .go{color:var(--g)}
+.ct-badge{background:rgba(255,255,255,.04);color:var(--tx);box-shadow:inset 0 0 0 1px rgba(226,197,90,.3)}
+.ct-badge::before{background:var(--g)}
+.ct-card{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.025));border-color:rgba(226,197,90,.22);box-shadow:0 30px 70px rgba(0,0,0,.35)}
+.ct-card h3{color:#fff}
+.ct-card .csub,.ct-priv{color:var(--mu)}
+.ct-priv svg{color:var(--g)}
+.ct-f label{color:rgba(237,230,218,.86)}
+.ct-f input,.ct-f select,.ct-f textarea{background-color:rgba(0,0,0,.28);border-color:rgba(237,230,218,.16);color:#fff}
+.ct-f input::placeholder,.ct-f textarea::placeholder{color:rgba(237,230,218,.38)}
+.ct-f select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%23E2C55A' stroke-width='1.8'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+.ct-f select option{color:#1A0E08;background:#fff}
+.ct-f input:focus,.ct-f select:focus,.ct-f textarea:focus{background-color:rgba(0,0,0,.38);border-color:var(--g);box-shadow:0 0 0 4px rgba(226,197,90,.16)}
+.ct-f.err input,.ct-f.err textarea{border-color:#E07A6A}
+.ct-f .em{color:#F0A091}
+.ct-btn{background:var(--g2);color:#1A120C;box-shadow:0 12px 30px rgba(201,162,39,.25)}
+.ct-btn:hover{background:var(--g)}
+.ct-done b{color:#fff}.ct-done p{color:var(--mu)}
+.ct-done .tick{background:rgba(226,197,90,.14);color:var(--g)}
+.ct-done a{background:var(--g2);color:#1A120C}
+.ct-done #ct-mail{background:transparent!important;color:var(--g)!important;border-color:rgba(226,197,90,.5)!important}
+.ct-done button{color:var(--g);border-color:rgba(226,197,90,.5)}
+/* footer continues the same background; its call-to-action repeats the form above, so it is hidden on the home page */
+.site-ft{background:#1A120C}
+.site-ft .ft-cta{display:none}
+.site-ft .ft-main{padding-top:clamp(40px,5vw,60px);border-top:1px solid rgba(237,230,218,.1)}
+.site-ft::after{display:none}
+/* clients: logos always in their original colours */
+.cl-tile img{filter:none;opacity:1}
 /* where we work (moved out of the old hero) */
 .places{padding:120px 0 24px;text-align:center}
 .places h2{margin-top:14px;font-size:clamp(2.2rem,4.6vw,3.9rem)}
@@ -1179,6 +1396,17 @@ a.ct-m:hover .go{opacity:1;transform:none}
   </div>
 </section>
 
+<section class="cl" id="clients" aria-labelledby="cl-title">
+  <div class="cl-head">
+    <h2 class="cl-kicker" id="cl-title">Our Clients</h2>
+    <p class="cl-sub">Trusted by companies, schools and communities across the UAE and beyond.</p>
+  </div>
+  <div class="cl-row">
+    <ul class="cl-lane" aria-label="Client logos"><li class="cl-tile"><img style="--w:150px;--h:29px" src="img/logos/howden.webp" alt="Howden Insurance Brokers" loading="lazy" draggable="false"></li><li class="cl-tile"><img style="--w:62px;--h:69px" src="img/logos/dataflow.webp" alt="Dataflow Group" loading="lazy" draggable="false"></li><li class="cl-tile"><img style="--w:114px;--h:38px" src="img/logos/transworld.webp" alt="Transworld Group" loading="lazy" draggable="false"></li><li class="cl-tile"><img style="--w:159px;--h:27px" src="img/logos/unifeeder.webp" alt="Unifeeder Group" loading="lazy" draggable="false"></li><li class="cl-tile"><img style="--w:54px;--h:72px" src="img/logos/msb-dubai.webp" alt="MSB Private School, Dubai" loading="lazy" draggable="false"></li><li class="cl-tile"><img style="--w:160px;--h:22px" src="img/logos/amp.webp" alt="Association of Muslim Professionals" loading="lazy" draggable="false"></li><li class="cl-tile" aria-hidden="true"><img style="--w:150px;--h:29px" src="img/logos/howden.webp" alt="" loading="lazy" draggable="false"></li><li class="cl-tile" aria-hidden="true"><img style="--w:62px;--h:69px" src="img/logos/dataflow.webp" alt="" loading="lazy" draggable="false"></li><li class="cl-tile" aria-hidden="true"><img style="--w:114px;--h:38px" src="img/logos/transworld.webp" alt="" loading="lazy" draggable="false"></li><li class="cl-tile" aria-hidden="true"><img style="--w:159px;--h:27px" src="img/logos/unifeeder.webp" alt="" loading="lazy" draggable="false"></li><li class="cl-tile" aria-hidden="true"><img style="--w:54px;--h:72px" src="img/logos/msb-dubai.webp" alt="" loading="lazy" draggable="false"></li><li class="cl-tile" aria-hidden="true"><img style="--w:160px;--h:22px" src="img/logos/amp.webp" alt="" loading="lazy" draggable="false"></li></ul>
+  </div>
+</section>
+
+
 <section class="sv" id="services" aria-labelledby="sv-title">
   <div class="sv-head">
     <div>
@@ -1312,41 +1540,139 @@ a.ct-m:hover .go{opacity:1;transform:none}
   </dialog>
 </section>
 
-<section class="gl" id="gallery" aria-labelledby="gl-title">
-  <div class="gl-in">
-    <div class="gl-head">
-      <div>
-        <h2 class="gl-h" id="gl-title">Our photo gallery</h2>
-        <p class="gl-sub">Moments from workshops, conferences and live events across the UAE and beyond.</p>
-      </div>
-      <div class="gl-tabs" role="tablist" aria-label="Filter the gallery">
-        <span class="gl-pill" aria-hidden="true"></span>
-        <button class="gl-tab" type="button" role="tab" aria-selected="true" data-f="all">All (13)</button>
-        <button class="gl-tab" type="button" role="tab" aria-selected="false" data-f="photo">Workshops (6)</button>
-        <button class="gl-tab" type="button" role="tab" aria-selected="false" data-f="poster">Events (7)</button>
-      </div>
+<section class="ms" id="mission" aria-labelledby="ms-title">
+  <div class="ms-bg" aria-hidden="true"><img class="ms-video" src="img/mission/mission-bg.webp" alt="" width="1600" height="660" loading="lazy"></div>
+  <div class="ms-in">
+    <h2 class="ms-kicker" id="ms-title">Our Mission</h2>
+    <p class="ms-text"><span class="w">Is</span> <span class="w">to</span> <span class="w">set</span> <em><span class="w">vibrations</span> <span class="w">of</span> <span class="w">excellence</span></em> <span class="w">among</span> <span class="w">all</span> <span class="w">age</span> <span class="w">groups</span> <span class="w">who</span> <span class="w">fail</span> <span class="w">to</span> <span class="w">envisage</span> <span class="w">their</span> <span class="w">success</span> <span class="w">and</span> <span class="w">conceal</span> <span class="w">their</span> <span class="w">competence</span> <span class="w">under</span> <span class="w">the</span> <span class="w">dashboard</span> <span class="w">of</span> <span class="w">low</span> <span class="w">self-esteem,</span> <span class="w">non-performance</span> <span class="w">and</span> <span class="w">failure.</span></p>
+  </div>
+</section>
+
+<section class="tm" id="testimonials" aria-labelledby="tm-title">
+  <div class="tm-head">
+    <h2 class="tm-h" id="tm-title">What our clients say</h2>
+    <p class="tm-sub">Leaders, educators, parents and students on working with Dr. Shaheena Kadri and EOH.</p>
+  </div>
+  <div class="tm-row r1"><div class="tm-lane"><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Achieved self-awareness, great confidence in my own abilities and could organise my thoughts.”</blockquote><p class="tm-prog">Mente Skill workshop for corporate leaders</p><figcaption class="tm-who"><img src="img/clients/nadine.webp" alt="" width="160" height="160" loading="lazy"><span><b>Nadine Kabbany</b><small>HR Manager, Dataflow</small></span><button class="tm-more" type="button" data-t="0" aria-label="Read the full review from Nadine Kabbany">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“The program is designed to uplift and enhance various skills for leaders and executives to unleash their potential.”</blockquote><p class="tm-prog">Mente Skill for corporate leaders</p><figcaption class="tm-who"><img src="img/clients/sajith.webp" alt="" width="160" height="160" loading="lazy"><span><b>Sajith Kumar</b><small>Chief Operating Officer, Howden Insurance Brokers</small></span><button class="tm-more" type="button" data-t="1" aria-label="Read the full review from Sajith Kumar">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“They were able to shed their inhibitions, set achievable targets and achieve their goals.”</blockquote><p class="tm-prog">Mente Skill for educators</p><figcaption class="tm-who"><img src="img/clients/nafisa.webp" alt="" width="160" height="160" loading="lazy"><span><b>Nafisa Arsiwala</b><small>Principal, MSB School Dubai</small></span><button class="tm-more" type="button" data-t="2" aria-label="Read the full review from Nafisa Arsiwala">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Mente Skill geared me and my entire team in India, the UAE and abroad to gear up potentially.”</blockquote><p class="tm-prog">Resilience webinar</p><figcaption class="tm-who"><img src="img/clients/amit.webp" alt="" width="160" height="160" loading="lazy"><span><b>Amit Powar</b><small>HR Manager, Unifeeder Group</small></span><button class="tm-more" type="button" data-t="3" aria-label="Read the full review from Amit Powar">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Strongly recommended for becoming a better version of yourself.”</blockquote><p class="tm-prog">Corporate learning session</p><figcaption class="tm-who"><img src="img/clients/naveen.webp" alt="" width="160" height="160" loading="lazy"><span><b>Naveen</b><small>Senior Manager, Client Service, Dataflow</small></span><button class="tm-more" type="button" data-t="4" aria-label="Read the full review from Naveen">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“An enriching session on resilience. The staff certainly found it of immense value.”</blockquote><p class="tm-prog">Resilience session for educators</p><figcaption class="tm-who"><img src="img/clients/zoher.webp" alt="" width="160" height="160" loading="lazy"><span><b>Zoher Campwalla</b><small>Manager, MSB School Dubai</small></span><button class="tm-more" type="button" data-t="5" aria-label="Read the full review from Zoher Campwalla">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“A fair boost in the confidence and rise in performance of my students.”</blockquote><p class="tm-prog">Mount N’ Muscle</p><figcaption class="tm-who"><img src="img/clients/ameer.webp" alt="" width="160" height="160" loading="lazy"><span><b>Ameer Adukkattil</b><small>Shotokan Karate Club, Dubai</small></span><button class="tm-more" type="button" data-t="6" aria-label="Read the full review from Ameer Adukkattil">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Achieved self-awareness, great confidence in my own abilities and could organise my thoughts.”</blockquote><p class="tm-prog">Mente Skill workshop for corporate leaders</p><figcaption class="tm-who"><img src="img/clients/nadine.webp" alt="" width="160" height="160" loading="lazy"><span><b>Nadine Kabbany</b><small>HR Manager, Dataflow</small></span><button class="tm-more" type="button" data-t="0" tabindex="-1" aria-label="Read the full review from Nadine Kabbany">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“The program is designed to uplift and enhance various skills for leaders and executives to unleash their potential.”</blockquote><p class="tm-prog">Mente Skill for corporate leaders</p><figcaption class="tm-who"><img src="img/clients/sajith.webp" alt="" width="160" height="160" loading="lazy"><span><b>Sajith Kumar</b><small>Chief Operating Officer, Howden Insurance Brokers</small></span><button class="tm-more" type="button" data-t="1" tabindex="-1" aria-label="Read the full review from Sajith Kumar">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“They were able to shed their inhibitions, set achievable targets and achieve their goals.”</blockquote><p class="tm-prog">Mente Skill for educators</p><figcaption class="tm-who"><img src="img/clients/nafisa.webp" alt="" width="160" height="160" loading="lazy"><span><b>Nafisa Arsiwala</b><small>Principal, MSB School Dubai</small></span><button class="tm-more" type="button" data-t="2" tabindex="-1" aria-label="Read the full review from Nafisa Arsiwala">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Mente Skill geared me and my entire team in India, the UAE and abroad to gear up potentially.”</blockquote><p class="tm-prog">Resilience webinar</p><figcaption class="tm-who"><img src="img/clients/amit.webp" alt="" width="160" height="160" loading="lazy"><span><b>Amit Powar</b><small>HR Manager, Unifeeder Group</small></span><button class="tm-more" type="button" data-t="3" tabindex="-1" aria-label="Read the full review from Amit Powar">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Strongly recommended for becoming a better version of yourself.”</blockquote><p class="tm-prog">Corporate learning session</p><figcaption class="tm-who"><img src="img/clients/naveen.webp" alt="" width="160" height="160" loading="lazy"><span><b>Naveen</b><small>Senior Manager, Client Service, Dataflow</small></span><button class="tm-more" type="button" data-t="4" tabindex="-1" aria-label="Read the full review from Naveen">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“An enriching session on resilience. The staff certainly found it of immense value.”</blockquote><p class="tm-prog">Resilience session for educators</p><figcaption class="tm-who"><img src="img/clients/zoher.webp" alt="" width="160" height="160" loading="lazy"><span><b>Zoher Campwalla</b><small>Manager, MSB School Dubai</small></span><button class="tm-more" type="button" data-t="5" tabindex="-1" aria-label="Read the full review from Zoher Campwalla">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“A fair boost in the confidence and rise in performance of my students.”</blockquote><p class="tm-prog">Mount N’ Muscle</p><figcaption class="tm-who"><img src="img/clients/ameer.webp" alt="" width="160" height="160" loading="lazy"><span><b>Ameer Adukkattil</b><small>Shotokan Karate Club, Dubai</small></span><button class="tm-more" type="button" data-t="6" tabindex="-1" aria-label="Read the full review from Ameer Adukkattil">Read</button></figcaption></figure></div></div>
+  <div class="tm-row r2"><div class="tm-lane"><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“A fabulous session positively driving interaction with children.”</blockquote><p class="tm-prog">Mente Skills program</p><figcaption class="tm-who"><img src="img/clients/ajith.webp" alt="" width="160" height="160" loading="lazy"><span><b>Ajith Pereira</b><small>Counselor, Dubai Gavel Club</small></span><button class="tm-more" type="button" data-t="7" aria-label="Read the full review from Ajith Pereira">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Given me and my employees an intense insight to upright ourselves, personally and professionally.”</blockquote><p class="tm-prog">Corporate wellness workshop</p><figcaption class="tm-who"><img src="img/clients/fatema.webp" alt="" width="160" height="160" loading="lazy"><span><b>Fatema Rizvi</b><small>Co-owner, Laperel Commercial Brokers, Dubai</small></span><button class="tm-more" type="button" data-t="8" aria-label="Read the full review from Fatema Rizvi">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“I always felt considered and valued, both as a client and as a person.”</blockquote><p class="tm-prog">One-to-one corporate coaching</p><figcaption class="tm-who"><img src="img/clients/sylvia.webp" alt="" width="160" height="160" loading="lazy"><span><b>Sylvia David</b><small>Executive, Dubai</small></span><button class="tm-more" type="button" data-t="9" aria-label="Read the full review from Sylvia David">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Extremely beneficial and enlightening.”</blockquote><p class="tm-prog">Master Mental Mettle &amp; Bounce Back</p><figcaption class="tm-who"><img src="img/clients/richard.webp" alt="" width="160" height="160" loading="lazy"><span><b>Richard Monteiro</b><small>Principal, City School Ajman</small></span><button class="tm-more" type="button" data-t="10" aria-label="Read the full review from Richard Monteiro">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Solutions to problems lie within you.”</blockquote><p class="tm-prog">Mente Skill Junior</p><figcaption class="tm-who"><img src="img/clients/lisa.webp" alt="" width="160" height="160" loading="lazy"><span><b>Lisa Molly Kurian</b><small>JSS International School Dubai</small></span><button class="tm-more" type="button" data-t="11" aria-label="Read the full review from Lisa Molly Kurian">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Problem solving was the best takeaway.”</blockquote><p class="tm-prog">Mente Skill Junior</p><figcaption class="tm-who"><img src="img/clients/jash.webp" alt="" width="160" height="160" loading="lazy"><span><b>Jash Mehta</b><small>JSS International School Dubai</small></span><button class="tm-more" type="button" data-t="12" aria-label="Read the full review from Jash Mehta">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Got over the fear of public speaking.”</blockquote><p class="tm-prog">Mente Skill Junior</p><figcaption class="tm-who"><img src="img/clients/anaya.webp" alt="" width="160" height="160" loading="lazy"><span><b>Anaya Ghosh</b><small>JSS International School Dubai</small></span><button class="tm-more" type="button" data-t="13" aria-label="Read the full review from Anaya Ghosh">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“A fabulous session positively driving interaction with children.”</blockquote><p class="tm-prog">Mente Skills program</p><figcaption class="tm-who"><img src="img/clients/ajith.webp" alt="" width="160" height="160" loading="lazy"><span><b>Ajith Pereira</b><small>Counselor, Dubai Gavel Club</small></span><button class="tm-more" type="button" data-t="7" tabindex="-1" aria-label="Read the full review from Ajith Pereira">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Given me and my employees an intense insight to upright ourselves, personally and professionally.”</blockquote><p class="tm-prog">Corporate wellness workshop</p><figcaption class="tm-who"><img src="img/clients/fatema.webp" alt="" width="160" height="160" loading="lazy"><span><b>Fatema Rizvi</b><small>Co-owner, Laperel Commercial Brokers, Dubai</small></span><button class="tm-more" type="button" data-t="8" tabindex="-1" aria-label="Read the full review from Fatema Rizvi">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“I always felt considered and valued, both as a client and as a person.”</blockquote><p class="tm-prog">One-to-one corporate coaching</p><figcaption class="tm-who"><img src="img/clients/sylvia.webp" alt="" width="160" height="160" loading="lazy"><span><b>Sylvia David</b><small>Executive, Dubai</small></span><button class="tm-more" type="button" data-t="9" tabindex="-1" aria-label="Read the full review from Sylvia David">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Extremely beneficial and enlightening.”</blockquote><p class="tm-prog">Master Mental Mettle &amp; Bounce Back</p><figcaption class="tm-who"><img src="img/clients/richard.webp" alt="" width="160" height="160" loading="lazy"><span><b>Richard Monteiro</b><small>Principal, City School Ajman</small></span><button class="tm-more" type="button" data-t="10" tabindex="-1" aria-label="Read the full review from Richard Monteiro">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Solutions to problems lie within you.”</blockquote><p class="tm-prog">Mente Skill Junior</p><figcaption class="tm-who"><img src="img/clients/lisa.webp" alt="" width="160" height="160" loading="lazy"><span><b>Lisa Molly Kurian</b><small>JSS International School Dubai</small></span><button class="tm-more" type="button" data-t="11" tabindex="-1" aria-label="Read the full review from Lisa Molly Kurian">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Problem solving was the best takeaway.”</blockquote><p class="tm-prog">Mente Skill Junior</p><figcaption class="tm-who"><img src="img/clients/jash.webp" alt="" width="160" height="160" loading="lazy"><span><b>Jash Mehta</b><small>JSS International School Dubai</small></span><button class="tm-more" type="button" data-t="12" tabindex="-1" aria-label="Read the full review from Jash Mehta">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Got over the fear of public speaking.”</blockquote><p class="tm-prog">Mente Skill Junior</p><figcaption class="tm-who"><img src="img/clients/anaya.webp" alt="" width="160" height="160" loading="lazy"><span><b>Anaya Ghosh</b><small>JSS International School Dubai</small></span><button class="tm-more" type="button" data-t="13" tabindex="-1" aria-label="Read the full review from Anaya Ghosh">Read</button></figcaption></figure></div></div>
+  <dialog class="tm-dlg" aria-labelledby="tm-dlg-name">
+    <button class="tm-dlg-x" type="button" aria-label="Close"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3l10 10M13 3 3 13"/></svg></button>
+    <div class="tm-dlg-in">
+      <div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div>
+      <p class="tm-q" data-h></p>
+      <p class="tm-dlg-full" data-f></p>
+      <div class="tm-who"><span data-av></span><span><b id="tm-dlg-name" data-n></b><small data-r></small></span></div>
     </div>
-    <div class="gl-grid">
-      <button class="gl-item" type="button" data-i="0" data-cat="photo" style="--d:0.00s" aria-label="Open photo: Speaking at the Remedium International Conference, Dubai"><img src="img/g/remedium-international-conference-dubai.webp" alt="Speaking at the Remedium International Conference, Dubai" width="845" height="1200" loading="lazy"><span class="gl-cap"><small>Workshop</small>Speaking at the Remedium International Conference, Dubai</span><span class="gl-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
-      <button class="gl-item" type="button" data-i="1" data-cat="photo" style="--d:0.06s" aria-label="Open photo: Stress management workshop for Adidas Group"><img src="img/g/adidas-group-session-a-stress-management-workshop.webp" alt="Stress management workshop for Adidas Group" width="1080" height="810" loading="lazy"><span class="gl-cap"><small>Workshop</small>Stress management workshop for Adidas Group</span><span class="gl-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
-      <button class="gl-item" type="button" data-i="2" data-cat="poster" style="--d:0.12s" aria-label="Open photo: Resilience workshop at Dubai Quality Group"><img src="img/g/a-resilience-workshop-at-dubai-quality-group.webp" alt="Resilience workshop at Dubai Quality Group" width="1194" height="1200" loading="lazy"><span class="gl-cap"><small>Event poster</small>Resilience workshop at Dubai Quality Group</span><span class="gl-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
-      <button class="gl-item" type="button" data-i="3" data-cat="photo" style="--d:0.18s" aria-label="Open photo: Mente Skills program for educators, MSB School Dubai"><img src="img/g/msb-school-dubai-mente-skills-program-for-educators.webp" alt="Mente Skills program for educators, MSB School Dubai" width="1200" height="800" loading="lazy"><span class="gl-cap"><small>Workshop</small>Mente Skills program for educators, MSB School Dubai</span><span class="gl-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
-      <button class="gl-item" type="button" data-i="4" data-cat="photo" style="--d:0.24s" aria-label="Open photo: Mente Skill program for Unifeeder Group, Dubai"><img src="img/g/mente-skill-program-for-unifeeder-group-dubai.webp" alt="Mente Skill program for Unifeeder Group, Dubai" width="676" height="1200" loading="lazy"><span class="gl-cap"><small>Workshop</small>Mente Skill program for Unifeeder Group, Dubai</span><span class="gl-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
-      <button class="gl-item" type="button" data-i="5" data-cat="poster" style="--d:0.30s" aria-label="Open photo: Women Empowerment Workshop, AMP national event"><img src="img/g/amp-ngo-national-event-women-empowerment-workshop.webp" alt="Women Empowerment Workshop, AMP national event" width="904" height="928" loading="lazy"><span class="gl-cap"><small>Event poster</small>Women Empowerment Workshop, AMP national event</span><span class="gl-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
-      <button class="gl-item" type="button" data-i="6" data-cat="photo" style="--d:0.36s" aria-label="Open photo: Mente Skills program at Transworld, Dubai"><img src="img/g/mente-skills-program-at-transworld-dubai.webp" alt="Mente Skills program at Transworld, Dubai" width="1200" height="676" loading="lazy"><span class="gl-cap"><small>Workshop</small>Mente Skills program at Transworld, Dubai</span><span class="gl-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
-      <button class="gl-item" type="button" data-i="7" data-cat="poster" style="--d:0.42s" aria-label="Open photo: Leadership workshop for Howden"><img src="img/g/howden-leadership-workshop.webp" alt="Leadership workshop for Howden" width="848" height="1200" loading="lazy"><span class="gl-cap"><small>Event poster</small>Leadership workshop for Howden</span><span class="gl-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
-      <button class="gl-item" type="button" data-i="8" data-cat="photo" style="--d:0.48s" aria-label="Open photo: Transworld Group workshop"><img src="img/g/transworld-group-workshop.webp" alt="Transworld Group workshop" width="1200" height="676" loading="lazy"><span class="gl-cap"><small>Workshop</small>Transworld Group workshop</span><span class="gl-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
-      <button class="gl-item" type="button" data-i="9" data-cat="poster" style="--d:0.48s" aria-label="Open photo: International webinar session, IIHP"><img src="img/g/1st-international-workshop.webp" alt="International webinar session, IIHP" width="751" height="1024" loading="lazy"><span class="gl-cap"><small>Event poster</small>International webinar session, IIHP</span><span class="gl-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
-      <button class="gl-item" type="button" data-i="10" data-cat="poster" style="--d:0.48s" aria-label="Open photo: Kick Start 2022: personal and professional growth live event"><img src="img/g/live-event-personal-and-professional-growth-webinar.webp" alt="Kick Start 2022: personal and professional growth live event" width="848" height="1200" loading="lazy"><span class="gl-cap"><small>Event poster</small>Kick Start 2022: personal and professional growth live event</span><span class="gl-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
-      <button class="gl-item" type="button" data-i="11" data-cat="poster" style="--d:0.48s" aria-label="Open photo: Mente Skills workshop with Unifeeder"><img src="img/g/mente-skills-workshop-with-unifeeder.webp" alt="Mente Skills workshop with Unifeeder" width="848" height="1200" loading="lazy"><span class="gl-cap"><small>Event poster</small>Mente Skills workshop with Unifeeder</span><span class="gl-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
-      <button class="gl-item" type="button" data-i="12" data-cat="poster" style="--d:0.48s" aria-label="Open photo: Mente Skills Jr with Toastmasters at Dubai Gavel Club"><img src="img/g/mente-skills-jr-with-toastmasters-at-gavels-club.webp" alt="Mente Skills Jr with Toastmasters at Dubai Gavel Club" width="776" height="1200" loading="lazy"><span class="gl-cap"><small>Event poster</small>Mente Skills Jr with Toastmasters at Dubai Gavel Club</span><span class="gl-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span></button>
+  </dialog>
+</section>
+
+
+
+<section class="pg" id="gallery" aria-labelledby="pg-title">
+  <div class="pg-head">
+    <h2 class="pg-h" id="pg-title">Our photo gallery</h2>
+    <p class="pg-sub">Moments from workshops, conferences and live events across the UAE and beyond.</p>
+  </div>
+  <div class="pg-track">
+    <div class="pg-sticky">
+      <div class="pg-banner">
+        <div class="pg-persp">
+          <div class="pg-matrix">
+            <div class="pg-col" data-c="0">
+            <button class="pg-card" type="button" data-i="0" aria-label="Open photo: Speaking at the Remedium International Conference, Dubai"><img src="img/g/remedium-international-conference-dubai.webp" alt="Speaking at the Remedium International Conference, Dubai" width="845" height="1200" loading="lazy" draggable="false"></button>
+            <button class="pg-card" type="button" data-i="4" aria-label="Open photo: Mente Skill program for Unifeeder Group, Dubai"><img src="img/g/mente-skill-program-for-unifeeder-group-dubai.webp" alt="Mente Skill program for Unifeeder Group, Dubai" width="676" height="1200" loading="lazy" draggable="false"></button>
+            <button class="pg-card" type="button" data-i="8" aria-label="Open photo: Transworld Group workshop"><img src="img/g/transworld-group-workshop.webp" alt="Transworld Group workshop" width="1200" height="676" loading="lazy" draggable="false"></button>
+            <button class="pg-card" type="button" data-i="12" aria-label="Open photo: Mente Skills Jr with Toastmasters at Dubai Gavel Club"><img src="img/g/mente-skills-jr-with-toastmasters-at-gavels-club.webp" alt="Mente Skills Jr with Toastmasters at Dubai Gavel Club" width="776" height="1200" loading="lazy" draggable="false"></button>
+            <button class="pg-card" type="button" data-i="0" aria-hidden="true" tabindex="-1" aria-label="Open photo: Speaking at the Remedium International Conference, Dubai"><img src="img/g/remedium-international-conference-dubai.webp" alt="" width="845" height="1200" loading="lazy" draggable="false"></button>
+            <button class="pg-card" type="button" data-i="4" aria-hidden="true" tabindex="-1" aria-label="Open photo: Mente Skill program for Unifeeder Group, Dubai"><img src="img/g/mente-skill-program-for-unifeeder-group-dubai.webp" alt="" width="676" height="1200" loading="lazy" draggable="false"></button>
+            <button class="pg-card" type="button" data-i="8" aria-hidden="true" tabindex="-1" aria-label="Open photo: Transworld Group workshop"><img src="img/g/transworld-group-workshop.webp" alt="" width="1200" height="676" loading="lazy" draggable="false"></button>
+            <button class="pg-card" type="button" data-i="12" aria-hidden="true" tabindex="-1" aria-label="Open photo: Mente Skills Jr with Toastmasters at Dubai Gavel Club"><img src="img/g/mente-skills-jr-with-toastmasters-at-gavels-club.webp" alt="" width="776" height="1200" loading="lazy" draggable="false"></button>
+            </div>
+            <div class="pg-col" data-c="1">
+            <button class="pg-card" type="button" data-i="1" aria-label="Open photo: Stress management workshop for Adidas Group"><img src="img/g/adidas-group-session-a-stress-management-workshop.webp" alt="Stress management workshop for Adidas Group" width="1080" height="810" loading="lazy" draggable="false"></button>
+            <button class="pg-card" type="button" data-i="5" aria-label="Open photo: Women Empowerment Workshop, AMP national event"><img src="img/g/amp-ngo-national-event-women-empowerment-workshop.webp" alt="Women Empowerment Workshop, AMP national event" width="904" height="928" loading="lazy" draggable="false"></button>
+            <button class="pg-card" type="button" data-i="9" aria-label="Open photo: International webinar session, IIHP"><img src="img/g/1st-international-workshop.webp" alt="International webinar session, IIHP" width="751" height="1024" loading="lazy" draggable="false"></button>
+            <button class="pg-card" type="button" data-i="1" aria-hidden="true" tabindex="-1" aria-label="Open photo: Stress management workshop for Adidas Group"><img src="img/g/adidas-group-session-a-stress-management-workshop.webp" alt="" width="1080" height="810" loading="lazy" draggable="false"></button>
+            <button class="pg-card" type="button" data-i="5" aria-hidden="true" tabindex="-1" aria-label="Open photo: Women Empowerment Workshop, AMP national event"><img src="img/g/amp-ngo-national-event-women-empowerment-workshop.webp" alt="" width="904" height="928" loading="lazy" draggable="false"></button>
+            <button class="pg-card" type="button" data-i="9" aria-hidden="true" tabindex="-1" aria-label="Open photo: International webinar session, IIHP"><img src="img/g/1st-international-workshop.webp" alt="" width="751" height="1024" loading="lazy" draggable="false"></button>
+            </div>
+            <div class="pg-col" data-c="2">
+            <button class="pg-card" type="button" data-i="2" aria-label="Open photo: Resilience workshop at Dubai Quality Group"><img src="img/g/a-resilience-workshop-at-dubai-quality-group.webp" alt="Resilience workshop at Dubai Quality Group" width="1194" height="1200" loading="lazy" draggable="false"></button>
+            <button class="pg-card" type="button" data-i="6" aria-label="Open photo: Mente Skills program at Transworld, Dubai"><img src="img/g/mente-skills-program-at-transworld-dubai.webp" alt="Mente Skills program at Transworld, Dubai" width="1200" height="676" loading="lazy" draggable="false"></button>
+            <button class="pg-card" type="button" data-i="10" aria-label="Open photo: Kick Start 2022: personal and professional growth live event"><img src="img/g/live-event-personal-and-professional-growth-webinar.webp" alt="Kick Start 2022: personal and professional growth live event" width="848" height="1200" loading="lazy" draggable="false"></button>
+            <button class="pg-card" type="button" data-i="2" aria-hidden="true" tabindex="-1" aria-label="Open photo: Resilience workshop at Dubai Quality Group"><img src="img/g/a-resilience-workshop-at-dubai-quality-group.webp" alt="" width="1194" height="1200" loading="lazy" draggable="false"></button>
+            <button class="pg-card" type="button" data-i="6" aria-hidden="true" tabindex="-1" aria-label="Open photo: Mente Skills program at Transworld, Dubai"><img src="img/g/mente-skills-program-at-transworld-dubai.webp" alt="" width="1200" height="676" loading="lazy" draggable="false"></button>
+            <button class="pg-card" type="button" data-i="10" aria-hidden="true" tabindex="-1" aria-label="Open photo: Kick Start 2022: personal and professional growth live event"><img src="img/g/live-event-personal-and-professional-growth-webinar.webp" alt="" width="848" height="1200" loading="lazy" draggable="false"></button>
+            </div>
+            <div class="pg-col" data-c="3">
+            <button class="pg-card" type="button" data-i="3" aria-label="Open photo: Mente Skills program for educators, MSB School Dubai"><img src="img/g/msb-school-dubai-mente-skills-program-for-educators.webp" alt="Mente Skills program for educators, MSB School Dubai" width="1200" height="800" loading="lazy" draggable="false"></button>
+            <button class="pg-card" type="button" data-i="7" aria-label="Open photo: Leadership workshop for Howden"><img src="img/g/howden-leadership-workshop.webp" alt="Leadership workshop for Howden" width="848" height="1200" loading="lazy" draggable="false"></button>
+            <button class="pg-card" type="button" data-i="11" aria-label="Open photo: Mente Skills workshop with Unifeeder"><img src="img/g/mente-skills-workshop-with-unifeeder.webp" alt="Mente Skills workshop with Unifeeder" width="848" height="1200" loading="lazy" draggable="false"></button>
+            <button class="pg-card" type="button" data-i="3" aria-hidden="true" tabindex="-1" aria-label="Open photo: Mente Skills program for educators, MSB School Dubai"><img src="img/g/msb-school-dubai-mente-skills-program-for-educators.webp" alt="" width="1200" height="800" loading="lazy" draggable="false"></button>
+            <button class="pg-card" type="button" data-i="7" aria-hidden="true" tabindex="-1" aria-label="Open photo: Leadership workshop for Howden"><img src="img/g/howden-leadership-workshop.webp" alt="" width="848" height="1200" loading="lazy" draggable="false"></button>
+            <button class="pg-card" type="button" data-i="11" aria-hidden="true" tabindex="-1" aria-label="Open photo: Mente Skills workshop with Unifeeder"><img src="img/g/mente-skills-workshop-with-unifeeder.webp" alt="" width="848" height="1200" loading="lazy" draggable="false"></button>
+            </div>
+          </div>
+          <span class="pg-shade" aria-hidden="true"></span>
+        </div>
+        <button class="pg-all" type="button">View all photos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></button>
+      </div>
     </div>
   </div>
-  <div class="gl-lb" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+  <div class="gl-lb pg-lb" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
     <button class="x" type="button" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     <button class="pv" type="button" aria-label="Previous photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
     <figure><img alt=""><figcaption><b data-n></b><span data-c></span></figcaption></figure>
     <button class="nx" type="button" aria-label="Next photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+  </div>
+</section>
+
+<section class="bl" id="blog" aria-labelledby="bl-title">
+  <div class="bl-in">
+    <div class="bl-head">
+      <div data-bl>
+        <h2 class="bl-h" id="bl-title">Our Blog</h2>
+        <p class="bl-sub">Physician-grounded insights from Dr. Shaheena Kadri on mindset, parenting, leadership and life.</p>
+      </div>
+      <a class="bl-all" href="blog.html" data-bl style="--d:.1s">View all articles <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
+    </div>
+    <div class="bl-grid">
+      <a class="bl-feat" href="blog.html#inner-potential" data-bl style="--d:.1s">
+        <div class="bl-media"><img src="img/blog/inner-potential.webp" alt="A woman meditating calmly on a sofa" width="1280" height="853" loading="lazy"><span class="bl-tag">Mindset &amp; Growth</span></div>
+        <div class="bl-body">
+          <div class="bl-meta"><img src="img/shaheena.webp" alt="" width="28" height="28"><b>Dr. Shaheena Kadri</b><i></i><span>6 min read</span></div>
+          <h3 class="bl-t"><span>Explore the Inner Potential: Understanding Adolescent Transformation</span></h3>
+          <p class="bl-x">Adolescence is not a period of disruption to be survived; it is a renaissance. How parents and educators can replace friction with empowerment to unlock hidden capabilities.</p>
+          <span class="bl-go">Read article <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+        </div>
+      </a>
+      <div class="bl-list">
+        <a class="bl-item" href="blog.html#kid-entrepreneur" data-bl style="--d:0.2s">
+          <div class="bl-media"><img src="img/blog/kid-entrepreneur.webp" alt="A child in glasses with the words I am your boss" width="400" height="400" loading="lazy"><span class="bl-tag">Parenting &amp; Youth</span></div>
+          <div class="bl-body">
+            <div class="bl-meta"><span>Parenting &amp; Youth</span><i></i><span>5 min read</span></div>
+            <h3 class="bl-t"><span>Is Your Kid an Entrepreneur? Early Markers of Independence</span></h3>
+            <p class="bl-x">Curiosity and independent problem-solving are often mislabelled as stubbornness. How to recognise and nurture them early.</p>
+          </div>
+        </a>
+        <a class="bl-item" href="blog.html#screen-time" data-bl style="--d:0.3s">
+          <div class="bl-media"><img src="img/blog/screen-time.webp" alt="Two girls walking and looking at a phone" width="400" height="400" loading="lazy"><span class="bl-tag">Parenting &amp; Youth</span></div>
+          <div class="bl-body">
+            <div class="bl-meta"><span>Parenting &amp; Youth</span><i></i><span>4 min read</span></div>
+            <h3 class="bl-t"><span>Screen-Time in the Modern Age: A Physician's Guide for Parents</span></h3>
+            <p class="bl-x">Reframe dopamine cycles, protect attention spans and co-create digital boundaries that stick.</p>
+          </div>
+        </a>
+        <a class="bl-item" href="blog.html#ceo-at-home" data-bl style="--d:0.4s">
+          <div class="bl-media"><img src="img/blog/ceo-at-home.webp" alt="A woman working on a laptop in a bright bedroom" width="400" height="400" loading="lazy"><span class="bl-tag">Women &amp; Career</span></div>
+          <div class="bl-body">
+            <div class="bl-meta"><span>Women &amp; Career</span><i></i><span>7 min read</span></div>
+            <h3 class="bl-t"><span>Stay-at-Home Mom to CEO at Home: Rising Into Agency</span></h3>
+            <p class="bl-x">How women can cultivate internal authority, reclaim their voice and lead their life with conviction.</p>
+          </div>
+        </a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1387,30 +1713,6 @@ a.ct-m:hover .go{opacity:1;transform:none}
   </div>
 </section>
 
-<section class="hz" id="horizon" aria-labelledby="hz-title">
-  <div class="hz-stage">
-    <div class="hz-sky" aria-hidden="true"><i class="hz-night"></i><i class="hz-dawn"></i><i class="hz-day"></i></div>
-    <canvas class="hz-dust" aria-hidden="true"></canvas>
-    <div class="hz-upper" aria-hidden="true">
-      <div class="hz-sun"><i class="hz-rays"></i><i class="hz-halo"></i><i class="hz-disc"></i></div>
-    </div>
-    <div class="hz-sea" aria-hidden="true"><i class="hz-sea-dawn"></i><i class="hz-sea-day"></i><i class="hz-glint"></i></div>
-    <i class="hz-bloom" aria-hidden="true"></i>
-    <i class="hz-line" aria-hidden="true"></i>
-
-    <p class="hz-kick">Every horizon begins in the dark.</p>
-    <h2 class="hz-title" id="hz-title" aria-label="A new horizon, emerge and shine now.">
-      <span class="hz-a" aria-hidden="true">A new horizon,</span>
-      <span class="hz-bw" aria-hidden="true"><span class="hz-b">emerge and shine now.</span></span>
-    </h2>
-    <div class="hz-rise" aria-hidden="true"><span class="hz-w">clarity</span><span class="hz-w">courage</span><span class="hz-w">purpose</span></div>
-    <div class="hz-sink" aria-hidden="true"><span class="hz-o">doubt<i></i></span><span class="hz-o">fear<i></i></span><span class="hz-o">limits<i></i></span></div>
-    <div class="hz-cta">
-      <a class="btn btn-dark" href="#contact">Begin your journey <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      <button class="btn hz-ghost" type="button" data-ebook-open>Get the free eBook</button>
-    </div>
-  </div>
-</section>
 
 <section class="ct" id="contact" aria-labelledby="ct-title">
   <div class="ct-in">
@@ -1473,84 +1775,12 @@ a.ct-m:hover .go{opacity:1;transform:none}
 
 
 
-<section class="ms" id="mission" aria-labelledby="ms-title">
-  <div class="ms-bg" aria-hidden="true"><video class="ms-video" muted loop playsinline preload="none" poster="video/mission-sunrise.jpg" data-src="video/mission-sunrise.mp4" data-src-m="video/mission-sunrise-m.mp4"></video></div>
-  <div class="ms-in">
-    <h2 class="ms-kicker" id="ms-title">Our Mission</h2>
-    <p class="ms-text"><span class="w">Is</span> <span class="w">to</span> <span class="w">set</span> <em><span class="w">vibrations</span> <span class="w">of</span> <span class="w">excellence</span></em> <span class="w">among</span> <span class="w">all</span> <span class="w">age</span> <span class="w">groups</span> <span class="w">who</span> <span class="w">fail</span> <span class="w">to</span> <span class="w">envisage</span> <span class="w">their</span> <span class="w">success</span> <span class="w">and</span> <span class="w">conceal</span> <span class="w">their</span> <span class="w">competence</span> <span class="w">under</span> <span class="w">the</span> <span class="w">dashboard</span> <span class="w">of</span> <span class="w">low</span> <span class="w">self-esteem,</span> <span class="w">non-performance</span> <span class="w">and</span> <span class="w">failure.</span></p>
-    <div class="ms-cta">
-      <a class="btn btn-gold" href="https://wa.me/971541615066?text=Hi%20EOH%2C%20I%27d%20like%20to%20book%20a%20consultation.">Book a consultation</a>
-      <a class="btn btn-ghost" href="about.html">Meet the founders</a>
-    </div>
-  </div>
-</section>
 
-<section class="tm" id="testimonials" aria-labelledby="tm-title">
-  <div class="tm-head">
-    <h2 class="tm-h" id="tm-title">What our clients say</h2>
-    <p class="tm-sub">Leaders, educators, parents and students on working with Dr. Shaheena Kadri and EOH.</p>
-  </div>
-  <div class="tm-row r1"><div class="tm-lane"><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Achieved self-awareness, great confidence in my own abilities and could organise my thoughts.”</blockquote><p class="tm-prog">Mente Skill workshop for corporate leaders</p><figcaption class="tm-who"><img src="img/clients/nadine.webp" alt="" width="160" height="160" loading="lazy"><span><b>Nadine Kabbany</b><small>HR Manager, Dataflow</small></span><button class="tm-more" type="button" data-t="0" aria-label="Read the full review from Nadine Kabbany">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“The program is designed to uplift and enhance various skills for leaders and executives to unleash their potential.”</blockquote><p class="tm-prog">Mente Skill for corporate leaders</p><figcaption class="tm-who"><img src="img/clients/sajith.webp" alt="" width="160" height="160" loading="lazy"><span><b>Sajith Kumar</b><small>Chief Operating Officer, Howden Insurance Brokers</small></span><button class="tm-more" type="button" data-t="1" aria-label="Read the full review from Sajith Kumar">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“They were able to shed their inhibitions, set achievable targets and achieve their goals.”</blockquote><p class="tm-prog">Mente Skill for educators</p><figcaption class="tm-who"><img src="img/clients/nafisa.webp" alt="" width="160" height="160" loading="lazy"><span><b>Nafisa Arsiwala</b><small>Principal, MSB School Dubai</small></span><button class="tm-more" type="button" data-t="2" aria-label="Read the full review from Nafisa Arsiwala">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Mente Skill geared me and my entire team in India, the UAE and abroad to gear up potentially.”</blockquote><p class="tm-prog">Resilience webinar</p><figcaption class="tm-who"><img src="img/clients/amit.webp" alt="" width="160" height="160" loading="lazy"><span><b>Amit Powar</b><small>HR Manager, Unifeeder Group</small></span><button class="tm-more" type="button" data-t="3" aria-label="Read the full review from Amit Powar">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Strongly recommended for becoming a better version of yourself.”</blockquote><p class="tm-prog">Corporate learning session</p><figcaption class="tm-who"><img src="img/clients/naveen.webp" alt="" width="160" height="160" loading="lazy"><span><b>Naveen</b><small>Senior Manager, Client Service, Dataflow</small></span><button class="tm-more" type="button" data-t="4" aria-label="Read the full review from Naveen">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“An enriching session on resilience. The staff certainly found it of immense value.”</blockquote><p class="tm-prog">Resilience session for educators</p><figcaption class="tm-who"><img src="img/clients/zoher.webp" alt="" width="160" height="160" loading="lazy"><span><b>Zoher Campwalla</b><small>Manager, MSB School Dubai</small></span><button class="tm-more" type="button" data-t="5" aria-label="Read the full review from Zoher Campwalla">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“A fair boost in the confidence and rise in performance of my students.”</blockquote><p class="tm-prog">Mount N’ Muscle</p><figcaption class="tm-who"><img src="img/clients/ameer.webp" alt="" width="160" height="160" loading="lazy"><span><b>Ameer Adukkattil</b><small>Shotokan Karate Club, Dubai</small></span><button class="tm-more" type="button" data-t="6" aria-label="Read the full review from Ameer Adukkattil">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Achieved self-awareness, great confidence in my own abilities and could organise my thoughts.”</blockquote><p class="tm-prog">Mente Skill workshop for corporate leaders</p><figcaption class="tm-who"><img src="img/clients/nadine.webp" alt="" width="160" height="160" loading="lazy"><span><b>Nadine Kabbany</b><small>HR Manager, Dataflow</small></span><button class="tm-more" type="button" data-t="0" tabindex="-1" aria-label="Read the full review from Nadine Kabbany">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“The program is designed to uplift and enhance various skills for leaders and executives to unleash their potential.”</blockquote><p class="tm-prog">Mente Skill for corporate leaders</p><figcaption class="tm-who"><img src="img/clients/sajith.webp" alt="" width="160" height="160" loading="lazy"><span><b>Sajith Kumar</b><small>Chief Operating Officer, Howden Insurance Brokers</small></span><button class="tm-more" type="button" data-t="1" tabindex="-1" aria-label="Read the full review from Sajith Kumar">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“They were able to shed their inhibitions, set achievable targets and achieve their goals.”</blockquote><p class="tm-prog">Mente Skill for educators</p><figcaption class="tm-who"><img src="img/clients/nafisa.webp" alt="" width="160" height="160" loading="lazy"><span><b>Nafisa Arsiwala</b><small>Principal, MSB School Dubai</small></span><button class="tm-more" type="button" data-t="2" tabindex="-1" aria-label="Read the full review from Nafisa Arsiwala">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Mente Skill geared me and my entire team in India, the UAE and abroad to gear up potentially.”</blockquote><p class="tm-prog">Resilience webinar</p><figcaption class="tm-who"><img src="img/clients/amit.webp" alt="" width="160" height="160" loading="lazy"><span><b>Amit Powar</b><small>HR Manager, Unifeeder Group</small></span><button class="tm-more" type="button" data-t="3" tabindex="-1" aria-label="Read the full review from Amit Powar">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Strongly recommended for becoming a better version of yourself.”</blockquote><p class="tm-prog">Corporate learning session</p><figcaption class="tm-who"><img src="img/clients/naveen.webp" alt="" width="160" height="160" loading="lazy"><span><b>Naveen</b><small>Senior Manager, Client Service, Dataflow</small></span><button class="tm-more" type="button" data-t="4" tabindex="-1" aria-label="Read the full review from Naveen">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“An enriching session on resilience. The staff certainly found it of immense value.”</blockquote><p class="tm-prog">Resilience session for educators</p><figcaption class="tm-who"><img src="img/clients/zoher.webp" alt="" width="160" height="160" loading="lazy"><span><b>Zoher Campwalla</b><small>Manager, MSB School Dubai</small></span><button class="tm-more" type="button" data-t="5" tabindex="-1" aria-label="Read the full review from Zoher Campwalla">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“A fair boost in the confidence and rise in performance of my students.”</blockquote><p class="tm-prog">Mount N’ Muscle</p><figcaption class="tm-who"><img src="img/clients/ameer.webp" alt="" width="160" height="160" loading="lazy"><span><b>Ameer Adukkattil</b><small>Shotokan Karate Club, Dubai</small></span><button class="tm-more" type="button" data-t="6" tabindex="-1" aria-label="Read the full review from Ameer Adukkattil">Read</button></figcaption></figure></div></div>
-  <div class="tm-row r2"><div class="tm-lane"><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“A fabulous session positively driving interaction with children.”</blockquote><p class="tm-prog">Mente Skills program</p><figcaption class="tm-who"><img src="img/clients/ajith.webp" alt="" width="160" height="160" loading="lazy"><span><b>Ajith Pereira</b><small>Counselor, Dubai Gavel Club</small></span><button class="tm-more" type="button" data-t="7" aria-label="Read the full review from Ajith Pereira">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Given me and my employees an intense insight to upright ourselves, personally and professionally.”</blockquote><p class="tm-prog">Corporate wellness workshop</p><figcaption class="tm-who"><img src="img/clients/fatema.webp" alt="" width="160" height="160" loading="lazy"><span><b>Fatema Rizvi</b><small>Co-owner, Laperel Commercial Brokers, Dubai</small></span><button class="tm-more" type="button" data-t="8" aria-label="Read the full review from Fatema Rizvi">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“I always felt considered and valued, both as a client and as a person.”</blockquote><p class="tm-prog">One-to-one corporate coaching</p><figcaption class="tm-who"><img src="img/clients/sylvia.webp" alt="" width="160" height="160" loading="lazy"><span><b>Sylvia David</b><small>Executive, Dubai</small></span><button class="tm-more" type="button" data-t="9" aria-label="Read the full review from Sylvia David">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Extremely beneficial and enlightening.”</blockquote><p class="tm-prog">Master Mental Mettle &amp; Bounce Back</p><figcaption class="tm-who"><img src="img/clients/richard.webp" alt="" width="160" height="160" loading="lazy"><span><b>Richard Monteiro</b><small>Principal, City School Ajman</small></span><button class="tm-more" type="button" data-t="10" aria-label="Read the full review from Richard Monteiro">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Solutions to problems lie within you.”</blockquote><p class="tm-prog">Mente Skill Junior</p><figcaption class="tm-who"><img src="img/clients/lisa.webp" alt="" width="160" height="160" loading="lazy"><span><b>Lisa Molly Kurian</b><small>JSS International School Dubai</small></span><button class="tm-more" type="button" data-t="11" aria-label="Read the full review from Lisa Molly Kurian">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Problem solving was the best takeaway.”</blockquote><p class="tm-prog">Mente Skill Junior</p><figcaption class="tm-who"><img src="img/clients/jash.webp" alt="" width="160" height="160" loading="lazy"><span><b>Jash Mehta</b><small>JSS International School Dubai</small></span><button class="tm-more" type="button" data-t="12" aria-label="Read the full review from Jash Mehta">Read</button></figcaption></figure><figure class="tm-card"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Got over the fear of public speaking.”</blockquote><p class="tm-prog">Mente Skill Junior</p><figcaption class="tm-who"><img src="img/clients/anaya.webp" alt="" width="160" height="160" loading="lazy"><span><b>Anaya Ghosh</b><small>JSS International School Dubai</small></span><button class="tm-more" type="button" data-t="13" aria-label="Read the full review from Anaya Ghosh">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“A fabulous session positively driving interaction with children.”</blockquote><p class="tm-prog">Mente Skills program</p><figcaption class="tm-who"><img src="img/clients/ajith.webp" alt="" width="160" height="160" loading="lazy"><span><b>Ajith Pereira</b><small>Counselor, Dubai Gavel Club</small></span><button class="tm-more" type="button" data-t="7" tabindex="-1" aria-label="Read the full review from Ajith Pereira">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Given me and my employees an intense insight to upright ourselves, personally and professionally.”</blockquote><p class="tm-prog">Corporate wellness workshop</p><figcaption class="tm-who"><img src="img/clients/fatema.webp" alt="" width="160" height="160" loading="lazy"><span><b>Fatema Rizvi</b><small>Co-owner, Laperel Commercial Brokers, Dubai</small></span><button class="tm-more" type="button" data-t="8" tabindex="-1" aria-label="Read the full review from Fatema Rizvi">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“I always felt considered and valued, both as a client and as a person.”</blockquote><p class="tm-prog">One-to-one corporate coaching</p><figcaption class="tm-who"><img src="img/clients/sylvia.webp" alt="" width="160" height="160" loading="lazy"><span><b>Sylvia David</b><small>Executive, Dubai</small></span><button class="tm-more" type="button" data-t="9" tabindex="-1" aria-label="Read the full review from Sylvia David">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Extremely beneficial and enlightening.”</blockquote><p class="tm-prog">Master Mental Mettle &amp; Bounce Back</p><figcaption class="tm-who"><img src="img/clients/richard.webp" alt="" width="160" height="160" loading="lazy"><span><b>Richard Monteiro</b><small>Principal, City School Ajman</small></span><button class="tm-more" type="button" data-t="10" tabindex="-1" aria-label="Read the full review from Richard Monteiro">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Solutions to problems lie within you.”</blockquote><p class="tm-prog">Mente Skill Junior</p><figcaption class="tm-who"><img src="img/clients/lisa.webp" alt="" width="160" height="160" loading="lazy"><span><b>Lisa Molly Kurian</b><small>JSS International School Dubai</small></span><button class="tm-more" type="button" data-t="11" tabindex="-1" aria-label="Read the full review from Lisa Molly Kurian">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Problem solving was the best takeaway.”</blockquote><p class="tm-prog">Mente Skill Junior</p><figcaption class="tm-who"><img src="img/clients/jash.webp" alt="" width="160" height="160" loading="lazy"><span><b>Jash Mehta</b><small>JSS International School Dubai</small></span><button class="tm-more" type="button" data-t="12" tabindex="-1" aria-label="Read the full review from Jash Mehta">Read</button></figcaption></figure><figure class="tm-card" aria-hidden="true"><div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div><blockquote class="tm-q">“Got over the fear of public speaking.”</blockquote><p class="tm-prog">Mente Skill Junior</p><figcaption class="tm-who"><img src="img/clients/anaya.webp" alt="" width="160" height="160" loading="lazy"><span><b>Anaya Ghosh</b><small>JSS International School Dubai</small></span><button class="tm-more" type="button" data-t="13" tabindex="-1" aria-label="Read the full review from Anaya Ghosh">Read</button></figcaption></figure></div></div>
-  <dialog class="tm-dlg" aria-labelledby="tm-dlg-name">
-    <button class="tm-dlg-x" type="button" aria-label="Close"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3l10 10M13 3 3 13"/></svg></button>
-    <div class="tm-dlg-in">
-      <div class="tm-stars" role="img" aria-label="5 out of 5 stars"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 1.6l2.6 5.3 5.8.8-4.2 4.1 1 5.8L10 14.9l-5.2 2.7 1-5.8L1.6 7.7l5.8-.8z"/></svg></div>
-      <p class="tm-q" data-h></p>
-      <p class="tm-dlg-full" data-f></p>
-      <div class="tm-who"><span data-av></span><span><b id="tm-dlg-name" data-n></b><small data-r></small></span></div>
-    </div>
-  </dialog>
-</section>
 
-<section class="bl" id="blog" aria-labelledby="bl-title">
-  <div class="bl-in">
-    <div class="bl-head">
-      <div data-bl>
-        <h2 class="bl-h" id="bl-title">Our Blog</h2>
-        <p class="bl-sub">Physician-grounded insights from Dr. Shaheena Kadri on mindset, parenting, leadership and life.</p>
-      </div>
-      <a class="bl-all" href="blog.html" data-bl style="--d:.1s">View all articles <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-    </div>
-    <div class="bl-grid">
-      <a class="bl-feat" href="blog.html#inner-potential" data-bl style="--d:.1s">
-        <div class="bl-media"><img src="img/blog/inner-potential.webp" alt="A woman meditating calmly on a sofa" width="1280" height="853" loading="lazy"><span class="bl-tag">Mindset &amp; Growth</span></div>
-        <div class="bl-body">
-          <div class="bl-meta"><img src="img/shaheena.webp" alt="" width="28" height="28"><b>Dr. Shaheena Kadri</b><i></i><span>6 min read</span></div>
-          <h3 class="bl-t"><span>Explore the Inner Potential: Understanding Adolescent Transformation</span></h3>
-          <p class="bl-x">Adolescence is not a period of disruption to be survived; it is a renaissance. How parents and educators can replace friction with empowerment to unlock hidden capabilities.</p>
-          <span class="bl-go">Read article <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
-        </div>
-      </a>
-      <div class="bl-list">
-        <a class="bl-item" href="blog.html#kid-entrepreneur" data-bl style="--d:0.2s">
-          <div class="bl-media"><img src="img/blog/kid-entrepreneur.webp" alt="A child in glasses with the words I am your boss" width="400" height="400" loading="lazy"><span class="bl-tag">Parenting &amp; Youth</span></div>
-          <div class="bl-body">
-            <div class="bl-meta"><span>Parenting &amp; Youth</span><i></i><span>5 min read</span></div>
-            <h3 class="bl-t"><span>Is Your Kid an Entrepreneur? Early Markers of Independence</span></h3>
-            <p class="bl-x">Curiosity and independent problem-solving are often mislabelled as stubbornness. How to recognise and nurture them early.</p>
-          </div>
-        </a>
-        <a class="bl-item" href="blog.html#screen-time" data-bl style="--d:0.3s">
-          <div class="bl-media"><img src="img/blog/screen-time.webp" alt="Two girls walking and looking at a phone" width="400" height="400" loading="lazy"><span class="bl-tag">Parenting &amp; Youth</span></div>
-          <div class="bl-body">
-            <div class="bl-meta"><span>Parenting &amp; Youth</span><i></i><span>4 min read</span></div>
-            <h3 class="bl-t"><span>Screen-Time in the Modern Age: A Physician's Guide for Parents</span></h3>
-            <p class="bl-x">Reframe dopamine cycles, protect attention spans and co-create digital boundaries that stick.</p>
-          </div>
-        </a>
-        <a class="bl-item" href="blog.html#ceo-at-home" data-bl style="--d:0.4s">
-          <div class="bl-media"><img src="img/blog/ceo-at-home.webp" alt="A woman working on a laptop in a bright bedroom" width="400" height="400" loading="lazy"><span class="bl-tag">Women &amp; Career</span></div>
-          <div class="bl-body">
-            <div class="bl-meta"><span>Women &amp; Career</span><i></i><span>7 min read</span></div>
-            <h3 class="bl-t"><span>Stay-at-Home Mom to CEO at Home: Rising Into Agency</span></h3>
-            <p class="bl-x">How women can cultivate internal authority, reclaim their voice and lead their life with conviction.</p>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
+
+
+
+
 
 
 
@@ -1572,18 +1802,6 @@ a.ct-m:hover .go{opacity:1;transform:none}
 </main>
 
 <footer class="site-ft" id="site-footer">
-  <div class="ft-cta ft-r">
-    <div class="ft-wrap ft-cta-in">
-      <div>
-        <h2 class="ft-cta-h">Your horizon is waiting.</h2>
-        <p class="ft-cta-p">Tell us who it’s for and we’ll reply on WhatsApp. Ask for the free eBook too.</p>
-      </div>
-      <div class="ft-cta-btns">
-        <a class="ft-btn ft-btn-gold" href="#contact">Register now</a>
-        <a class="ft-btn ft-btn-line" href="https://wa.me/971541615066?text=Hi%20EOH%2C%20I%27d%20like%20to%20book%20a%20consultation%20and%20get%20the%20free%20eBook.">Book a consultation <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-      </div>
-    </div>
-  </div>
   <div class="ft-wrap ft-main">
     <div class="ft-brand ft-r">
       <a href="index.html" class="ft-logo" aria-label="Emerge on Horizon home"><img src="img/logo.webp" alt="Emerge on Horizon" width="562" height="84" loading="lazy"></a>
@@ -1605,15 +1823,6 @@ a.ct-m:hover .go{opacity:1;transform:none}
         <li><a href="mailto:support@emergeonhorizon.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>support@emergeonhorizon.com</a></li>
         <li><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>Dubai, United Arab Emirates</span></li>
       </ul>
-      <form class="ft-news" action="mailto:support@emergeonhorizon.com" method="post" enctype="text/plain" novalidate>
-        <label for="ft-email">Sign up to get started</label>
-        <div class="ft-news-row">
-          <input id="ft-name" name="name" type="text" placeholder="Name" autocomplete="name" aria-label="Your name">
-          <input id="ft-email" name="email" type="email" placeholder="Email" autocomplete="email" required>
-          <button type="submit" aria-label="Sign up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
-        </div>
-        <p class="ft-news-msg" aria-live="polite"></p>
-      </form>
     </div>
   </div>
   <div class="ft-wrap ft-legal">
@@ -1634,15 +1843,6 @@ a.ct-m:hover .go{opacity:1;transform:none}
     [].forEach.call(ft.querySelectorAll('.ft-r,.ft-giant'),function(el,i){ el.style.setProperty('--d',(i%5)*0.08+'s'); io.observe(el); });
   }
   ft.querySelector('.ft-top').addEventListener('click',function(){ window.scrollTo({top:0,behavior:reduce?'auto':'smooth'}); });
-  var f=ft.querySelector('.ft-news'), msg=f.querySelector('.ft-news-msg');
-  f.addEventListener('submit',function(e){
-    e.preventDefault();
-    var em=f.querySelector('#ft-email'), nm=f.querySelector('#ft-name');
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value.trim())){ msg.textContent='Enter a valid email address.'; em.focus(); return; }
-    var body='Please add me to the Emerge on Horizon updates.%0D%0A%0D%0AName: '+encodeURIComponent(nm.value.trim())+'%0D%0AEmail: '+encodeURIComponent(em.value.trim());
-    window.location.href='mailto:support@emergeonhorizon.com?subject='+encodeURIComponent('Sign up: EOH updates')+'&body='+body;
-    msg.textContent='Your email app is opening. Press send to finish signing up.';
-  });
 })();
 </script>
 
@@ -2312,7 +2512,7 @@ a.ct-m:hover .go{opacity:1;transform:none}
   var sec=document.querySelector('.ms'); if(!sec) return;
   var ws=[].slice.call(sec.querySelectorAll('.ms-text .w')), img=sec.querySelector('.ms-video');
   (function(v){
-    if(!v) return;
+    if(!v||v.tagName!=='VIDEO') return;
     var loaded=false;
     function load(){ if(loaded) return; loaded=true; v.src=(window.innerWidth<760?v.dataset.srcM:v.dataset.src); v.load(); }
     if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;   /* poster only */
@@ -2330,7 +2530,6 @@ a.ct-m:hover .go{opacity:1;transform:none}
   }});
   gsap.fromTo(img,{yPercent:-6,scale:1.12},{yPercent:6,scale:1.02,ease:'none',scrollTrigger:{trigger:sec,start:'top bottom',end:'bottom top',scrub:true}});
   gsap.from(sec.querySelector('.ms-kicker'),{y:24,opacity:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:sec,start:'top 75%'}});
-  gsap.from(sec.querySelector('.ms-cta'),{y:20,opacity:0,duration:.9,ease:'power3.out',scrollTrigger:{trigger:sec,start:'center 60%'}});
 })();
 </script>
 
@@ -2382,53 +2581,7 @@ a.ct-m:hover .go{opacity:1;transform:none}
 })();
 </script>
 
-<script>
-/* Gallery: filters, entrance, lightbox */
-(function(){
-  var sec=document.querySelector('.gl'); if(!sec) return;
-  var tabs=[].slice.call(sec.querySelectorAll('.gl-tab')), pill=sec.querySelector('.gl-pill');
-  var items=[].slice.call(sec.querySelectorAll('.gl-item'));
-  var lb=sec.querySelector('.gl-lb'), lbImg=lb.querySelector('img'), lbN=lb.querySelector('[data-n]'), lbC=lb.querySelector('[data-c]');
-  var list=items.slice(), cur=0, lastFocus=null;
-  function place(t){ pill.style.width=t.offsetWidth+'px'; pill.style.transform='translateX('+(t.offsetLeft-5)+'px)'; }
-  function filter(f,t){
-    tabs.forEach(function(x){x.setAttribute('aria-selected',x===t?'true':'false')}); place(t);
-    list=[];
-    items.forEach(function(it){
-      var show=f==='all'||it.dataset.cat===f;
-      it.classList.toggle('hide',!show);
-      if(show){ list.push(it); it.classList.remove('pop'); void it.offsetWidth; it.classList.add('pop'); }
-    });
-  }
-  tabs.forEach(function(t){t.addEventListener('click',function(){filter(t.dataset.f,t)})});
-  window.addEventListener('resize',function(){place(sec.querySelector('.gl-tab[aria-selected=true]'))});
-  (document.fonts?document.fonts.ready:Promise.resolve()).then(function(){place(tabs[0])}); place(tabs[0]);
 
-  function show(k){
-    cur=(k+list.length)%list.length; var it=list[cur], im=it.querySelector('img');
-    lbImg.src=im.src; lbImg.alt=im.alt; lbImg.style.animation='none'; void lbImg.offsetWidth; lbImg.style.animation='';
-    lbN.textContent=(cur+1)+' / '+list.length; lbC.textContent=im.alt;
-  }
-  function open(it){ lastFocus=it; show(list.indexOf(it)); lb.hidden=false; lb.classList.add('open'); document.documentElement.style.overflow='hidden'; lb.querySelector('.x').focus(); }
-  function close(){ lb.classList.remove('open'); lb.hidden=true; document.documentElement.style.overflow=''; if(lastFocus) lastFocus.focus(); }
-  items.forEach(function(it){it.addEventListener('click',function(){open(it)})});
-  lb.querySelector('.x').addEventListener('click',close);
-  lb.querySelector('.pv').addEventListener('click',function(){show(cur-1)});
-  lb.querySelector('.nx').addEventListener('click',function(){show(cur+1)});
-  lb.addEventListener('click',function(e){ if(e.target===lb) close(); });
-  document.addEventListener('keydown',function(e){
-    if(lb.hidden) return;
-    if(e.key==='Escape') close(); else if(e.key==='ArrowRight') show(cur+1); else if(e.key==='ArrowLeft') show(cur-1);
-    else if(e.key==='Tab'){ var f=[].slice.call(lb.querySelectorAll('button')), i=f.indexOf(document.activeElement); e.preventDefault(); f[(i+(e.shiftKey?-1:1)+f.length)%f.length].focus(); }
-  });
-  var sx=null; lb.addEventListener('touchstart',function(e){sx=e.touches[0].clientX},{passive:true});
-  lb.addEventListener('touchend',function(e){ if(sx===null) return; var dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>40) show(cur+(dx<0?1:-1)); sx=null; },{passive:true});
-
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(function(es,o){es.forEach(function(e){ if(e.isIntersecting){ sec.classList.add('in'); o.disconnect(); setTimeout(function(){items.forEach(function(i){i.classList.add('settled')})},1600);} });},{threshold:.1}).observe(sec);
-  } else sec.classList.add('in');
-})();
-</script>
 
 <script>
 /* FAQ: smooth accordion (one open at a time) + entrance. Contact: validate, then send through WhatsApp */
@@ -2486,117 +2639,64 @@ a.ct-m:hover .go{opacity:1;transform:none}
 })();
 </script>
 
+
+
 <script>
-/* "A new horizon": a sunrise you scroll through.
-   Night: a horizon line draws itself and "A new horizon," rises letter by letter.
-   Dawn: the sun lifts out of the line; doubt / fear / limits sink and strike out below it while
-   clarity / courage / purpose rise above it. Day: the sky turns gold and "emerge and shine now." is written in. */
+/* Clients: logos pop in one by one, then scroll in a loop (pauses on hover) */
 (function(){
-  var sec=document.querySelector('.hz'); if(!sec) return;
-  var $=function(s){return sec.querySelector(s)}, $$=function(s){return Array.prototype.slice.call(sec.querySelectorAll(s))};
+  var sec=document.querySelector('.cl'); if(!sec) return;
+  var t=[].slice.call(sec.querySelectorAll('.cl-tile'));
+  t.forEach(function(el,i){ el.style.setProperty('--d',(Math.min(i,8)*0.12)+'s'); });
+  function go(){ sec.classList.add('in'); setTimeout(function(){ sec.classList.add('settled'); }, 1700); }
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es,o){es.forEach(function(e){ if(e.isIntersecting){ go(); o.disconnect(); } });},{threshold:.3}).observe(sec);
+  } else { sec.classList.add('in','settled'); }
+})();
+</script>
+
+
+
+<script>
+/* Photo gallery: frame opens to full screen while the tilted photo columns straighten and slide (scroll-driven) */
+(function(){
+  var sec=document.querySelector('.pg'); if(!sec) return;
+  var track=sec.querySelector('.pg-track'), banner=sec.querySelector('.pg-banner'), matrix=sec.querySelector('.pg-matrix');
+  var cols=[].slice.call(sec.querySelectorAll('.pg-col'));
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduce || !window.gsap || !window.ScrollTrigger) return;   // CSS already shows the finished sunrise
-  gsap.registerPlugin(ScrollTrigger);
-  sec.classList.add('hz-motion');
+  if(reduce || !window.gsap || !window.ScrollTrigger){ sec.classList.add('static'); }
+  else {
+    gsap.registerPlugin(ScrollTrigger);
+    var tl=gsap.timeline({defaults:{ease:'none'},scrollTrigger:{trigger:track,start:'top top',end:'bottom bottom',scrub:0.8}});
+    tl.fromTo(banner,{width:'90vw',height:'80vh',borderRadius:44,borderWidth:4},{width:'100vw',height:'100vh',borderRadius:0,borderWidth:0,duration:.15},0)
+      .fromTo(matrix,{x:0,y:0,rotateX:25,rotateY:-45,rotateZ:15,z:-800},{x:0,y:0,rotateX:4,rotateY:-8,rotateZ:2,z:0,duration:.85},.15)
+      .fromTo(cols[0],{yPercent:0},{yPercent:-40,duration:.85},.15)
+      .fromTo(cols[1],{yPercent:-40},{yPercent:10,duration:.85},.15)
+      .fromTo(cols[2],{yPercent:0},{yPercent:-40,duration:.85},.15)
+      .fromTo(cols[3],{yPercent:-30},{yPercent:20,duration:.85},.15);
+    /* "View all photos" stays hidden while the gallery animates, then fades in slowly at the end */
+    var allBtn=sec.querySelector('.pg-all');
+    ScrollTrigger.create({trigger:track,start:'top top',end:'bottom bottom',onUpdate:function(st){ allBtn.classList.toggle('pg-all-show', st.progress>0.92); },
+      onLeave:function(){ allBtn.classList.add('pg-all-show'); }});
+  }
 
-  /* split "A new horizon," into letters inside a mask */
-  var a=$('.hz-a');
-  a.innerHTML=a.textContent.trim().split(' ').map(function(w){
-    return '<span class="hz-ln">'+w.split('').map(function(c){return '<span class="hz-ch">'+c+'</span>'}).join('')+'</span>';
-  }).join(' ');
-
-  var stage=$('.hz-stage'), H=function(){return stage.offsetHeight};
-  var sun=$('.hz-sun'), words=$$('.hz-w'), olds=$$('.hz-o');
-  var sunStart=function(){return sun.offsetWidth*0.62}, sunEnd=function(){return -H()*0.19};
-  var wordUp=function(){return -H()*0.2};
-
-  /* starting state: night */
-  gsap.set(sun,{xPercent:-50,yPercent:-50,x:0,y:sunStart,'--warm':1});
-  gsap.set(['.hz-dawn','.hz-day','.hz-sea-dawn','.hz-sea-day','.hz-halo','.hz-glint','.hz-rays','.hz-bloom','.hz-kick'],{opacity:0});
-  gsap.set('.hz-line',{scaleX:0});
-  gsap.set('.hz-ch',{yPercent:110});
-  gsap.set(a,{color:'#F6EBDD'});
-  gsap.set('.hz-b',{clipPath:'inset(-30% 100% -30% -6%)'});
-  gsap.set('.hz-cta',{opacity:0,y:24,pointerEvents:'none'});
-  gsap.set(words,{opacity:1,yPercent:100,y:0});
-  gsap.set(olds,{opacity:0,xPercent:-50,y:-8,filter:'blur(0px)'});
-
-  var dust={mode:0};
-  var tl=gsap.timeline({defaults:{ease:'none'},scrollTrigger:{trigger:sec,start:'top top',end:'bottom bottom',scrub:0.7,invalidateOnRefresh:true}});
-
-  /* 0 - 1.7  night: the horizon draws, the title rises */
-  tl.to('.hz-line',{scaleX:1,duration:1.2,ease:'power2.inOut'},0)
-    .to('.hz-kick',{opacity:1,duration:.6},.2)
-    .to('.hz-ch',{yPercent:0,duration:.9,ease:'power3.out',stagger:.035},.3)
-    .to('.hz-bloom',{opacity:1,duration:2.6,ease:'sine.inOut'},1.2)
-    .to('.hz-kick',{opacity:0,y:12,duration:.4},1.3)
-
-  /* 1.2 - 8.6  the sun rises, the sky turns from night to dawn to day */
-    .to(sun,{y:sunEnd,duration:7.4,ease:'sine.inOut'},1.2)
-    .to(sun,{'--warm':0,duration:5.5},3)
-    .to('.hz-halo',{opacity:1,duration:4.5},2)
-    .to('.hz-glint',{opacity:1,duration:4},2.5)
-    .to('.hz-dawn',{opacity:1,duration:4,ease:'sine.inOut'},1.5)
-    .to('.hz-day',{opacity:1,duration:3,ease:'sine.inOut'},5.6)
-    .to('.hz-sea-dawn',{opacity:1,duration:3.5,ease:'sine.inOut'},2)
-    .to('.hz-sea-day',{opacity:1,duration:3.4,ease:'sine.inOut'},5.2)
-    .to('.hz-bloom',{opacity:.35,duration:2},6.6)
-    .to(a,{color:'#2B160C',duration:1.2},6.6)
-    .to('.hz-rays',{opacity:.55,duration:2.6},6.2)
-    .to(dust,{mode:1,duration:7.4},1.2);
-
-  /* 1.8 - 7.8  what you leave below the horizon, what rises above it */
-  words.forEach(function(w,i){
-    var s=1.8+i*2, o=olds[i];
-    tl.to(o,{opacity:1,y:0,duration:.4},s)
-      .to(o.querySelector('i'),{scaleX:1,duration:.5,ease:'power2.out'},s+.35)
-      .to(o,{y:function(){return H()*0.16},opacity:0,filter:'blur(6px)',duration:.9,ease:'power1.in'},s+.75)
-      .to(w,{yPercent:50,y:wordUp,duration:1,ease:'power2.out'},s+.3)
-      .to(w,{opacity:0,y:function(){return wordUp()-H()*0.06},letterSpacing:'.04em',filter:'blur(10px)',duration:.6,ease:'power1.in'},s+1.5);
+  /* viewer */
+  var lb=sec.querySelector('.pg-lb'), lbImg=lb.querySelector('img'), lbN=lb.querySelector('[data-n]'), lbC=lb.querySelector('[data-c]');
+  var list=[].slice.call(sec.querySelectorAll('.pg-card:not([aria-hidden])')).sort(function(a,b){return a.dataset.i-b.dataset.i});
+  var cur=0,last=null;
+  function show(k){ cur=(k+list.length)%list.length; var im=list[cur].querySelector('img'); lbImg.src=im.src; lbImg.alt=im.alt; lbN.textContent=(cur+1)+' / '+list.length; lbC.textContent=im.alt; }
+  function open(k,from){ last=from; show(k); lb.hidden=false; lb.classList.add('open'); document.documentElement.style.overflow='hidden'; lb.querySelector('.x').focus(); }
+  function close(){ lb.classList.remove('open'); lb.hidden=true; document.documentElement.style.overflow=''; if(last) last.focus(); }
+  sec.addEventListener('click',function(e){
+    var c=e.target.closest('.pg-card'); if(c){ open(list.findIndex(function(x){return x.dataset.i===c.dataset.i}),c); return; }
+    if(e.target.closest('.pg-all')) open(0,e.target.closest('.pg-all'));
   });
-
-  /* 8 - 9.8  daylight: the promise is written in, then the invitation */
-  tl.to('.hz-b',{clipPath:'inset(-30% -6% -30% -6%)',duration:1.3,ease:'power1.inOut'},8)
-    .fromTo('.hz-b',{scale:.94,filter:'blur(4px)'},{scale:1,filter:'blur(0px)',duration:1.3,ease:'power2.out',immediateRender:false},8)
-    .to('.hz-cta',{opacity:1,y:0,pointerEvents:'auto',duration:.7,ease:'power2.out'},9.1)
-    .to({},{duration:.8});
-
-  /* the sun and the dust follow the pointer a little */
-  var px=0, py=0;
-  if(window.matchMedia('(pointer:fine)').matches){
-    var sx=gsap.quickTo(sun,'x',{duration:1.6,ease:'power3.out'});
-    sec.addEventListener('pointermove',function(e){
-      px=e.clientX/innerWidth-.5; py=e.clientY/innerHeight-.5; sx(px*-36);
-    });
-  }
-
-  /* stars at night that turn into golden motes drifting up by day */
-  var cv=$('.hz-dust'), cx=cv.getContext('2d'), dpr=Math.min(2,window.devicePixelRatio||1), W=0, HH=0, P=[], on=false, ox=0, oy=0;
-  function size(){
-    W=cv.clientWidth; HH=cv.clientHeight; cv.width=W*dpr; cv.height=HH*dpr; cx.setTransform(dpr,0,0,dpr,0,0);
-    var n=Math.round(Math.min(160,W*HH/9000)); P=[];
-    for(var i=0;i<n;i++) P.push({x:Math.random()*W,y:Math.random()*HH,r:Math.random()*1.4+.4,t:Math.random()*6.28,s:Math.random()*.6+.4,d:Math.random()*.8+.2});
-  }
-  function mix(a,b,m){return Math.round(a+(b-a)*m)}
-  function draw(){
-    if(!on) return;
-    var m=dust.mode, hz=HH*.64;
-    ox+=(px*-14-ox)*.05; oy+=(py*-8-oy)*.05;
-    cx.clearRect(0,0,W,HH);
-    cx.fillStyle='rgb('+mix(235,214,m)+','+mix(232,140,m)+','+mix(255,40,m)+')';
-    for(var i=0;i<P.length;i++){
-      var p=P[i]; p.t+=.02*p.s;
-      p.y-=(.03+m*.7)*p.s; p.x+=Math.sin(p.t*.5)*.15*m;
-      if(p.y<-4){p.y=HH+4; p.x=Math.random()*W;}
-      var al=(1-m)*(p.y<hz?1:.15)*(.35+.65*Math.abs(Math.sin(p.t)))*.9 + m*.55*p.d;
-      if(al<.02) continue;
-      cx.globalAlpha=al;
-      cx.beginPath(); cx.arc(p.x+ox*p.d,p.y+oy*p.d,p.r*(1+m*.8),0,6.283); cx.fill();
-    }
-    requestAnimationFrame(draw);
-  }
-  size(); window.addEventListener('resize',size);
-  new IntersectionObserver(function(es){ var v=es[0].isIntersecting; if(v&&!on){on=true;requestAnimationFrame(draw);} on=v; }).observe(sec);
+  lb.querySelector('.x').addEventListener('click',close);
+  lb.querySelector('.pv').addEventListener('click',function(){show(cur-1)});
+  lb.querySelector('.nx').addEventListener('click',function(){show(cur+1)});
+  lb.addEventListener('click',function(e){ if(e.target===lb) close(); });
+  document.addEventListener('keydown',function(e){ if(lb.hidden) return; if(e.key==='Escape') close(); else if(e.key==='ArrowRight') show(cur+1); else if(e.key==='ArrowLeft') show(cur-1); });
+  var sx=null; lb.addEventListener('touchstart',function(e){sx=e.touches[0].clientX},{passive:true});
+  lb.addEventListener('touchend',function(e){ if(sx===null) return; var dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>40) show(cur+(dx<0?1:-1)); sx=null; },{passive:true});
 })();
 </script>
 </body>

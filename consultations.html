@@ -84,18 +84,6 @@
 </section>
 </main>
 <footer class="site-ft" id="site-footer">
-  <div class="ft-cta ft-r">
-    <div class="ft-wrap ft-cta-in">
-      <div>
-        <h2 class="ft-cta-h">Your horizon is waiting.</h2>
-        <p class="ft-cta-p">Tell us who it’s for and we’ll reply on WhatsApp. Ask for the free eBook too.</p>
-      </div>
-      <div class="ft-cta-btns">
-        <a class="ft-btn ft-btn-gold" href="contact.html#contact-form">Register now</a>
-        <a class="ft-btn ft-btn-line" href="https://wa.me/971541615066?text=Hi%20EOH%2C%20I%27d%20like%20to%20book%20a%20consultation%20and%20get%20the%20free%20eBook.">Book a consultation <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
-      </div>
-    </div>
-  </div>
   <div class="ft-wrap ft-main">
     <div class="ft-brand ft-r">
       <a href="index.html" class="ft-logo" aria-label="Emerge on Horizon home"><img src="img/logo.webp" alt="Emerge on Horizon" width="562" height="84" loading="lazy"></a>
@@ -117,15 +105,6 @@
         <li><a href="mailto:support@emergeonhorizon.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>support@emergeonhorizon.com</a></li>
         <li><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>Dubai, United Arab Emirates</span></li>
       </ul>
-      <form class="ft-news" action="mailto:support@emergeonhorizon.com" method="post" enctype="text/plain" novalidate>
-        <label for="ft-email">Sign up to get started</label>
-        <div class="ft-news-row">
-          <input id="ft-name" name="name" type="text" placeholder="Name" autocomplete="name" aria-label="Your name">
-          <input id="ft-email" name="email" type="email" placeholder="Email" autocomplete="email" required>
-          <button type="submit" aria-label="Sign up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></button>
-        </div>
-        <p class="ft-news-msg" aria-live="polite"></p>
-      </form>
     </div>
   </div>
   <div class="ft-wrap ft-legal">
@@ -146,15 +125,6 @@
     [].forEach.call(ft.querySelectorAll('.ft-r,.ft-giant'),function(el,i){ el.style.setProperty('--d',(i%5)*0.08+'s'); io.observe(el); });
   }
   ft.querySelector('.ft-top').addEventListener('click',function(){ window.scrollTo({top:0,behavior:reduce?'auto':'smooth'}); });
-  var f=ft.querySelector('.ft-news'), msg=f.querySelector('.ft-news-msg');
-  f.addEventListener('submit',function(e){
-    e.preventDefault();
-    var em=f.querySelector('#ft-email'), nm=f.querySelector('#ft-name');
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value.trim())){ msg.textContent='Enter a valid email address.'; em.focus(); return; }
-    var body='Please add me to the Emerge on Horizon updates.%0D%0A%0D%0AName: '+encodeURIComponent(nm.value.trim())+'%0D%0AEmail: '+encodeURIComponent(em.value.trim());
-    window.location.href='mailto:support@emergeonhorizon.com?subject='+encodeURIComponent('Sign up: EOH updates')+'&body='+body;
-    msg.textContent='Your email app is opening. Press send to finish signing up.';
-  });
 })();
 </script>
 <script src="vendor/lenis.min.js"></script>
