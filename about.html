@@ -1939,15 +1939,6 @@
           [].forEach.call(ft.querySelectorAll('.ft-r,.ft-giant'), function (el, i) { el.style.setProperty('--d', (i % 5) * 0.08 + 's'); io.observe(el); });
         }
         ft.querySelector('.ft-top').addEventListener('click', function () { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); });
-        var f = ft.querySelector('.ft-news'), msg = f.querySelector('.ft-news-msg');
-        f.addEventListener('submit', function (e) {
-          e.preventDefault();
-          var em = f.querySelector('#ft-email'), nm = f.querySelector('#ft-name');
-          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em.value.trim())) { msg.textContent = 'Enter a valid email address.'; em.focus(); return; }
-          var body = 'Please add me to the Emerge on Horizon updates.%0D%0A%0D%0AName: ' + encodeURIComponent(nm.value.trim()) + '%0D%0AEmail: ' + encodeURIComponent(em.value.trim());
-          window.location.href = 'mailto:support@emergeonhorizon.com?subject=' + encodeURIComponent('Sign up: EOH updates') + '&body=' + body;
-          msg.textContent = 'Your email app is opening. Press send to finish signing up.';
-        });
       })();
   </script>
   <script src="vendor/lenis.min.js"></script>
