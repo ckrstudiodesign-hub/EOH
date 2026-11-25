@@ -99,9 +99,9 @@ p{margin:0}
 .hw-fig img{width:100%;height:auto;-webkit-user-drag:none;user-select:none}
 /* slide 1: center Alisha inside the circle (text sits upper-left) */
 .hw-fig[data-i="0"]{left:39%;bottom:6%}
-/* group photos: prominent and larger than the background circle */
-.hw-fig[data-i="1"]{width:124%;bottom:10%;-webkit-mask-image:linear-gradient(to bottom,#000 74%,transparent 100%);mask-image:linear-gradient(to bottom,#000 74%,transparent 100%)}
-.hw-fig[data-i="2"]{width:122%;bottom:8%;-webkit-mask-image:linear-gradient(to bottom,#000 74%,transparent 100%);mask-image:linear-gradient(to bottom,#000 74%,transparent 100%)}
+/* group photos: prominent and aligned with other slides' height */
+.hw-fig[data-i="1"]{width:124%;bottom:18%;-webkit-mask-image:linear-gradient(to bottom,#000 74%,transparent 100%);mask-image:linear-gradient(to bottom,#000 74%,transparent 100%)}
+.hw-fig[data-i="2"]{width:122%;bottom:16%;-webkit-mask-image:linear-gradient(to bottom,#000 74%,transparent 100%);mask-image:linear-gradient(to bottom,#000 74%,transparent 100%)}
 .hw-fig.on{opacity:1;transform:translate(-50%,0) scale(1);filter:none;transition-delay:.12s}
 .hw-fig.out{opacity:0;transform:translate(-50%,-18px) scale(1.02);filter:blur(3px);transition-duration:.55s,.8s,.55s}
 .hw-fig.on img{animation:hwFloat 6s ease-in-out 1.2s infinite}
@@ -176,9 +176,12 @@ p{margin:0}
 .va-more{display:inline;margin-left:4px;font:600 .95rem/1.68 "Zilla Slab",Georgia,serif;color:#1A0E08;text-decoration:underline;text-underline-offset:3px;transition:color .2s ease}
 .va-more:hover{color:#B89600}
 .va-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
-.va-stat{background:#fff;border-radius:12px;padding:16px 14px;text-align:center;border:1px solid rgba(26,14,8,.05);box-shadow:0 4px 16px rgba(43,33,26,.04)}
+.va-stat{position:relative;overflow:hidden;background:#fff;border-radius:12px;padding:16px 14px;text-align:center;border:1px solid rgba(184,150,0,.16);box-shadow:0 4px 16px rgba(43,33,26,.04);transition:transform .35s var(--ease),box-shadow .35s ease,border-color .35s ease}
+.va-stat::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#B89600,#E2C55A,#B89600);background-size:200% 100%;animation:vaStatBar 4s linear infinite}
+.va-stat:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(184,150,0,.14);border-color:rgba(184,150,0,.45)}
 .va-stat b{display:block;font:700 clamp(1.5rem,2.3vw,1.9rem)/1.1 var(--font);color:#B89600;font-variant-numeric:tabular-nums}
 .va-stat span{display:block;margin-top:5px;font-size:.8125rem;color:#5E5249}
+@keyframes vaStatBar{0%{background-position:0% 50%}100%{background-position:200% 50%}}
 
 /* video card: custom player (21st.dev "video-player" look, plain JS) */
 .va-media{position:relative}
@@ -2058,9 +2061,25 @@ a.ct-m:hover .go{opacity:1;transform:none}
     if(counted) return; counted=true;
     sec.querySelectorAll('[data-count]').forEach(function(el){
       var end=+el.dataset.count, suf=el.dataset.suffix||'';
-      if(reduce||!window.gsap){el.textContent=end+suf;return;}
-      var o={v:0}; gsap.to(o,{v:end,duration:1.8,ease:'power2.out',onUpdate:function(){el.textContent=Math.round(o.v)+suf;}});
+      if(reduce){el.textContent=end+suf;return;}
+      if(window.gsap){
+        var o={v:0};
+        gsap.fromTo(o,{v:0},{v:end,duration:2,ease:'power2.out',onUpdate:function(){el.textContent=Math.round(o.v)+suf;}});
+      } else {
+        var t0=performance.now(), dur=1800;
+        (function step(now){
+          var p=Math.min(1,(now-t0)/dur), ease=1-Math.pow(1-p,3);
+          el.textContent=Math.round(end*ease)+suf;
+          if(p<1) requestAnimationFrame(step);
+        })(t0);
+      }
     });
+  }
+  var statsEl=sec.querySelector('.va-stats');
+  if(statsEl && 'IntersectionObserver' in window){
+    new IntersectionObserver(function(es,obs){
+      if(es[0].isIntersecting){count();obs.disconnect();}
+    },{threshold:0.25}).observe(statsEl);
   }
 
   /* ---------- player ---------- */
