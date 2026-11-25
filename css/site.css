@@ -1,4 +1,12 @@
 /* Shared styles for every EOH page: tokens, base, buttons, navbar with Services dropdown, footer. */
+@font-face{
+  font-family:"Selima";
+  src:url("../fonts/Selima.otf") format("opentype"),
+      url("../fonts/Selima.ttf") format("truetype");
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
+}
 :root{
   --espresso:#1A0E08; --espresso-2:#2B160C; --cream:#F8F4EE; --paper:#FFFFFF; --ink:#1A0E08; --mute:#6B5D53; --line:#E9E1D6;
   --accent:#E8540F; --accent-2:#FF7A2E; --olive:#4A4416; --gold:#B89600;
@@ -202,7 +210,7 @@ p{margin:0}
 .site-ft a{color:inherit;text-decoration:none}
 .ft-cta{padding:clamp(64px,8vw,96px) 0 clamp(40px,5vw,56px)}
 .ft-cta-in{display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;padding-bottom:clamp(40px,5vw,56px);border-bottom:1px solid rgba(237,230,218,.12)}
-.ft-cta-h{margin:0;font:400 clamp(2.3rem,4.8vw,4rem)/1.1 "Kaushan Script",cursive;color:var(--g2);letter-spacing:0}
+.ft-cta-h{margin:0;font:400 clamp(2.3rem,4.8vw,4rem)/1.1 "Selima",cursive;color:var(--g2);letter-spacing:0}
 .ft-cta-p{margin-top:12px;color:rgba(237,230,218,.68);font-size:1.0625rem;max-width:32em}
 .ft-cta-btns{display:flex;gap:12px;flex-wrap:wrap}
 .ft-btn{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 24px;border-radius:999px;font-weight:600;font-size:1rem;transition:background-color .25s ease,color .25s ease,transform .2s ease,box-shadow .25s ease}
@@ -245,7 +253,7 @@ p{margin:0}
 .ft-top{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border-radius:999px;border:1px solid rgba(237,230,218,.2);background:transparent;color:#EDE6DA;font:inherit;font-size:.8125rem;cursor:pointer;transition:border-color .2s ease,color .2s ease}
 .ft-top svg{width:14px;height:14px;transition:transform .3s ease}
 .ft-top:hover{border-color:var(--g2);color:var(--g2)}.ft-top:hover svg{transform:translateY(-3px)}
-.ft-giant{font:400 clamp(3.2rem,11.2vw,10.5rem)/.85 "Kaushan Script",cursive;text-align:center;white-space:nowrap;padding-top:.08em;margin-bottom:-.2em;
+.ft-giant{font:400 clamp(3.2rem,11.2vw,10.5rem)/.85 "Selima",cursive;text-align:center;white-space:nowrap;padding-top:.08em;margin-bottom:-.2em;
   background:linear-gradient(180deg,rgba(201,162,39,.30) 0%,rgba(201,162,39,.04) 85%);-webkit-background-clip:text;background-clip:text;color:transparent;user-select:none;pointer-events:none}
 .site-ft :focus-visible{outline:2px solid var(--g2);outline-offset:3px;border-radius:6px}
 /* reveal (only when JS + motion allowed) */
