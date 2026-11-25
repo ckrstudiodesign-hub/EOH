@@ -18,6 +18,18 @@
   nav.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { if (a.getAttribute('href').charAt(0) === '#') closeAll(); }); });
   var on = false; function sc() { var s = scrollY > 40; if (s !== on) { on = s; nav.classList.toggle('scrolled', s); } }
   addEventListener('scroll', sc, { passive: true }); sc();
+  /* hide the navbar while scrolling down, show it again when scrolling up or near the top */
+  var lastY = scrollY, hidden = false, ticking = false;
+  function hide(h) { if (h !== hidden) { hidden = h; nav.classList.toggle('nav-hidden', h); } }
+  function onScroll() {
+    var y = scrollY, d = y - lastY;
+    if (y < 80 || nav.hasAttribute('data-open') || nav.contains(document.activeElement)) hide(false);
+    else if (d > 4) hide(true);
+    else if (d < -4) hide(false);
+    lastY = y; ticking = false;
+  }
+  addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  nav.addEventListener('focusin', function () { hide(false); });
   document.querySelectorAll('.cmd[data-copy]').forEach(function (c) {
     c.querySelector('button').addEventListener('click', function () {
       var done = function () { c.classList.add('done'); c.querySelector('.copied').textContent = 'Copied'; setTimeout(function () { c.classList.remove('done'); }, 1600); };

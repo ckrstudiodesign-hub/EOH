@@ -1058,6 +1058,36 @@ a.ct-m:hover .ct-ic{background:#B89600;color:#fff}
 .ct-done a{background:#B89600;color:#fff}
 .ct-done #ct-mail{background:#fff!important;color:#7A6300!important;border-color:rgba(184,150,0,.5)!important}
 .ct-done button{color:#7A6300;border-color:rgba(184,150,0,.5)}
+/* founders: wide rows, sized portraits, read more */
+.fd2 .fd-in{max-width:1120px}
+.fd2-list{display:flex;flex-direction:column;gap:clamp(28px,4vw,48px)}
+.fd2-row{display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);gap:clamp(24px,4vw,56px);align-items:center;padding:clamp(20px,2.6vw,32px);border-radius:28px;background:#fff;border:1px solid rgba(43,33,26,.07);box-shadow:0 24px 60px rgba(43,33,26,.07)}
+.fd2-rev{grid-template-columns:minmax(0,1.28fr) minmax(0,.72fr)}
+.fd2-rev .fd2-photo{order:2}
+.fd2-photo{position:relative;margin:0;aspect-ratio:4/5;border-radius:22px;overflow:hidden;background:linear-gradient(180deg,#FFFDF6,#FFF6DE);isolation:isolate}
+.fd2-sun{position:absolute;left:50%;bottom:-22%;width:110%;aspect-ratio:1;border-radius:50%;transform:translateX(-50%);z-index:-1;background:radial-gradient(circle,#F3E3A6 0 42%,#F8EDC6 42.4% 100%);box-shadow:0 0 0 18px rgba(248,237,198,.45)}
+.fd2-photo img{position:absolute;left:50%;bottom:0;height:94%;width:auto;max-width:none;transform:translateX(-50%);filter:drop-shadow(0 18px 30px rgba(120,90,20,.16))}
+.fd2-eyebrow{margin:0;font:400 clamp(1.2rem,1.8vw,1.5rem)/1.1 "Selima","Kaushan Script",cursive;color:#B89600}
+.fd2-name{margin:6px 0 0;font:500 clamp(1.9rem,3.2vw,2.6rem)/1.05 "Zilla Slab",Georgia,serif;color:#1A0E08;letter-spacing:-.02em}
+.fd2-role{margin:10px 0 0;font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#9E8000;line-height:1.5}
+.fd2-creds{margin:8px 0 0;font-size:.9rem;color:#6B5F56;line-height:1.55}
+.fd2-lead{margin:16px 0 0;padding-top:16px;border-top:1px solid rgba(43,33,26,.08);font:italic 400 clamp(1.02rem,1.3vw,1.14rem)/1.65 "Zilla Slab",Georgia,serif;color:#2B211A}
+.fd2-more{overflow:hidden}
+.fd2-more p{margin:12px 0 0;color:#5E5249;font-size:.95rem;line-height:1.7}
+.fd2-btn{margin-top:14px;display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:999px;border:1.5px solid rgba(184,150,0,.45);background:transparent;color:#7A6300;font:600 .85rem/1 var(--font);cursor:pointer;transition:background-color .25s ease,color .25s ease}
+.fd2-btn:hover{background:#B89600;border-color:#B89600;color:#fff}
+.fd2-btn svg{width:15px;height:15px;transition:transform .35s ease}
+.fd2-btn[aria-expanded="true"] svg{transform:rotate(180deg)}
+.fd2 .fd-tags{margin-top:16px}
+.fd2 .fd-tags li{opacity:1!important;transform:none!important}
+.fd2 .fd-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px}
+.fd2 .fd-stat{padding:14px 10px;border-radius:16px;background:#1A120C;text-align:center}
+.fd2 .fd-stat b{display:block;font:500 clamp(1.3rem,2vw,1.7rem)/1 "Zilla Slab",Georgia,serif;color:#E2C55A}
+.fd2 .fd-stat span{display:block;margin-top:6px;font-size:.75rem;color:rgba(237,230,218,.75)}
+.js .fd2 .fd2-rv{opacity:0;transform:translateY(40px);transition:opacity .9s ease,transform 1s cubic-bezier(.23,1,.32,1)}
+.js .fd2 .fd2-rv.in{opacity:1;transform:none}
+@media (max-width:820px){.fd2-row,.fd2-rev{grid-template-columns:1fr}.fd2-rev .fd2-photo{order:0}.fd2-photo{max-width:340px;width:100%;margin:0 auto}}
+@media (prefers-reduced-motion:reduce){.js .fd2 .fd2-rv{opacity:1;transform:none;transition:none}}
 /* where we work (moved out of the old hero) */
 .places{padding:120px 0 24px;text-align:center}
 .places h2{margin-top:14px;font-size:clamp(2.2rem,4.6vw,3.9rem)}
@@ -1290,7 +1320,7 @@ a.ct-m:hover .ct-ic{background:#B89600;color:#fff}
     <li><a href="#top" aria-current="page">Home</a></li>
     <li><a href="about.html">About us</a></li>
     <li class="has-sub"><button class="sub-toggle" type="button" aria-expanded="false" aria-controls="sub-services">Services <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 3.5l3 3 3-3"/></svg></button>
-      <div class="sub" id="sub-services"><a href="programmes.html"><img src="img/g/msb-school-dubai-mente-skills-program-for-educators.webp" alt="" width="64" height="64" loading="lazy"><span><b>Emerge to Excellence Programs</b><small>Eleven programmes for leaders, women, youth and athletes</small></span></a><a href="coaching.html"><img src="img/g/mente-skill-program-for-unifeeder-group-dubai.webp" alt="" width="64" height="64" loading="lazy"><span><b>Empower to Elevate Coaching</b><small>Leadership, executive, career and 1-on-1 coaching</small></span></a><a href="workshops.html"><img src="img/g/adidas-group-session-a-stress-management-workshop.webp" alt="" width="64" height="64" loading="lazy"><span><b>Elevate for Success Seminars / Workshops</b><small>Mindfulness, resilience and parenting workshops</small></span></a><a href="consultations.html"><img src="img/g/mente-skills-program-at-transworld-dubai.webp" alt="" width="64" height="64" loading="lazy"><span><b>Expert Strategic Consultations</b><small>Strategy for organisations planning lasting change</small></span></a></div></li>
+      <div class="sub" id="sub-services"><a href="programmes.html"><span><b>Emerge to Excellence Programs</b><small>Eleven programmes for leaders, women, youth and athletes</small></span></a><a href="coaching.html"><span><b>Empower to Elevate Coaching</b><small>Leadership, executive, career and 1-on-1 coaching</small></span></a><a href="workshops.html"><span><b>Elevate for Success Seminars / Workshops</b><small>Mindfulness, resilience and parenting workshops</small></span></a><a href="consultations.html"><span><b>Expert Strategic Consultations</b><small>Strategy for organisations planning lasting change</small></span></a></div></li>
     <li><a href="blog.html">Blog</a></li>
     <li><a href="#contact">Contact us</a></li>
   </ul>
@@ -1510,31 +1540,29 @@ a.ct-m:hover .ct-ic{background:#B89600;color:#fff}
   <div class="sv-progress" aria-hidden="true"><span><i></i></span></div>
 </section>
 
-<section class="fd" id="founders" aria-labelledby="fd-title">
+<section class="fd fd2" id="founders" aria-labelledby="fd-title">
   <div class="fd-in">
     <div class="fd-head">
       <p class="fd-kicker">The founders</p>
       <h2 class="fd-h" id="fd-title">Two generations, one mission.</h2>
       <p class="fd-sub">Clinical depth and fresh energy, side by side.</p>
     </div>
-    <div class="fd-grid">
-      <article class="fd-card" style="--d:0.00s">
-        <div class="fd-photo"><span class="fd-sun" aria-hidden="true"></span><img src="img/shaheena-cut.webp" alt="Dr. Shaheena Kadri smiling in a white blazer and saffron headscarf" width="600" height="879" loading="lazy"></div>
-        <div class="fd-body">
-          <span class="fd-eyebrow">Our Founder</span>
-          <p class="fd-role">Founder &amp; Chief Empowerment Officer</p>
-          <h3 class="fd-name">Dr. Shaheena Kadri</h3>
-          <p class="fd-creds-line">Physician · ICF Certified Life Coach · Peak Performance &amp; Empowerment Coach · Author · International Speaker</p>
-          <div class="fd-bio">
-            <p>Dr. Shaheena Kadri’s journey is not a conventional one. It began in the world of medicine — where nearly two decades of clinical practice across India and the UAE placed her at the intersection of human health and human potential. As a Homeopathic Physician, she treated the body. But what she witnessed was something deeper — individuals whose gifts lay buried beneath layers of self-doubt, fear, and unfulfilled aspiration. That discovery changed everything.</p>
-            <p>She expanded her practice into the study of human behaviour, psychology, and coaching science — becoming an ICF Certified Life Coach, Peak Performance &amp; Empowerment Coach, Mindfulness Trainer, Leadership Facilitator, and published author. From that breadth of expertise, Emerge on Horizon was born — not as a coaching company, but as a movement. A movement committed to moving every soul from potential to performance, and limitation to legacy.</p>
-            <p>Dr. Shaheena holds one unwavering belief: that every human being possesses a unique, extraordinary genius. Her life’s work — across individuals, leaders, students, healthcare professionals, and organisations — has been devoted to finding it, igniting it, and ensuring the world never has to go without it.</p>
-          </div>
+    <div class="fd2-list">
+      <article class="fd2-row fd2-rv">
+        <figure class="fd2-photo"><span class="fd2-sun" aria-hidden="true"></span><img src="img/shaheena-cut.webp" alt="Dr. Shaheena Kadri smiling in a white blazer and saffron headscarf" loading="lazy"></figure>
+        <div class="fd2-body">
+          <p class="fd2-eyebrow">Our Founder</p>
+          <h3 class="fd2-name">Dr. Shaheena Kadri</h3>
+          <p class="fd2-role">Founder &amp; Chief Empowerment Officer</p>
+          <p class="fd2-creds">Physician · ICF Certified Life Coach · Peak Performance &amp; Empowerment Coach · Author · International Speaker</p>
+          <p class="fd2-lead">Dr. Shaheena Kadri’s journey is not a conventional one. It began in the world of medicine — where nearly two decades of clinical practice across India and the UAE placed her at the intersection of human health and human potential. As a Homeopathic Physician, she treated the body. But what she witnessed was something deeper — individuals whose gifts lay buried beneath layers of self-doubt, fear, and unfulfilled aspiration. That discovery changed everything.</p>
+          <div class="fd2-more" id="fd2-more-0" hidden><p>She expanded her practice into the study of human behaviour, psychology, and coaching science — becoming an ICF Certified Life Coach, Peak Performance &amp; Empowerment Coach, Mindfulness Trainer, Leadership Facilitator, and published author. From that breadth of expertise, Emerge on Horizon was born — not as a coaching company, but as a movement. A movement committed to moving every soul from potential to performance, and limitation to legacy.</p><p>Dr. Shaheena holds one unwavering belief: that every human being possesses a unique, extraordinary genius. Her life’s work — across individuals, leaders, students, healthcare professionals, and organisations — has been devoted to finding it, igniting it, and ensuring the world never has to go without it.</p></div>
+          <button class="fd2-btn" type="button" aria-expanded="false" aria-controls="fd2-more-0"><span>Read more</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
           <ul class="fd-tags" aria-label="Dr. Shaheena Kadri: highlights">
-            <li style="transition-delay:0.90s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>MD HOM — UK</li>
-            <li style="transition-delay:0.97s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>ICF Certified Coach</li>
-            <li style="transition-delay:1.04s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Mindfulness Trainer</li>
-            <li style="transition-delay:1.11s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Published Author</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>MD HOM — UK</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>ICF Certified Coach</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Mindfulness Trainer</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Published Author</li>
           </ul>
           <div class="fd-stats">
             <div class="fd-stat"><b>20+</b><span>Years Experience</span></div>
@@ -1543,27 +1571,24 @@ a.ct-m:hover .ct-ic{background:#B89600;color:#fff}
           </div>
         </div>
       </article>
-      <article class="fd-card" style="--d:0.15s">
-        <div class="fd-photo"><span class="fd-sun" aria-hidden="true"></span><img src="img/alisha-cut.webp" alt="Alisha Kadri smiling with arms crossed in a white blazer and saffron headscarf" width="900" height="1337" loading="lazy"></div>
-        <div class="fd-body">
-          <span class="fd-eyebrow">Our Co-Founder</span>
-          <p class="fd-role">Co-Founder &amp; Director, Partnerships, Growth &amp; Strategic Alliances</p>
-          <h3 class="fd-name">Alisha Kadri</h3>
-          <p class="fd-creds-line">Partnership Development · Corporate Outreach · Community Building · Growth &amp; Strategic Alliances</p>
-          <div class="fd-bio">
-            <p>Some people grow into leadership. Alisha Kadri was drawn to it from the very beginning — not out of ambition for a title, but out of a deep, instinctive need to be useful, to connect, and to make things better for the people around her.</p>
-            <p>What makes Alisha’s journey remarkable is not any single role she held — it is the deliberate, cumulative way she grew through each one. She served as Learning Ambassador, channelling her love of knowledge into inspiring others. As House Captain, she discovered the power of rallying a team and carrying others when the pressure was on. Her time as Wellness Ambassador was perhaps the role closest to her heart — championing mental wellbeing and peer support, values that would one day sit at the foundation of Emerge on Horizon.</p>
-            <p>She then stepped into the Gavels Club as Secretary before earning her place as Club President through service, not shortcuts. As Head of the Finance Club, she added strategic thinking and commercial acumen to her growing arsenal. Each role sharpened a different edge. Each responsibility revealed a new dimension of a leader who simply refuses to be one-dimensional.</p>
-            <p>Today, as Co-Founder and Director of Partnerships, Growth &amp; Strategic Alliances, Alisha is the bridge between EOH’s transformational programmes and the organisations, schools, and communities that need them most. She does not approach organisations with a pitch. She approaches them with a genuine question — “How can we grow together?” — and the patience, professionalism, and warmth to find the answer alongside them.</p>
-            <p>She trains hard — kickboxing, hiking, trekking — travels widely, reads voraciously, and competes fiercely in everything she takes on. And through all of it, she remains — above everything — a people person. The kind who remembers your name, your story, and how she can help.</p>
-          </div>
+      <article class="fd2-row fd2-rev fd2-rv">
+        <figure class="fd2-photo"><span class="fd2-sun" aria-hidden="true"></span><img src="img/alisha-cut.webp" alt="Alisha Kadri smiling with arms crossed in a white blazer and saffron headscarf" loading="lazy"></figure>
+        <div class="fd2-body">
+          <p class="fd2-eyebrow">Our Co-Founder</p>
+          <h3 class="fd2-name">Alisha Kadri</h3>
+          <p class="fd2-role">Co-Founder &amp; Director, Partnerships, Growth &amp; Strategic Alliances</p>
+          <p class="fd2-creds">Partnership Development · Corporate Outreach · Community Building · Growth &amp; Strategic Alliances</p>
+          <p class="fd2-lead">Some people grow into leadership. Alisha Kadri was drawn to it from the very beginning — not out of ambition for a title, but out of a deep, instinctive need to be useful, to connect, and to make things better for the people around her.</p>
+          <div class="fd2-more" id="fd2-more-1" hidden><p>What makes Alisha’s journey remarkable is not any single role she held — it is the deliberate, cumulative way she grew through each one. She served as Learning Ambassador, channelling her love of knowledge into inspiring others. As House Captain, she discovered the power of rallying a team and carrying others when the pressure was on. Her time as Wellness Ambassador was perhaps the role closest to her heart — championing mental wellbeing and peer support, values that would one day sit at the foundation of Emerge on Horizon.</p><p>She then stepped into the Gavels Club as Secretary before earning her place as Club President through service, not shortcuts. As Head of the Finance Club, she added strategic thinking and commercial acumen to her growing arsenal. Each role sharpened a different edge. Each responsibility revealed a new dimension of a leader who simply refuses to be one-dimensional.</p><p>Today, as Co-Founder and Director of Partnerships, Growth &amp; Strategic Alliances, Alisha is the bridge between EOH’s transformational programmes and the organisations, schools, and communities that need them most. She does not approach organisations with a pitch. She approaches them with a genuine question — “How can we grow together?” — and the patience, professionalism, and warmth to find the answer alongside them.</p><p>She trains hard — kickboxing, hiking, trekking — travels widely, reads voraciously, and competes fiercely in everything she takes on. And through all of it, she remains — above everything — a people person. The kind who remembers your name, your story, and how she can help.</p></div>
+          <button class="fd2-btn" type="button" aria-expanded="false" aria-controls="fd2-more-1"><span>Read more</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
           <ul class="fd-tags" aria-label="Alisha Kadri: highlights">
-            <li style="transition-delay:1.05s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Partnership Development</li>
-            <li style="transition-delay:1.12s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Corporate Outreach</li>
-            <li style="transition-delay:1.19s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Community Building</li>
-            <li style="transition-delay:1.26s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Growth Strategy</li>
-            <li style="transition-delay:1.33s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Gen Z Leadership</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Partnership Development</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Corporate Outreach</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Community Building</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Growth Strategy</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Gen Z Leadership</li>
           </ul>
+          
         </div>
       </article>
     </div>
@@ -1706,7 +1731,7 @@ a.ct-m:hover .ct-ic{background:#B89600;color:#fff}
       <a class="bl-all" href="blog.html" data-bl style="--d:.1s">View all articles <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg></a>
     </div>
     <div class="bl-grid">
-      <a class="bl-feat" href="blog.html#inner-potential" data-bl style="--d:.1s">
+      <a class="bl-feat" href="blog-inner-potential.html" data-bl style="--d:.1s">
         <div class="bl-media"><img src="img/blog/inner-potential.webp" alt="A woman meditating calmly on a sofa" width="1280" height="853" loading="lazy"><span class="bl-tag">Mindset &amp; Growth</span></div>
         <div class="bl-body">
           <div class="bl-meta"><img src="img/shaheena.webp" alt="" width="28" height="28"><b>Dr. Shaheena Kadri</b><i></i><span>6 min read</span></div>
@@ -1716,7 +1741,7 @@ a.ct-m:hover .ct-ic{background:#B89600;color:#fff}
         </div>
       </a>
       <div class="bl-list">
-        <a class="bl-item" href="blog.html#kid-entrepreneur" data-bl style="--d:0.2s">
+        <a class="bl-item" href="blog-kid-entrepreneur.html" data-bl style="--d:0.2s">
           <div class="bl-media"><img src="img/blog/kid-entrepreneur.webp" alt="A child in glasses with the words I am your boss" width="400" height="400" loading="lazy"><span class="bl-tag">Parenting &amp; Youth</span></div>
           <div class="bl-body">
             <div class="bl-meta"><span>Parenting &amp; Youth</span><i></i><span>5 min read</span></div>
@@ -1724,7 +1749,7 @@ a.ct-m:hover .ct-ic{background:#B89600;color:#fff}
             <p class="bl-x">Curiosity and independent problem-solving are often mislabelled as stubbornness. How to recognise and nurture them early.</p>
           </div>
         </a>
-        <a class="bl-item" href="blog.html#screen-time" data-bl style="--d:0.3s">
+        <a class="bl-item" href="blog-screen-time.html" data-bl style="--d:0.3s">
           <div class="bl-media"><img src="img/blog/screen-time.webp" alt="Two girls walking and looking at a phone" width="400" height="400" loading="lazy"><span class="bl-tag">Parenting &amp; Youth</span></div>
           <div class="bl-body">
             <div class="bl-meta"><span>Parenting &amp; Youth</span><i></i><span>4 min read</span></div>
@@ -1732,7 +1757,7 @@ a.ct-m:hover .ct-ic{background:#B89600;color:#fff}
             <p class="bl-x">Reframe dopamine cycles, protect attention spans and co-create digital boundaries that stick.</p>
           </div>
         </a>
-        <a class="bl-item" href="blog.html#ceo-at-home" data-bl style="--d:0.4s">
+        <a class="bl-item" href="blog-ceo-at-home.html" data-bl style="--d:0.4s">
           <div class="bl-media"><img src="img/blog/ceo-at-home.webp" alt="A woman working on a laptop in a bright bedroom" width="400" height="400" loading="lazy"><span class="bl-tag">Women &amp; Career</span></div>
           <div class="bl-body">
             <div class="bl-meta"><span>Women &amp; Career</span><i></i><span>7 min read</span></div>
@@ -2766,6 +2791,30 @@ a.ct-m:hover .ct-ic{background:#B89600;color:#fff}
   document.addEventListener('keydown',function(e){ if(lb.hidden) return; if(e.key==='Escape') close(); else if(e.key==='ArrowRight') show(cur+1); else if(e.key==='ArrowLeft') show(cur-1); });
   var sx=null; lb.addEventListener('touchstart',function(e){sx=e.touches[0].clientX},{passive:true});
   lb.addEventListener('touchend',function(e){ if(sx===null) return; var dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>40) show(cur+(dx<0?1:-1)); sx=null; },{passive:true});
+})();
+</script>
+
+<script>
+/* Founders: reveal rows, read more */
+(function(){
+  var sec=document.querySelector('.fd2'); if(!sec) return;
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var rows=[].slice.call(sec.querySelectorAll('.fd2-rv'));
+  if('IntersectionObserver' in window && !reduce){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });},{threshold:.15});
+    rows.forEach(function(r){io.observe(r)});
+  } else rows.forEach(function(r){r.classList.add('in')});
+  [].forEach.call(sec.querySelectorAll('.fd2-btn'),function(b){
+    var box=document.getElementById(b.getAttribute('aria-controls')), lbl=b.querySelector('span');
+    b.addEventListener('click',function(){
+      var open=b.getAttribute('aria-expanded')!=='true';
+      b.setAttribute('aria-expanded',open?'true':'false'); lbl.textContent=open?'Read less':'Read more';
+      if(open){ box.hidden=false; if(!reduce){ box.animate([{height:'0px',opacity:0},{height:box.scrollHeight+'px',opacity:1}],{duration:520,easing:'cubic-bezier(.23,1,.32,1)'}); } }
+      else if(reduce){ box.hidden=true; }
+      else { var an=box.animate([{height:box.scrollHeight+'px',opacity:1},{height:'0px',opacity:0}],{duration:360,easing:'cubic-bezier(.4,0,.2,1)'}); an.onfinish=function(){box.hidden=true}; }
+      if(window.ScrollTrigger) setTimeout(function(){ScrollTrigger.refresh()},600);
+    });
+  });
 })();
 </script>
 </body>
